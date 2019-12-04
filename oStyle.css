@@ -1,0 +1,25 @@
+
+ul{
+    display: block;
+    width: 60%;
+    margin-left: 20%;
+}
+li{
+    display: block;
+    float: left;
+    margin: 10px;
+    padding: 10px;
+}
+
+#background img{
+    width: 60%;
+    margin-left: 20%;
+}
+
+#text{
+    display: block;
+    width: 60%;
+    margin-left: 20%;
+    border: solid gray;
+    border-radius: 10px;
+}
