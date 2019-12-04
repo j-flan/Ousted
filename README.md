@@ -1,2 +1,2 @@
-#Ousted
+# Ousted
 An Adventure Game
