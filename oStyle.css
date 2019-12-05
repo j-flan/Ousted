@@ -1,14 +1,26 @@
 
-ul{
+#decisions{
     display: block;
     width: 60%;
     margin-left: 20%;
+    clear: left;
 }
-li{
+#decisions li{
     display: block;
     float: left;
     margin: 10px;
     padding: 10px;
+}
+#directions{
+    display: block;
+    width: 20%;
+    margin-left: 35%;
+    clear: left;
+}
+#directions li{
+    display: block;
+    float: left;
+    margin-left: 10px;
 }
 
 #background img{
