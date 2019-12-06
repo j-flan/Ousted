@@ -38,6 +38,8 @@ let getEnemy = () =>{
             return enemyList;
         }
     };
+    xmlhttp.open("GET", "https://jhflanegan.com/enemyList.json", false);
+    xmlhttp.send();
 }
 let battle = () =>{
     
