@@ -9,7 +9,7 @@
 var bossName =["Greasy Vandal", "Litch King", "Gryphon", "Necro Horde", "Chaos Demon", "Chaos"];*/
 
 
-let getEnemy = () =>{
+/*let getEnemy = () =>{
 
     //HTTP request will go here
 
@@ -21,4 +21,4 @@ let listeners = () =>{
     btn.addEventListener("click", getEnemy, false);
 }
 
-window.addEventListener("load", listeners, false);
+window.addEventListener("load", listeners, false);*/

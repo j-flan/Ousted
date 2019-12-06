@@ -2,42 +2,38 @@
 
     "location":{
 
-        "swamp":{
+        "forest":{
             
-            "enemy1":{
-                "name": "Goblin",
-                "ability": "",
-                "hp": "",
-                "attackStyle": "",
-                "killText": "",
-                "deathFlavor": "",
-                "minRange": "",
-                "maxRange": "",
-                "minHit": "",
-                "maxHit": "",
-                "minFlee": "",
-                "maxFlee": "",
-                "toHit": "",
-                "gold": "",
-                "points": ""
+            "Bear":{
+                "name": "Bear",
+                "ability": "a",
+                "hp": "12",
+                "attackStyle": "Swipes",
+                "minRange": "3",
+                "maxRange": "6",
+                "minHit": "4",
+                "maxHit": "10",
+                "minFlee": "4",
+                "maxFlee": "8",
+                "toHit": "8",
+                "gold": "5",
+                "points": "50"
         
             },
-            "enemy2":{
-                "name": "Bear",
-                "ability": "",
-                "hp": "",
-                "attackStyle": "",
-                "killText": "",
-                "deathFlavor": "",
-                "minRange": "",
-                "maxRange": "",
-                "minHit": "",
-                "maxHit": "",
-                "minFlee": "",
-                "maxFlee": "",
-                "toHit": "",
-                "gold": "",
-                "points": ""
+            "Goblins":{
+                "name": "Goblins",
+                "ability": "a",
+                "hp": "6",
+                "attackStyle": "attack",
+                "minRange": "1",
+                "maxRange": "5",
+                "minHit": "5",
+                "maxHit": "10",
+                "minFlee": "5",
+                "maxFlee": "8",
+                "toHit": "8",
+                "gold": "3",
+                "points": "10"
         
             }
 
@@ -49,8 +45,6 @@
                 "ability": "",
                 "hp": "",
                 "attackStyle": "",
-                "killText": "",
-                "deathFlavor": "",
                 "minRange": "",
                 "maxRange": "",
                 "minHit": "",
@@ -67,8 +61,6 @@
                 "ability": "",
                 "hp": "",
                 "attackStyle": "",
-                "killText": "",
-                "deathFlavor": "",
                 "minRange": "",
                 "maxRange": "",
                 "minHit": "",
