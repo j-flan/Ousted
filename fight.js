@@ -1,4 +1,5 @@
-import {Enemies} from './enemies.js'
+
+
 
 function Enemy(enemy){
 
@@ -19,6 +20,10 @@ function Enemy(enemy){
     this.points = enemy.points;
 
 }
+let getEnemy = () =>{
+
+    return enemy;
+}
 
 let attack = (enemy) =>{
 
@@ -34,12 +39,15 @@ let dynamite = () =>{
 }
 
 let battle = () =>{
-    let enemy = JSON.parse(Enemies.location.swamp);
+
+   // let enemyType = document.getElementById("enemy").value;
+    //let enemy = new Enemy(enemyType);
+
     let attack = document.getElementById("attack");
     let flee = document.getElementById("flee");
     let potion = document.getElementById("potion");
     let dynamite = document.getElementById("dynamite");
-    console.log(enemy);
+    console.log(enemy.name, enemy.maxHit);
 
     if (attack){
         
