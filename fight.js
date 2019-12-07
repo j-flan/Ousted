@@ -61,37 +61,34 @@ let litchKing = {name: "Litch  King", ability: "v", hp: 110, attackStyle: "attac
 let vandal = {name: "Greasy Vandal", ability: "a", hp: 45, attackStyle: "slashes", minRange: 5, maxRange: 10, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 0, points: 250};
 let lady;
 let victim;
-let randomMerchant
+let randomMerchant;
 
-//enemy by location object arrays
-let start = [bear, goblins, elf];
-let merchantRoad = [gutterBums, bandit, marauder];
-let swampRoad = [wolves, wraith, mudMan, leech];
-let cityRoad = [thief, thrall, wyvren];
-let mountainRoad = [fSprite, mimic, mTroll, bat];
-let valleyRoad = [fern, zombie, panther, malboro];
-let marshRoad = [litchling, crows, banshee, aElement];
-let desertRoad = [scorpion, phantom, wisp, taranTroll];
-let cliffsRoad = [ants, mimic, doppleganger, miniBears];
-let forestRoad = [witch, bat, mush, centaur];
-let plainsRoad = [chimera, crows, sandMan, golem];
-let volcanoRoad = [chaosEl, fBat, omegaTroll];
-let lake = [mLeech, mudMan, lady, poo];
-let city = [drunk, vandal, rat, cultist];
-let mountain = [fSprite, chaosDemon, mTroll, bat];
-let valley = [fern, randomMerchant, viper, malboro];
-let marsh = [litchling, horde, crows, aElement];
-let desert = [scorpion, randomMerchant, wisp, taranTroll];
-let cliffs = [ants, gryphon, crows, miniBears];
-let tomb = [scarabs, litchKing, pViper, spectre];
-let plains = [chimera, sandMan, crows, golem];
-let volcano = [chaosEl, chaos, omegaTroll, fBat];
 
-//location array object
-let areas = {"start":start, "merchantRoad": merchantRoad, "swampRoad": swampRoad,  "cityRoad": cityRoad, "mountainRoad": mountainRoad, 
-            "valleyRoad": valleyRoad, "marshRoad": marshRoad, "desertRoad": desertRoad, "cliffsRoad": cliffsRoad, "forestRoad": forestRoad, 
-            "plainsRoad": plainsRoad, "volcanoRoad": volcanoRoad, "lake": lake, "city": city,"mountain": mountain,"valley": valley, 
-            "marsh": marsh,"desert": desert,"cliffs": cliffs,"tomb": tomb,"plains": plains,"volcano": volcano};
+//object of arrays
+let areas = {
+    "start": [bear, goblins, elf, goblins],
+    "merchantRoad" : [gutterBums, bandit, marauder, elf],
+    "swampRoad" : [wolves, wraith, mudMan, leech],
+    "cityRoad" : [thief, thrall, wyvren, gutterBums],
+    "mountainRoad" : [fSprite, mimic, mTroll, bat],
+    "valleyRoad" : [fern, zombie, panther, malboro],
+    "marshRoad" : [litchling, crows, banshee, aElement],
+    "desertRoad" : [scorpion, phantom, wisp, taranTroll],
+    "cliffsRoad" : [ants, mimic, doppleganger, miniBears],
+    "forestRoad" : [witch, bat, mush, centaur],
+    "plainsRoad" : [chimera, crows, sandMan, golem],
+    "volcanoRoad" : [chaosEl, fBat, omegaTroll, chimera],
+    "lake" : [mLeech, mudMan, lady, poo],
+    "city" : [drunk, vandal, rat, cultist],
+    "mountain" : [fSprite, chaosDemon, mTroll, bat],
+    "valley" : [fern, randomMerchant, viper, malboro],
+    "marsh" : [litchling, horde, crows, aElement],
+    "desert" : [scorpion, randomMerchant, wisp, taranTroll],
+    "cliffs" : [ants, gryphon, crows, miniBears],
+    "tomb" : [scarabs, litchKing, pViper, spectre],
+    "plains" : [chimera, sandMan, crows, golem],
+    "volcano" : [chaosEl, chaos, omegaTroll, fBat]
+}
 
 
 function Enemy(enemy){
@@ -126,14 +123,18 @@ let dynamite = () =>{
 }
 
 let getEnemy = () =>{
-    let here = document.getElementById("location").value;
+    
+    let here = document.getElementById("location").textContent;
+    //console.log(here);
     for (var key in areas){
         if (key == here){
-            let enemy = new Enemy(areas[key])
+            //console.log(key)
+            let rand = Math.floor(Math.random() * 4);
+            //console.log(rand);
+            let enemy = new Enemy(areas[key][rand])
             return enemy;
         }
     }
-
 }
 let battle = () =>{
     
@@ -144,9 +145,7 @@ let battle = () =>{
     let potion = document.getElementById("potion");
     let dynamite = document.getElementById("dynamite");
 
-    console.log(enemy[0]);
-
-    console.log(enemy[1].name, enemy[2].name);
+    console.log(enemy.name);
 
     if (attack){
         
