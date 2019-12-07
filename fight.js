@@ -64,7 +64,7 @@ let victim;
 let randomMerchant;
 
 
-//object of arrays
+//object of arrays of objects
 let areas = {
     "start": [bear, goblins, elf, goblins],
     "merchantRoad" : [gutterBums, bandit, marauder, elf],
@@ -109,8 +109,10 @@ function Enemy(enemy){
 
 }
 
-let attack = (enemy) =>{
+let attack = () =>{
 
+    damage = 
+    enemy.hp -= damage;
 }
 let flee = () =>{
 
@@ -125,12 +127,10 @@ let dynamite = () =>{
 let getEnemy = () =>{
     
     let here = document.getElementById("location").textContent;
-    //console.log(here);
+
     for (var key in areas){
         if (key == here){
-            //console.log(key)
             let rand = Math.floor(Math.random() * 4);
-            //console.log(rand);
             let enemy = new Enemy(areas[key][rand])
             return enemy;
         }
@@ -140,24 +140,29 @@ let battle = () =>{
     
     let enemy = getEnemy();
 
-    let attack = document.getElementById("attack");
-    let flee = document.getElementById("flee");
-    let potion = document.getElementById("potion");
-    let dynamite = document.getElementById("dynamite");
-
     console.log(enemy.name);
 
-    if (attack){
-        
-    }
-    else if (flee){
+    while (enemy.hp > 0){
 
-    }
-    else if (potion){
+        let attack = document.getElementById("attack");
+        let flee = document.getElementById("flee");
+        let potion = document.getElementById("potion");
+        let dynamite = document.getElementById("dynamite");
 
-    }
-    else if (dynamite){
+        if (attack){
+            
+        }
+        else if (flee){
 
+        }
+        else if (potion){
+
+        }
+        else if (dynamite){
+
+        }
+        //for test
+        enemy.hp = 0;
     }
 
 }
