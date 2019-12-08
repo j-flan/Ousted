@@ -11,7 +11,7 @@ function Player(player){
 
 let Location = (place) =>{
     let where = document.getElementById("location");
-    where.style.display = "none";
+    //where.style.display = "none";
     where.textContent = place;      
 }
 
@@ -20,7 +20,13 @@ let playerStart = () =>{
     let newPlayer = new Player(startPlayer);
     Location("start");
     console.log(newPlayer);
-    return newPlayer;
+    document.getElementById("gold").textContent = newPlayer.gold;
+    document.getElementById("hp").textContent = newPlayer.hp;
+    document.getElementById("hpMax").textContent = newPlayer.hpMax;
+    document.getElementById("minDmg").textContent = newPlayer.minDmg;
+    document.getElementById("maxDmg").textContent = newPlayer.maxDmg;
+    document.getElementById("dex").textContent = newPlayer.dex;
+    document.getElementById("evade").textContent = newPlayer.evade;
 }
 
 

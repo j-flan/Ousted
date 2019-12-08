@@ -1,39 +1,67 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <meta charset="utf-8"/>
+        
         <title>Ousted</title>
         <link rel="stylesheet" href="oStyle.css"/>
-        <script type="text/javascript" src="player.js"></script>
-        <script type="text/javascript" src="fight.js"></script> 
+        
     </head>
     <body>
-        <div id="background">
-            <img src="pics/forest.jpeg"/>
+        <div id="game">
+            <div id="background">
+                <img :src="backgroundImage"/>
+            </div>
+            <div id="text">
+                <p></p>
+            </div>
+            <div id="buttons">
+                <ul id="decisions">
+                    <li><button v-on:click="attack">Attack!</button></li>
+                    <li><input type="submit" id="flee" value="Flee" /></li>
+                    <li><input type="submit" id="potion" value="Potion" /></li>
+                    <li><input type="submit" id="dynamite" value="Dynamite" /></li>
+                </ul>
+                <ul id="directions" >
+                    <li><input type="submit" id="north" value="N"/></li>
+                    <li><input type="submit" id="west" value="W"/></li>
+                    <li><input type="submit" id="east" value="E"/></li>
+                    <li><input type="submit" id="south" value="S"/></li>
+
+                    <li><button v-on:click="getEnemy">get enemy</button></li>
+                    <li><button v-on:click="resetEnemy">reset enemy</button></li>
+
+                                
+                </ul>
+            </div>
+            <div id = "enemyOutput">
+                <br><p>Enemy: {{enemy.name}} </p>
+                <p>Ability: {{enemy.ability}} </p>
+                <p v-if="enemy.hp > 0" >HP: {{enemy.hp}} </p>
+                <p v-else>You killed that son of a bitch!</p>
+                <p>Attack: {{enemy.attack}} </p>
+                <p>Min Range: {{enemy.minRange}} </p>
+                <p>Max Range: {{enemy.maxRange}} </p>
+                <p>Min Hit: {{enemy.minHit}} </p>
+                <p>Max Hit: {{enemy.maxHit}} </p>
+                <p>Min Flee: {{enemy.minFlee}} </p>
+                <p>Max Flee: {{enemy.maxFlee}} </p>
+                <p>To Hit: {{enemy.toHit}} </p>
+                <p>Gold: {{enemy.gold}} </p>
+                <p>Points: {{enemy.points}} </p>
+            </div>
+           <!-- <div id="hfields">
+                <p>Gold:&nbsp </p><p id="gold"></p><br>
+                <p>HP:&nbsp </p><p id="hp"></p></br>
+                <p>HP MAX:&nbsp </p><p id="hpMax"></p></br>
+                <p>MIN DMG:&nbsp </p><p id="minDmg"></p></br>
+                <p>MAX DMG:&nbsp </p><p id="maxDmg"></p></br>
+                <p>DEX:&nbsp </p><p id="dex"></p></br>
+                <p>EVADE:&nbsp </p><p id="evade"></p></br>
+                <p>LOCATION:&nbsp </p>:<p id="location"></p>
+            </div>-->
         </div>
-        <div id="text">
-            <p>""</p>
-        </div>
-        <div id="buttons">
-            <ul id="decisions">
-                <li><input type="submit" id="attack" value="Attack" /></li>
-                <li><input type="submit" id="flee" value="Flee" /></li>
-                <li><input type="submit" id="potion" value="Potion" /></li>
-                <li><input type="submit" id="dynamite" value="Dynamite" /></li>
-            </ul>
-            <ul id="directions" >
-                <li><input type="submit" id="north" value="N"/></li>
-                <li><input type="submit" id="west" value="W"/></li>
-                <li><input type="submit" id="east" value="E"/></li>
-                <li><input type="submit" id="south" value="S"/></li>
-                <li><input type="submit" id="continue" value="Continue"/></li>
-                               
-            </ul>
-        </div>
-        <div id="hfields">
-            <p id="enemy"></p>
-            <p id="location"></p>
-        </div>
-         
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!--<script type="text/javascript" src="player.js"></script>-->
+        <script type="text/javascript" src="fight.js"></script> 
     </body>
 </html>

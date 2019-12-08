@@ -36,3 +36,14 @@
     border: solid gray;
     border-radius: 10px;
 }
+#hfields{
+    display: block;
+    float: right;
+    clear: left;
+    width: 20%;
+
+}
+#hfields p{
+    display: block;
+    float: left;
+}

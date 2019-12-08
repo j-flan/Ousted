@@ -1,4 +1,5 @@
 //enemies
+
 let bear = {name: "Bear", ability: "a", hp: 12, attackStyle: "swipes", minRange: 3, maxRange: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 50};
 let goblins = {name: "Goblins", ability: "a", hp: 6, attackStyle: "attack", minRange: 1, maxRange: 5, minHit: 5, maxHit: 10, minFlee: 5, maxFlee: 8, toHit: 8, gold: 3, points:10 };
 let elf = {name: "Elf", ability: "a", hp: 8, attackStyle: "attacks", minRange: 3, maxRange: 5, minHit: 6, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 30};
@@ -90,29 +91,113 @@ let areas = {
     "volcano" : [chaosEl, chaos, omegaTroll, fBat]
 }
 
+var game = new Vue({
+    el: '#game',
+    data:{
+        backgroundImage: 'pics/forest.jpeg',
+        location: 'start',
+        chapter: 1,
+        potion: 25,
+        tmpHp:0,    
+        enemy:{
+            name: 'itsa me',
+            ability: '',
+            hp: 0,
+            attack: '',
+            minRange: 0,
+            maxRange: 0,
+            minHit: 0,
+            maxHit: 0,
+            minFlee: 0,
+            maxFlee: 0,
+            toHit: 0,
+            gold: 0,
+            points: 0
+        },
+        player:{
+            gold: 0,
+            hp: 0,
+            hpMax: 0,
+            minDmg: 2,
+            maxDmg: 5,
+            dex: 7,
+            evade: 7
+        }
+    },
+    methods:{
+        getEnemy: function(){     
+            for (var key in areas){
+                if (key == this.location){
+                    let rand = Math.floor(Math.random() * 4);       
+                    this.enemy = areas[key][rand];
+                    tmpHp = this.enemy.hp;
+                }
+            }
+        },
+        setImage: function(newImage){
+            this.image = newImage;
+        },
+        setLocation: function(newLocation){
+            this.location = newLocation
+        },
+        nextChapter: function(){
+            this.chapter+=1;
+            this.potion+=25;
+        },
+        attack: function(){
+            let range = this.player.maxDmg - this.player.minDmg;
+            let dmg = Math.floor((Math.random() * range)+ this.player.minDmg);
+            this.enemy.hp -= dmg;
+        },
+        resetEnemy: function(){
+            this.enemy.hp = tmpHp;
+        },
+        flee: function(){
 
-function Enemy(enemy){
+        },
+        potion: function(){
+            this.player.hp += this.potion;
+            if (this.player.hp > this.player.hpMax)
+                this.player.hp = this.player.hpMax;
+        },
+        dynamite: function(){
+            this.enemy.hp -= 25;
+        }
+    }
 
-    this.name = enemy.name;
-    this.ability = enemy.ability;
-    this.hp = enemy.hp;
-    this.attackStyle = enemy.attackStyle;
-    this.minRange = enemy.minRange;
-    this.maxRange = enemy.maxRange;
-    this.minHit = enemy.minHit;
-    this.maxHit = enemy.maxHit;
-    this.minFlee = enemy.minFlee;
-    this.maxFlee = enemy.maxFlee;
-    this.toHit = enemy.toHit;
-    this.gold = enemy.gold;
-    this.points = enemy.points;
+})
 
+/*class Enemy{
+    
+    constructor(enemy){
+
+        this._name = enemy.name;
+        this._ability = enemy.ability;
+        this._hp = enemy.hp;
+        this._attackStyle = enemy.attackStyle;
+        this._minRange = enemy.minRange;
+        this._maxRange = enemy.maxRange;
+        this._minHit = enemy.minHit;
+        this._maxHit = enemy.maxHit;
+        this._minFlee = enemy.minFlee;
+        this._maxFlee = enemy.maxFlee;
+        this._toHit = enemy.toHit;
+        this._gold = enemy.gold;
+        this._points = enemy.points;
+
+    }
+        set hp(hp){
+            this._hp += hp;
+        }
+        get hp(){
+            return this._hp;
+        }
 }
+let att = (foe) =>{
 
-let attack = () =>{
+    foe.hp -=1;
+    document.getElementById("text").textContent = foe.hp;
 
-    damage = 
-    enemy.hp -= damage;
 }
 let flee = () =>{
 
@@ -138,38 +223,24 @@ let getEnemy = () =>{
 }
 let battle = () =>{
     
-    let enemy = getEnemy();
-
-    console.log(enemy.name);
-
-    while (enemy.hp > 0){
-
-        let attack = document.getElementById("attack");
-        let flee = document.getElementById("flee");
-        let potion = document.getElementById("potion");
-        let dynamite = document.getElementById("dynamite");
-
-        if (attack){
-            
-        }
-        else if (flee){
-
-        }
-        else if (potion){
-
-        }
-        else if (dynamite){
-
-        }
-        //for test
-        enemy.hp = 0;
-    }
-
+    let foe = getEnemy();
+    console.log(foe.name);
+    document.getElementById("text").textContent = foe.hp;
+    let attack = document.getElementById("attack");
+    let flee = document.getElementById("flee");
+    let potion = document.getElementById("potion");
+    let dynamite = document.getElementById("dynamite");
+    attack.addEventListener("click", att(foe), false);
+    flee.addEventListener("click", flee, false);
+    potion.addEventListener("click", potion, false);
+    dynamite.addEventListener("click", dynamite, false);
 }
 
 let listeners = () =>{
     let btn = document.getElementById("continue");
+    
     btn.addEventListener("click", battle, false);
+    
 }
 
-window.addEventListener("load", listeners, false);
+window.addEventListener("load", listeners, false);*/
