@@ -12,14 +12,14 @@
                 <img :src="backgroundImage"/>
             </div>
             <div id="text">
-                <p></p>
+                <li></li>
             </div>
             <div id="buttons">
                 <ul id="decisions">
                     <li><button v-on:click="attack">Attack!</button></li>
-                    <li><input type="submit" id="flee" value="Flee" /></li>
-                    <li><input type="submit" id="potion" value="Potion" /></li>
-                    <li><input type="submit" id="dynamite" value="Dynamite" /></li>
+                    <li><button v-on:click="flee">Flee!</button></li>
+                    <li><button v-on:click="dynamite">dynamite</button></li>
+                    <li><button v-on:click="heal">heal</button></li>
                 </ul>
                 <ul id="directions" >
                     <li><input type="submit" id="north" value="N"/></li>
@@ -28,40 +28,44 @@
                     <li><input type="submit" id="south" value="S"/></li>
 
                     <li><button v-on:click="getEnemy">get enemy</button></li>
-                    <li><button v-on:click="resetEnemy">reset enemy</button></li>
+                    <li><button v-on:click="resetEnemy">reset enemy hp</button></li>
+                    <li><button v-on:click="enemyAttack">Enemy attack</button></li>
 
                                 
                 </ul>
             </div>
             <div id = "enemyOutput">
-                <br><p>Enemy: {{enemy.name}} </p>
-                <p>Ability: {{enemy.ability}} </p>
-                <p v-if="enemy.hp > 0" >HP: {{enemy.hp}} </p>
-                <p v-else>You killed that son of a bitch!</p>
-                <p>Attack: {{enemy.attack}} </p>
-                <p>Min Range: {{enemy.minRange}} </p>
-                <p>Max Range: {{enemy.maxRange}} </p>
-                <p>Min Hit: {{enemy.minHit}} </p>
-                <p>Max Hit: {{enemy.maxHit}} </p>
-                <p>Min Flee: {{enemy.minFlee}} </p>
-                <p>Max Flee: {{enemy.maxFlee}} </p>
-                <p>To Hit: {{enemy.toHit}} </p>
-                <p>Gold: {{enemy.gold}} </p>
-                <p>Points: {{enemy.points}} </p>
+                <ul>
+                    <li>Enemy: {{enemy.name}} </li>
+                    <li>Ability: {{enemy.ability}} </li>
+                    <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
+                    <li v-else >Dead</li>
+                    <li>Attack: {{enemy.attackStyle}} </li>
+                    <li>Min Dmg: {{enemy.minDmg}} </li>
+                    <li>Max Dmg: {{enemy.maxDmg}} </li>
+                    <li>Min Hit: {{enemy.minHit}} </li>
+                    <li>Max Hit: {{enemy.maxHit}} </li>
+                    <li>Min Flee: {{enemy.minFlee}} </li>
+                    <li>Max Flee: {{enemy.maxFlee}} </li>
+                    <li>To Hit: {{enemy.toHit}} </li>
+                    <li>Gold: {{enemy.gold}} </li>
+                    <li>Points: {{enemy.points}} </li>
+                </ul>
             </div>
-           <!-- <div id="hfields">
-                <p>Gold:&nbsp </p><p id="gold"></p><br>
-                <p>HP:&nbsp </p><p id="hp"></p></br>
-                <p>HP MAX:&nbsp </p><p id="hpMax"></p></br>
-                <p>MIN DMG:&nbsp </p><p id="minDmg"></p></br>
-                <p>MAX DMG:&nbsp </p><p id="maxDmg"></p></br>
-                <p>DEX:&nbsp </p><p id="dex"></p></br>
-                <p>EVADE:&nbsp </p><p id="evade"></p></br>
-                <p>LOCATION:&nbsp </p>:<p id="location"></p>
-            </div>-->
+            <div id="playerOutput">
+                <ul>
+                    <li>HP: {{player.hp}} </li>
+                    <li>Min DMG: {{player.minDmg}} </li>
+                    <li>Max DMG: {{player.maxDmg}} </li>
+                    <li>Dex: {{player.dex}} </li>
+                    <li>Evade: {{player.evade}} </li>
+                    <li>Gold: {{player.gold}} </li>
+                    <li>Points: {{player.points}} </li>
+                </ul>
+            </div>
+           
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <!--<script type="text/javascript" src="player.js"></script>-->
-        <script type="text/javascript" src="fight.js"></script> 
+        <script type="text/javascript" src="game.js"></script> 
     </body>
 </html>

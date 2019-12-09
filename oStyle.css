@@ -36,14 +36,19 @@
     border: solid gray;
     border-radius: 10px;
 }
-#hfields{
-    display: block;
-    float: right;
-    clear: left;
-    width: 20%;
 
-}
-#hfields p{
+#enemyOutput{
     display: block;
     float: left;
+    clear: left;
+    width: 40%;
+}
+#playerOutput{
+    display: block;
+    float: right;
+}
+#playerOutput ul li, #enemyOutput ul li{
+    display: block;
+    float: left;
+    clear:left;
 }
