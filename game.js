@@ -95,7 +95,6 @@ let areas = {
     "plains" : [chimera, sandMan, crows, golem],
     "volcano" : [chaosEl, chaos, omegaTroll, fBat]
 }
-
 var game = new Vue({
     el: '#game',
     data:{
@@ -103,7 +102,7 @@ var game = new Vue({
         location: 'start',
         chapter: 1,
         potion: 25,
-        tmpHp:0,   
+        tmpHp:0,
         enemy:{
             name: '',
             ability: '',
@@ -117,7 +116,10 @@ var game = new Vue({
             maxFlee: 0,
             toHit: 0,
             gold: 0,
-            points: 0
+            points: 0,
+            poison: 0,
+            stun: 0,
+            vamp: 0
         },
         player:{
             gold: 0,
@@ -127,7 +129,10 @@ var game = new Vue({
             maxDmg: 5,
             dex: 7,
             evade: 7,
-            points: 0
+            points: 0,
+            poison: 0,
+            stun: 0,
+            vamp: 0
         }
     },
     methods:{
@@ -137,6 +142,7 @@ var game = new Vue({
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
+                    document.getElementById("attText").textContent = ``
                 }
             }
         },
@@ -151,65 +157,104 @@ var game = new Vue({
             this.potion+=25;
         },
         attack: function(){
+            
             //hit or miss
             let out = document.getElementById("text");
             let hit = Math.floor((Math.random() * this.enemy.toHit) + 1);
-            //hit
+
+            //hit for random damage between min & max
             if (this.player.dex >= hit){
                 let range = this.player.maxDmg - this.player.minDmg;
                 let dmg = Math.floor((Math.random() * range)+ this.player.minDmg);
                 this.enemy.hp -= dmg;
-                out.textContent = `${this.enemy.name} hit for ${dmg} dmg`
+                out.textContent = `You hit the ${this.enemy.name} for ${dmg} dmg`
             }
             //miss
             else{
                 out.textContent = "You Miss!"
             }
+            //enemy killed
             if (this.enemy.hp <= 0){
                 out.textContent = `You slay the ${this.enemy.name}!`;
                 this.enemyKilled();
+            }
+            else{
+                this.enemyAttack();
             }          
         },
         enemyKilled: function(){
+            //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
             this.resetEnemy();
-            this.enemy = empty;
-
+            document.getElementById("attText").textContent = '';
         },
         resetEnemy: function(){
+            //enemy hp reset for future battles
             this.enemy.hp = this.tmpHp;
+            //wipe enemy
+            this.enemy = empty;
         },
         enemyAttack: function(){
-            let out = document.getElementById("text");
+            //hit or miss
+            let out = document.getElementById("attText");
             let hitRange = this.enemy.maxHit - this.enemy.minHit;
             let hit = Math.floor((Math.random() * hitRange) + this.enemy.minHit);
+
+            //hit for random damage between min & max
             if (hit >= this.player.evade){
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
-                out.textContent = `${this.enemy.name} hits for ${dmg} dmg`
+                out.textContent = `${this.enemy.name} hits you for ${dmg} dmg`
             }
+            //miss
             else{
                 out.textContent = `${this.enemy.name} Misses!`
             }
         },
         flee: function(){
             let out = document.getElementById("text");
+            let eOut = document.getElementById("attText")
+            //chance to flee, evade must be larger than random enemy
+            //flee chance between minflee and maxflee
             let range = this.enemy.maxFlee - this.enemy.minFlee;
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`
+                eOut.textContent = '';
+                this.resetEnemy();
+            }
+            //did not flee
+            else{
+                out.textContent = "You try to run, but trip and fall on your face instead";
+                if(this.enemy.hp > 0){
+                    this.enemyAttack();
+                }
             }
         },
         dynamite: function(){
-            this.enemy.hp -= 25;         
+            let out = document.getElementById("text");
+            this.enemy.hp -= 25;
+            out.textContent = `The explosion thits the ${this.enemy.name} for 25dmg`;
+            if(this.enemy.hp > 0){
+                this.enemyAttack();
+            }
+            else{
+                this.enemyKilled();
+            }       
         },
         heal: function(){
+            let out = document.getElementById("text");
             this.player.hp += this.potion;
             if (this.player.hp > this.player.hpMax){
                 this.player.hp = this.player.hpMax;
+                out.textContent = "Full health!";
             }
+            else{
+                out.textContent = `You heal for ${potion}hp`
+            }
+            this.enemyAttack();
         },
         chooseClass: function(){
 
@@ -230,8 +275,9 @@ var game = new Vue({
 
         },
         pPoison: function(){
-            
+
         }
+
     }
 
 })

@@ -12,22 +12,25 @@
                 <img :src="backgroundImage"/>
             </div>
             <div id="text">
-                <li></li>
+                P<li></li>
+            </div>
+            <div id="attText">
+                E<li></li>
             </div>
             <div id="buttons">
-                <ul id="decisions">
+                <ul v-if="enemy.hp > 0" id="decisions">
                     <li><button v-on:click="attack">Attack!</button></li>
                     <li><button v-on:click="flee">Flee!</button></li>
                     <li><button v-on:click="dynamite">dynamite</button></li>
                     <li><button v-on:click="heal">heal</button></li>
                 </ul>
-                <ul id="directions" >
+                <ul v-if="enemy.hp == 0" id="directions" >
                     <li><input type="submit" id="north" value="N"/></li>
                     <li><input type="submit" id="west" value="W"/></li>
                     <li><input type="submit" id="east" value="E"/></li>
                     <li><input type="submit" id="south" value="S"/></li>
 
-                    <li><button v-on:click="getEnemy">get enemy</button></li>
+                    <li><button v-on:click="getEnemy">Battle!</button></li>
                     <li><button v-on:click="resetEnemy">reset enemy hp</button></li>
                     <li><button v-on:click="enemyAttack">Enemy attack</button></li>
 
@@ -39,7 +42,7 @@
                     <li>Enemy: {{enemy.name}} </li>
                     <li>Ability: {{enemy.ability}} </li>
                     <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
-                    <li v-else >Dead</li>
+                    <li v-else>HP: -</li>
                     <li>Attack: {{enemy.attackStyle}} </li>
                     <li>Min Dmg: {{enemy.minDmg}} </li>
                     <li>Max Dmg: {{enemy.maxDmg}} </li>
