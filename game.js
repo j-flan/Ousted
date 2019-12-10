@@ -61,15 +61,13 @@ let gryphon = {name: "Gryphon", hp: 120, attackStyle: "strikes", minDmg: 7, maxD
 let litchKing = {name: "Litch  King", hp: 110, attackStyle: "attacks", minDmg: 7, maxDmg: 10, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 8, toHit: 10, gold:50 , points: 800, poison: false,stun: false,vamp: true};
 let vandal = {name: "Greasy Vandal", hp: 45, attackStyle: "slashes", minDmg: 5, maxDmg: 10, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 0, points: 250, poison: false,stun: false,vamp: false};
 
+//empty enemy;
+let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
+
 //NPCs
 let lady;
 let victim;
 let randomMerchant;
-
-//empty enemy;
-let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
-//empty player;
-let zero = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
 
 //object of arrays of objects
 let areas = {
@@ -137,7 +135,26 @@ var game = new Vue({
             stun: false,
             vamp: false
         },
-        
+        npc:{
+            lady: true,
+            victim: true,
+        },
+        item:{
+            shortSword: false,
+            longSword: false,
+            leatherArmor: false,
+            mercurialBoots: false,
+            magicDagger: false,
+            magicShield: false,
+            bastardSword: false,
+            voidRapier: false,
+            coralKukri: false,
+            poisonDagger: false,
+            studdedLeatherArmor: false,
+            soultrapKatana: false,
+            lightningAxe: false,
+            voidBangle: false
+        }
     },
     methods:{
         getEnemy: function(){  
@@ -189,34 +206,6 @@ var game = new Vue({
                 out.textContent = "You Miss!";
             }        
         },
-        battle: function(){
-            document.getElementById("statText").textContent = '';
-            this.attack();
-            if(this.enemy.hp > 0)
-                this.enemyAttack();
-            if(this.player.hp < 1)
-                this.playerKilled();  
-        },
-        enemyKilled: function(){
-            document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
-            document.getElementById("attText").textContent = '';
-            //add spoils to player stats
-            this.player.gold += this.enemy.gold;
-            this.player.points += this.enemy.points;
-            this.resetEnemy();
-        },
-        playerKilled: function(){
-            document.getElementById("text").textContent = "GAME OVER";
-            document.getElementById("attText").textContent = '';
-            this.player = zero;
-            this.resetEnemy();
-        },
-        resetEnemy: function(){
-            //enemy hp reset for future battles
-            this.enemy.hp = this.tmpHp;
-            //wipe enemy
-            this.enemy = empty;
-        },
         enemyAttack: function(){
             //hit or miss
             let eOut = document.getElementById("attText");
@@ -241,6 +230,34 @@ var game = new Vue({
                 eOut.textContent = `${this.enemy.name} Misses!`;
             }
         },
+        battle: function(){
+            document.getElementById("statText").textContent = '';
+            this.attack();
+            if(this.enemy.hp > 0)
+                this.enemyAttack();
+            if(this.player.hp < 1)
+                this.playerKilled();  
+        },
+        enemyKilled: function(){
+            document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
+            document.getElementById("attText").textContent = '';
+            //add spoils to player stats
+            this.player.gold += this.enemy.gold;
+            this.player.points += this.enemy.points;
+            this.resetEnemy();
+        },
+        playerKilled: function(){
+            document.getElementById("text").textContent = "GAME OVER";
+            document.getElementById("attText").textContent = '';
+            this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
+            this.resetEnemy();
+        },
+        resetEnemy: function(){
+            //enemy hp reset for future battles
+            this.enemy.hp = this.tmpHp;
+            //wipe enemy
+            this.enemy = empty;
+        },    
         flee: function(){
             let out = document.getElementById("text");
             let eOut = document.getElementById("attText");
