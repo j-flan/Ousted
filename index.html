@@ -41,7 +41,10 @@
             <div id = "enemyOutput">
                 <ul>
                     <li>Enemy: {{enemy.name}} </li>
-                    <li>Ability: {{enemy.ability}} </li>
+                    <li v-if="enemy.poison" >Ability: Poison</li>
+                    <li v-else-if="enemy.stun">Ability: Stun</li>
+                    <li v-else-if="enemy.vamp">Ability: Leech </li>
+                    <li v-else>Ability: -</li>
                     <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
                     <li v-else>HP: -</li>
                     <li>Attack: {{enemy.attackStyle}} </li>

@@ -100,7 +100,7 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/forest.jpeg',
-        location: 'valleyRoad',
+        location: 'marshRoad',
         chapter: 1,
         potion: 25,
         tmpHp:0,
@@ -136,7 +136,8 @@ var game = new Vue({
             poisonCount: 0,
             stun: false,
             vamp: false
-        }
+        },
+        
     },
     methods:{
         getEnemy: function(){  
@@ -180,7 +181,6 @@ var game = new Vue({
                     this.pPoison();
                 //enemy killed
                 if (this.enemy.hp <= 0){
-                    out.textContent = `You slayed the ${this.enemy.name}!`;
                     this.enemyKilled();
                 } 
             }
@@ -198,6 +198,8 @@ var game = new Vue({
                 this.playerKilled();  
         },
         enemyKilled: function(){
+            document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
+            document.getElementById("attText").textContent = '';
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
@@ -205,6 +207,7 @@ var game = new Vue({
         },
         playerKilled: function(){
             document.getElementById("text").textContent = "GAME OVER";
+            document.getElementById("attText").textContent = '';
             this.player = zero;
             this.resetEnemy();
         },
@@ -225,7 +228,7 @@ var game = new Vue({
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
-                eOut.textContent = `${this.enemy.name} hits you for ${dmg} dmg`;
+                eOut.textContent = `${this.enemy.name} ${this.enemy.attackStyle} for ${dmg} dmg`;
                 if(this.enemy.vamp)
                     this.eVamp();
                 else if(this.enemy.stun)
