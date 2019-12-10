@@ -17,22 +17,23 @@
             <div id="attText">
                 E<li></li>
             </div>
+            <div id="statText">
+                S<li></li>
+            </div>
             <div id="buttons">
                 <ul v-if="enemy.hp > 0" id="decisions">
-                    <li><button v-on:click="attack">Attack!</button></li>
+                    <li><button v-on:click="battle">Attack!</button></li>
                     <li><button v-on:click="flee">Flee!</button></li>
                     <li><button v-on:click="dynamite">dynamite</button></li>
                     <li><button v-on:click="heal">heal</button></li>
                 </ul>
                 <ul v-if="enemy.hp == 0" id="directions" >
-                    <li><input type="submit" id="north" value="N"/></li>
+                   <!-- <li><input type="submit" id="north" value="N"/></li>
                     <li><input type="submit" id="west" value="W"/></li>
                     <li><input type="submit" id="east" value="E"/></li>
-                    <li><input type="submit" id="south" value="S"/></li>
+                    <li><input type="submit" id="south" value="S"/></li> -->
 
                     <li><button v-on:click="getEnemy">Battle!</button></li>
-                    <li><button v-on:click="resetEnemy">reset enemy hp</button></li>
-                    <li><button v-on:click="enemyAttack">Enemy attack</button></li>
 
                                 
                 </ul>

@@ -1,65 +1,65 @@
 //enemies
 
-let bear = {name: "Bear", ability: "a", hp: 12, attackStyle: "swipes", minDmg: 3, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 50};
-let goblins = {name: "Goblins", ability: "a", hp: 6, attackStyle: "attack", minDmg: 1, maxDmg: 5, minHit: 5, maxHit: 10, minFlee: 5, maxFlee: 8, toHit: 8, gold: 3, points:10 };
-let elf = {name: "Elf", ability: "a", hp: 8, attackStyle: "attacks", minDmg: 3, maxDmg: 5, minHit: 6, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 30};
-let gutterBums = {name: "Gutter Bums", ability: "a", hp: 12, attackStyle: "attack", minDmg: 1, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 4, points: 25};
-let bandit = {name: "Bandit", ability: "a", hp: 8, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 30};
-let marauder = {name: "Marauder", ability: "a", hp: 10, attackStyle: "attacks", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 10, minFlee: 5, maxFlee: 7, toHit: 8, gold: 7, points: 40};
-let wolves = {name: "Wolves", ability: "a", hp: 15, attackStyle: "attack", minDmg: 2, maxDmg: 7, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 30};
-let vWolves = {name: "Vicious Wolves", ability: "a", hp: 20, attackStyle: "attack", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 7, points: 40};
-let wraith = {name: "Wraith", ability: "a", hp: 18, attackStyle: "attacks", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 8, points: 50};
-let mudMan = {name: "Mud Man", ability: "a", hp: 14, attackStyle: "attacks", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 8, gold: 5, points: 40};
-let poo = {name: "Poo", ability: "a", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 6, maxHit: 11, minFlee: 6, maxFlee: 6, toHit: 8, gold: 8, points: 70};
-let leech = {name: "Leech", ability: "v", hp: 14, attackStyle: "bites", minDmg: 3, maxDmg: 8, minHit: 4, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 35};
-let mLeech = {name: "Massive Leech", ability: "v", hp: 20, attackStyle: "bites", minDmg: 4, maxDmg: 9, minHit: 4, maxHit:12 , minFlee: 4, maxFlee: 8, toHit: 8, gold: 10, points: 80};
-let rWraith = {name: "Rotten Wraith", ability: "a", hp: 24, attackStyle: "swipes", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 8, points: 80};
-let thief = {name: "Thief", ability: "a", hp: 15, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 40};
-let thrall = {name: "Thrall", ability: "a", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 8, toHit: 8, gold: 12, points: 60};
-let wyvren = {name: "Wyvren", ability: "a", hp: 25, attackStyle: "claws", minDmg: 5, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 4, toHit: 8, gold: 11, points: 100};
-let fSprite = {name: "Fire Sprite", ability: "a", hp: 30, attackStyle: "throws fireball", minDmg: 5, maxDmg: 9, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 15, points: 125};
-let mimic = {name: "Mimic", ability: "a", hp: 35, attackStyle: "chomps", minDmg: 5, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150};
-let mTroll = {name: "Mountain Troll", ability: "a", hp: 50, attackStyle: "clubs you", minDmg: 6, maxDmg: 8, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 6, toHit: 8, gold: 20, points: 140};
-let chaosEl = {name: "Chaos Elemental", ability: "a", hp: 60, attackStyle: "burns", minDmg: 7, maxDmg: 8, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 8, toHit:10 , gold: 28, points: 250};
-let bat = {name: "Vampire Bat", ability: "v", hp: 30, attackStyle: "bites", minDmg: 5, maxDmg: 5, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 13, points: 120};
-let fern = {name: "Fern Feind", ability: "a", hp: 30, attackStyle: "whips", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit:9 , gold: 15, points: 125};
-let zombie = {name: "Zombie", ability: "a", hp: 35, attackStyle: "claws", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150};
-let panther = {name: "Panther", ability: "a", hp: 40, attackStyle: "claws", minDmg: 6, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 6, toHit: 9, gold: 20, points: 140};
-let viper = {name: "Viper", ability: "p", hp: 40, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 11, toHit: 9, gold: 15, points: 160};
-let malboro = {name: "Malboro", ability: "p", hp: 35, attackStyle: "swats", minDmg: 7, maxDmg: 6, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 25, points: 150};
-let litchling = {name: "Litchling", ability: "v", hp: 35, attackStyle: "claws", minDmg: 4, maxDmg: 9, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 20, points: 175};
-let crows = {name: "Murder Crows", ability: "a", hp: 50, attackStyle: "dive bomb", minDmg: 5, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 25, points: 150};
-let banshee = {name: "Banshee", ability: "a", hp: 55, attackStyle: "claws", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 140};
-let aElement = {name: "Air Elemental", ability: "a", hp: 45, attackStyle: "gusts", minDmg: 7, maxDmg: 5, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150};
-let scorpion = {name: "Crystal Scorpion", ability: "p", hp: 35, attackStyle: "stings", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 17, points: 155};
-let phantom = {name: "Desert Phantom", ability: "a", hp: 40, attackStyle: "Mind Flays", minDmg: 6, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150};
-let wisp = {name: "Will-o'-the-wisp", ability: "v", hp: 40, attackStyle: "bludgeons", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 140};
-let taranTroll = {name: "Taran-Troll", ability: "a", hp: 60, attackStyle: "lunges", minDmg: 6, maxDmg: 7, minHit: 4, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 175};
-let ants = {name: "Komodo Ants", ability: "p", hp: 40, attackStyle: "sting", minDmg: 6, maxDmg: 5, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 15, points: 155};
-let doppleganger = {name: "Doppleganger", ability: "v", hp: 40, attackStyle: "strikes", minDmg: 6, maxDmg: 6, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 150};
-let miniBears = {name: "Minibears", ability: "a", hp: 50, attackStyle: "bite", minDmg: 5, maxDmg: 8, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 175};
-let witch = {name: "Hag Witch", ability: "s", hp: 50, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 13, minFlee: 6, maxFlee: 8, toHit: 10, gold: 25, points: 220};
-let mush = {name: "Mush Man", ability: "p", hp: 50, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 10, gold: 25, points: 200};
-let centaur = {name: "Centaur", ability: "a", hp: 60, attackStyle: "attacks", minDmg: 6, maxDmg: 9, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 9, toHit: 10, gold: 30, points: 250};
-let drunk = {name: "Drunkass", ability: "a", hp: 25, attackStyle: "swings", minDmg: 5, maxDmg: 8, minHit: 3, maxHit: 11, minFlee: 3, maxFlee: 8, toHit: 8, gold: 10, points: 80};
-let rat = {name: "Sewer Rat", ability: "a", hp: 25, attackStyle: "bites", minDmg: 5, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 9, gold: 15, points: 250};
-let cultist = {name: "Cultist", ability: "v", hp: 20, attackStyle: "stabs wildly", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 8, gold: 12, points: 110};
-let scarabs = {name: "Scarabs", ability: "s", hp: 50, attackStyle: "sting", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 10, gold: 22, points: 165};
-let pViper = {name: "Pit Viper", ability: "p", hp: 55, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 10, gold: 25, points: 200};
-let spectre = {name: "Spectre", ability: "a", hp: 60, attackStyle: "attacks", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 10, gold: 18, points: 220};
-let chimera = {name: "Chimera", ability: "p", hp: 65, attackStyle: "attacks", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 13, minFlee: 5, maxFlee: 7, toHit: 10, gold: 24, points: 220};
-let golem = {name: "Stone Golem", ability: "a", hp: 80, attackStyle: "swings", minDmg: 7, maxDmg: 9, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 10, gold: 30, points: 240};
-let omegaTroll = {name: "Omega Troll", ability: "a", hp: 80, attackStyle: "clubs", minDmg: 7, maxDmg: 10, minHit: 4, maxHit: 13, minFlee: 6, maxFlee: 6, toHit: 10, gold: 40, points: 275};
-let sandMan = {name: "Sandman", ability: "s", hp: 70, attackStyle: "attacks", minDmg: 5, maxDmg: 7, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 10, gold: 28, points: 175};
-let fBat = {name: "Fire Bat", ability: "v", hp: 60, attackStyle: "bites", minDmg: 7, maxDmg: 6, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 10, gold: 30, points: 220};
+let bear = {name: "Bear", hp: 12, attackStyle: "swipes", minDmg: 3, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 50, poison: false,stun: false,vamp: false};
+let goblins = {name: "Goblins", hp: 6, attackStyle: "attack", minDmg: 1, maxDmg: 5, minHit: 5, maxHit: 10, minFlee: 5, maxFlee: 8, toHit: 8, gold: 3, points:10 , poison: false,stun: false,vamp: false};
+let elf = {name: "Elf", hp: 8, attackStyle: "attacks", minDmg: 3, maxDmg: 5, minHit: 6, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
+let gutterBums = {name: "Gutter Bums", hp: 12, attackStyle: "attack", minDmg: 1, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 4, points: 25, poison: false,stun: false,vamp: false};
+let bandit = {name: "Bandit", hp: 8, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
+let marauder = {name: "Marauder", hp: 10, attackStyle: "attacks", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 10, minFlee: 5, maxFlee: 7, toHit: 8, gold: 7, points: 40, poison: false,stun: false,vamp: false};
+let wolves = {name: "Wolves", hp: 15, attackStyle: "attack", minDmg: 2, maxDmg: 7, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 30, poison: false,stun: false,vamp: false};
+let vWolves = {name: "Vicious Wolves", hp: 20, attackStyle: "attack", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 7, points: 40, poison: false,stun: false,vamp: false};
+let wraith = {name: "Wraith", hp: 18, attackStyle: "attacks", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 8, points: 50, poison: false,stun: false,vamp: false};
+let mudMan = {name: "Mud Man", hp: 14, attackStyle: "attacks", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 8, gold: 5, points: 40, poison: false,stun: false,vamp: false};
+let poo = {name: "Poo", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 6, maxHit: 11, minFlee: 6, maxFlee: 6, toHit: 8, gold: 8, points: 70, poison: false,stun: false,vamp: false};
+let leech = {name: "Leech", hp: 14, attackStyle: "bites", minDmg: 3, maxDmg: 8, minHit: 4, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 8, gold: 6, points: 35, poison: false,stun: false,vamp: true};
+let mLeech = {name: "Massive Leech", hp: 20, attackStyle: "bites", minDmg: 4, maxDmg: 9, minHit: 4, maxHit:12 , minFlee: 4, maxFlee: 8, toHit: 8, gold: 10, points: 80, poison: false,stun: false,vamp: true};
+let rWraith = {name: "Rotten Wraith", hp: 24, attackStyle: "swipes", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 9, gold: 8, points: 80, poison: false,stun: false,vamp: false};
+let thief = {name: "Thief", hp: 15, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 8, gold: 5, points: 40, poison: false,stun: false,vamp: false};
+let thrall = {name: "Thrall", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 8, toHit: 8, gold: 12, points: 60, poison: false,stun: false,vamp: false};
+let wyvren = {name: "Wyvren", hp: 25, attackStyle: "claws", minDmg: 5, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 4, toHit: 8, gold: 11, points: 100, poison: false,stun: false,vamp: false};
+let fSprite = {name: "Fire Sprite", hp: 30, attackStyle: "throws fireball", minDmg: 5, maxDmg: 9, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 15, points: 125, poison: false,stun: false,vamp: false};
+let mimic = {name: "Mimic", hp: 35, attackStyle: "chomps", minDmg: 5, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150, poison: false,stun: false,vamp: false};
+let mTroll = {name: "Mountain Troll", hp: 50, attackStyle: "clubs you", minDmg: 6, maxDmg: 8, minHit: 4, maxHit: 11, minFlee: 4, maxFlee: 6, toHit: 8, gold: 20, points: 140, poison: false,stun: false,vamp: false};
+let chaosEl = {name: "Chaos Elemental", hp: 60, attackStyle: "burns", minDmg: 7, maxDmg: 8, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 8, toHit:10 , gold: 28, points: 250, poison: false,stun: false,vamp: false};
+let bat = {name: "Vampire Bat", hp: 30, attackStyle: "bites", minDmg: 5, maxDmg: 5, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 13, points: 120, poison: false,stun: false,vamp: true};
+let fern = {name: "Fern Feind", hp: 30, attackStyle: "whips", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit:9 , gold: 15, points: 125, poison: false,stun: false,vamp: false};
+let zombie = {name: "Zombie", hp: 35, attackStyle: "claws", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150, poison: false,stun: false,vamp: false};
+let panther = {name: "Panther", hp: 40, attackStyle: "claws", minDmg: 6, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 6, toHit: 9, gold: 20, points: 140, poison: false,stun: false,vamp: false};
+let viper = {name: "Viper", hp: 40, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 11, toHit: 9, gold: 15, points: 160, poison: true,stun: false,vamp: false};
+let malboro = {name: "Malboro", hp: 35, attackStyle: "swats", minDmg: 7, maxDmg: 6, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 25, points: 150, poison: true,stun: false,vamp: false};
+let litchling = {name: "Litchling", hp: 35, attackStyle: "claws", minDmg: 4, maxDmg: 9, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 20, points: 175, poison: false,stun: false,vamp: true};
+let crows = {name: "Murder Crows", hp: 50, attackStyle: "dive bomb", minDmg: 5, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 25, points: 150, poison: false,stun: false,vamp: false};
+let banshee = {name: "Banshee", hp: 55, attackStyle: "claws", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 140, poison: false,stun: false,vamp: false};
+let aElement = {name: "Air Elemental", hp: 45, attackStyle: "gusts", minDmg: 7, maxDmg: 5, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150, poison: false,stun: false,vamp: false};
+let scorpion = {name: "Crystal Scorpion", hp: 35, attackStyle: "stings", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 17, points: 155, poison: true,stun: false,vamp: false};
+let phantom = {name: "Desert Phantom", hp: 40, attackStyle: "Mind Flays", minDmg: 6, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 150, poison: false,stun: false,vamp: false};
+let wisp = {name: "Will-o'-the-wisp", hp: 40, attackStyle: "bludgeons", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 140, poison: false,stun: false,vamp: false};
+let taranTroll = {name: "Taran-Troll", hp: 60, attackStyle: "lunges", minDmg: 6, maxDmg: 7, minHit: 4, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 175, poison: false,stun: false,vamp: false};
+let ants = {name: "Komodo Ants", hp: 40, attackStyle: "sting", minDmg: 6, maxDmg: 5, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 9, gold: 15, points: 155, poison: true,stun: false,vamp: false};
+let doppleganger = {name: "Doppleganger", hp: 40, attackStyle: "strikes", minDmg: 6, maxDmg: 6, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 9, gold: 18, points: 150, poison: false,stun: false,vamp: true};
+let miniBears = {name: "Minibears", hp: 50, attackStyle: "bite", minDmg: 5, maxDmg: 8, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 9, gold: 20, points: 175, poison: false,stun: false,vamp: false};
+let witch = {name: "Hag Witch", ability: "s", hp: 50, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 13, minFlee: 6, maxFlee: 8, toHit: 10, gold: 25, points: 220, poison: false,stun: true,vamp: false};
+let mush = {name: "Mush Man", hp: 50, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 11, minFlee: 4, maxFlee: 8, toHit: 10, gold: 25, points: 200, poison: true,stun: false,vamp: false};
+let centaur = {name: "Centaur", hp: 60, attackStyle: "attacks", minDmg: 6, maxDmg: 9, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 9, toHit: 10, gold: 30, points: 250, poison: false,stun: false,vamp: false};
+let drunk = {name: "Drunkass", hp: 25, attackStyle: "swings", minDmg: 5, maxDmg: 8, minHit: 3, maxHit: 11, minFlee: 3, maxFlee: 8, toHit: 8, gold: 10, points: 80, poison: false,stun: false,vamp: false};
+let rat = {name: "Sewer Rat", hp: 25, attackStyle: "bites", minDmg: 5, maxDmg: 6, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 9, gold: 15, points: 250, poison: false,stun: false,vamp: false};
+let cultist = {name: "Cultist", hp: 20, attackStyle: "stabs wildly", minDmg: 5, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 8, gold: 12, points: 110, poison: false,stun: false,vamp: true};
+let scarabs = {name: "Scarabs", ability: "s", hp: 50, attackStyle: "sting", minDmg: 6, maxDmg: 7, minHit: 5, maxHit: 12, minFlee: 4, maxFlee: 8, toHit: 10, gold: 22, points: 165, poison: false,stun: true,vamp: false};
+let pViper = {name: "Pit Viper", hp: 55, attackStyle: "strikes", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 10, gold: 25, points: 200, poison: true,stun: false,vamp: false};
+let spectre = {name: "Spectre", hp: 60, attackStyle: "attacks", minDmg: 6, maxDmg: 7, minHit: 6, maxHit: 12, minFlee: 5, maxFlee: 7, toHit: 10, gold: 18, points: 220, poison: false,stun: false,vamp: false};
+let chimera = {name: "Chimera", hp: 65, attackStyle: "attacks", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 13, minFlee: 5, maxFlee: 7, toHit: 10, gold: 24, points: 220, poison: true,stun: false,vamp: false};
+let golem = {name: "Stone Golem", hp: 80, attackStyle: "swings", minDmg: 7, maxDmg: 9, minHit: 5, maxHit: 11, minFlee: 5, maxFlee: 7, toHit: 10, gold: 30, points: 240, poison: false,stun: false,vamp: false};
+let omegaTroll = {name: "Omega Troll", hp: 80, attackStyle: "clubs", minDmg: 7, maxDmg: 10, minHit: 4, maxHit: 13, minFlee: 6, maxFlee: 6, toHit: 10, gold: 40, points: 275, poison: false,stun: false,vamp: false};
+let sandMan = {name: "Sandman", ability: "s", hp: 70, attackStyle: "attacks", minDmg: 5, maxDmg: 7, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 10, gold: 28, points: 175, poison: false,stun: true,vamp: false};
+let fBat = {name: "Fire Bat", hp: 60, attackStyle: "bites", minDmg: 7, maxDmg: 6, minHit: 7, maxHit: 12, minFlee: 6, maxFlee: 6, toHit: 10, gold: 30, points: 220, poison: false,stun: false,vamp: true};
 
 //bosses
-let chaos = {name: "Chaos", ability: "a", hp: 150, attackStyle: "attacks", minDmg: 8, maxDmg: 9, minHit: 7, maxHit: 13, minFlee: 5, maxFlee: 8, toHit: 10, gold: 100, points: 1000};
-let chaosDemon = {name: "Chaos Demon", ability: "a", hp: 90, attackStyle: "attacks", minDmg: 6, maxDmg: 12, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 50, points: 500};
-let horde = {name: "Necro Horde", ability: "a", hp: 120, attackStyle: "attacks", minDmg: 7, maxDmg: 9, minHit: 5, maxHit: 13, minFlee: 6, maxFlee: 8, toHit: 9, gold: 40, points: 600};
-let gryphon = {name: "Gryphon", ability: "a", hp: 120, attackStyle: "strikes", minDmg: 7, maxDmg: 9, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 8, toHit: 9, gold: 40, points: 600};
-let litchKing = {name: "Litch  King", ability: "v", hp: 110, attackStyle: "attacks", minDmg: 7, maxDmg: 10, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 8, toHit: 10, gold:50 , points: 800};
-let vandal = {name: "Greasy Vandal", ability: "a", hp: 45, attackStyle: "slashes", minDmg: 5, maxDmg: 10, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 0, points: 250};
+let chaos = {name: "Chaos", hp: 150, attackStyle: "attacks", minDmg: 8, maxDmg: 9, minHit: 7, maxHit: 13, minFlee: 5, maxFlee: 8, toHit: 10, gold: 100, points: 1000, poison: false,stun: false,vamp: false};
+let chaosDemon = {name: "Chaos Demon", hp: 90, attackStyle: "attacks", minDmg: 6, maxDmg: 12, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 50, points: 500, poison: false,stun: false,vamp: false};
+let horde = {name: "Necro Horde", hp: 120, attackStyle: "attacks", minDmg: 7, maxDmg: 9, minHit: 5, maxHit: 13, minFlee: 6, maxFlee: 8, toHit: 9, gold: 40, points: 600, poison: false,stun: false,vamp: false};
+let gryphon = {name: "Gryphon", hp: 120, attackStyle: "strikes", minDmg: 7, maxDmg: 9, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 8, toHit: 9, gold: 40, points: 600, poison: false,stun: false,vamp: false};
+let litchKing = {name: "Litch  King", hp: 110, attackStyle: "attacks", minDmg: 7, maxDmg: 10, minHit: 6, maxHit: 12, minFlee: 6, maxFlee: 8, toHit: 10, gold:50 , points: 800, poison: false,stun: false,vamp: true};
+let vandal = {name: "Greasy Vandal", hp: 45, attackStyle: "slashes", minDmg: 5, maxDmg: 10, minHit: 5, maxHit: 12, minFlee: 5, maxFlee: 8, toHit: 9, gold: 0, points: 250, poison: false,stun: false,vamp: false};
 
 //NPCs
 let lady;
@@ -67,8 +67,9 @@ let victim;
 let randomMerchant;
 
 //empty enemy;
-let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0};
-
+let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
+//empty player;
+let zero = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
 
 //object of arrays of objects
 let areas = {
@@ -99,7 +100,7 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/forest.jpeg',
-        location: 'start',
+        location: 'valleyRoad',
         chapter: 1,
         potion: 25,
         tmpHp:0,
@@ -117,9 +118,10 @@ var game = new Vue({
             toHit: 0,
             gold: 0,
             points: 0,
-            poison: 0,
-            stun: 0,
-            vamp: 0
+            poison: false,
+            poisonCount: 0,
+            stun: false,
+            vamp: false
         },
         player:{
             gold: 0,
@@ -130,19 +132,21 @@ var game = new Vue({
             dex: 7,
             evade: 7,
             points: 0,
-            poison: 0,
-            stun: 0,
-            vamp: 0
+            poison: false,
+            poisonCount: 0,
+            stun: false,
+            vamp: false
         }
     },
     methods:{
         getEnemy: function(){  
             for (var key in areas){
                 if (key == this.location){
+                    document.getElementById("text").textContent = '';
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
-                    document.getElementById("attText").textContent = ``
+                    document.getElementById("attText").textContent = `${this.enemy.name}`;
                 }
             }
         },
@@ -150,7 +154,7 @@ var game = new Vue({
             this.image = newImage;
         },
         setLocation: function(newLocation){
-            this.location = newLocation
+            this.location = newLocation;
         },
         nextChapter: function(){
             this.chapter+=1;
@@ -167,27 +171,42 @@ var game = new Vue({
                 let range = this.player.maxDmg - this.player.minDmg;
                 let dmg = Math.floor((Math.random() * range)+ this.player.minDmg);
                 this.enemy.hp -= dmg;
-                out.textContent = `You hit the ${this.enemy.name} for ${dmg} dmg`
+                out.textContent = `You hit the ${this.enemy.name} for ${dmg} dmg`;
+                if(this.player.vamp)
+                    this.pVamp();
+                else if(this.player.stun)
+                    this.pStun();
+                else if(this.player.poison)
+                    this.pPoison();
+                //enemy killed
+                if (this.enemy.hp <= 0){
+                    out.textContent = `You slayed the ${this.enemy.name}!`;
+                    this.enemyKilled();
+                } 
             }
             //miss
             else{
-                out.textContent = "You Miss!"
-            }
-            //enemy killed
-            if (this.enemy.hp <= 0){
-                out.textContent = `You slay the ${this.enemy.name}!`;
-                this.enemyKilled();
-            }
-            else{
+                out.textContent = "You Miss!";
+            }        
+        },
+        battle: function(){
+            document.getElementById("statText").textContent = '';
+            this.attack();
+            if(this.enemy.hp > 0)
                 this.enemyAttack();
-            }          
+            if(this.player.hp < 1)
+                this.playerKilled();  
         },
         enemyKilled: function(){
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
             this.resetEnemy();
-            document.getElementById("attText").textContent = '';
+        },
+        playerKilled: function(){
+            document.getElementById("text").textContent = "GAME OVER";
+            this.player = zero;
+            this.resetEnemy();
         },
         resetEnemy: function(){
             //enemy hp reset for future battles
@@ -197,7 +216,7 @@ var game = new Vue({
         },
         enemyAttack: function(){
             //hit or miss
-            let out = document.getElementById("attText");
+            let eOut = document.getElementById("attText");
             let hitRange = this.enemy.maxHit - this.enemy.minHit;
             let hit = Math.floor((Math.random() * hitRange) + this.enemy.minHit);
 
@@ -206,16 +225,22 @@ var game = new Vue({
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
-                out.textContent = `${this.enemy.name} hits you for ${dmg} dmg`
+                eOut.textContent = `${this.enemy.name} hits you for ${dmg} dmg`;
+                if(this.enemy.vamp)
+                    this.eVamp();
+                else if(this.enemy.stun)
+                    this.eStun();
+                else if(this.enemy.poison)
+                    this.ePoison();       
             }
             //miss
             else{
-                out.textContent = `${this.enemy.name} Misses!`
+                eOut.textContent = `${this.enemy.name} Misses!`;
             }
         },
         flee: function(){
             let out = document.getElementById("text");
-            let eOut = document.getElementById("attText")
+            let eOut = document.getElementById("attText");
             //chance to flee, evade must be larger than random enemy
             //flee chance between minflee and maxflee
             let range = this.enemy.maxFlee - this.enemy.minFlee;
@@ -260,24 +285,46 @@ var game = new Vue({
 
         },
         eVamp: function(){
-
+            this.player.hp -= 2;
+            this.enemy.hp += 1;
         },
         pVamp: function(){
-
+            this.enemy.hp -= 2;
+            this.player.hp += 1;
         },
         eStun: function(){
-
+            let stun = Math.floor(Math.random() * 5);
+            if(stun % 4 == 0){
+                document.getElementById("statText").textContent = "Stunned!"
+                this.enemyAttack();
+            }
         },
         pStun: function(){
-
+            let stun = Math.floor(Math.random() * 4);
+            if(stun % 3 == 0){
+                this.attack();
+            }
         },
         ePoison: function(){
-
+            let poison = Math.floor(Math.random() * 5);
+            if(poison % 4 == 0 && this.player.poisonCount < 1){
+                this.player.poisonCount = 3;
+                document.getElementById("statText").textContent = "Poisoned!"
+            }
+            else if(this.player.poisonCount > 0){
+                this.player.hp -= 2;
+                this.player.poisonCount -= 1;
+            }
         },
         pPoison: function(){
-
+            let poison = Math.floor(Math.random() * 4);
+            if(poison % 3 == 0 && this.enemy.poisonCount < 1){
+                this.enemy.poisonCount = 3;
+            }
+            else if(this.enemy.poisonCount > 0){
+                this.enemy.hp -= 2;
+                this.enemy.poisonCount -= 1;
+            }
         }
-
     }
-
 })
