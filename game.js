@@ -64,9 +64,8 @@ let vandal = {name: "Greasy Vandal", hp: 45, attackStyle: "slashes", minDmg: 5, 
 //empty enemy;
 let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 
-//NPCs
+//NPCs   ---- make as empty character? could make as .name = special event.
 let lady;
-let victim;
 let randomMerchant;
 
 //object of arrays of objects
@@ -98,10 +97,12 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/forest.jpeg',
-        location: 'marshRoad',
+        location: 'start',
+        direction: 'S',
         chapter: 1,
         potion: 25,
-        tmpHp:0,
+        tmpHp: 0,
+        battleCount: 0,
         enemy:{
             name: '',
             ability: '',
@@ -142,14 +143,16 @@ var game = new Vue({
         item:{
             shortSword: false,
             longSword: false,
+            phantomBane: false,
             leatherArmor: false,
+            studdedLeatherArmor: false,
             mercurialBoots: false,
             magicDagger: false,
             magicShield: false,
             bastardSword: false,
             voidRapier: false,
             coralKukri: false,
-            poisonDagger: false,
+            parryingDagger: false,
             studdedLeatherArmor: false,
             soultrapKatana: false,
             lightningAxe: false,
@@ -173,6 +176,9 @@ var game = new Vue({
         },
         setLocation: function(newLocation){
             this.location = newLocation;
+        },
+        setDirection: function(newDirection){
+            this.direction = newDirection;
         },
         nextChapter: function(){
             this.chapter+=1;
@@ -199,6 +205,7 @@ var game = new Vue({
                 //enemy killed
                 if (this.enemy.hp <= 0){
                     this.enemyKilled();
+                    this.battleCount += 1;
                 } 
             }
             //miss
@@ -266,6 +273,7 @@ var game = new Vue({
             let range = this.enemy.maxFlee - this.enemy.minFlee;
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){
+                this.battleCount += 1;
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`
                 eOut.textContent = '';
                 this.resetEnemy();
@@ -297,7 +305,7 @@ var game = new Vue({
                 out.textContent = "Full health!";
             }
             else{
-                out.textContent = `You heal for ${potion}hp`
+                out.textContent = `You heal for ${this.potion}hp`
             }
             this.enemyAttack();
         },
@@ -345,6 +353,98 @@ var game = new Vue({
                 this.enemy.hp -= 2;
                 this.enemy.poisonCount -= 1;
             }
+        },
+        //happens once at the time of purchase (leaving merchant). sets new stats.
+        equip: function(){
+            //main-hand weapons, player will always have main-hand weapon.
+            if (shortSword){
+                this.player.minDmg = 3;
+                this.player.maxDmg = 6;
+            }
+            else if (longSword){
+                this.player.minDmg = 4;
+                this.player.maxDmg = 9;
+                this.player.dex = 6;
+            }
+            else if (phantomBane){
+                this.player.minDmg = 5;
+                this.player.maxDmg = 8;
+            }
+            else if (bastardSword){
+                this.player.minDmg = 6;
+                this.player.maxDmg = 12;
+            }
+            else if (coralKukri){
+                this.player.minDmg = 6;
+                this.player.maxDmg = 11;
+                this.player.poison = true;
+            }
+            else if (voidRapier){
+                this.player.minDmg = 5;
+                this.player.maxDmg = 11;
+                this.player.vamp = true;
+            }
+            else if (soultrapKatana){
+                this.player.minDmg = 7;
+                this.player.maxDmg = 13;
+                this.player.vamp= true;
+            }
+            else if (lightningAxe){
+                this.player.minDmg = 8;
+                this.player.maxDmg = 13;
+                this.player.stun = true;
+            }
+            else{
+                this.player.minDmg = 2;
+                this.player.maxDmg = 5;
+            }
+            //armors
+            //zero for buff reset.
+            this,player.evade = 7;
+            this.player.dex = 7;
+            this.player.hpMax = 100;
+
+            if (leatherArmor){
+                this.player.evade += 1;
+            }
+            else if (studdedLeatherArmor){
+                this.player.evade += 2;
+            }
+            //accessories
+            if (mercurialBoots){
+                this.player.evade += 1;           
+            }
+            if (voidBangle){
+                this.player.vamp = true;
+            }
+            //off-hand
+            if (magicDagger){
+                this.player.minDmg += 1;
+                this.player.dex += 1;
+            }
+            else if (magicShield){
+                this.player.hpMax += 25
+            }
+            else if (parryingDagger){
+                this.player.dex += 2;
+                this.player.minDmg += 1;
+            }
+        },
+        merchantCamp: function(){
+            this.setLocation('merchantCamp');
+            document.getElementById("text").textContent = "You're at the Merchant Camp";
+        },
+        cityProper: function(){
+            this.setLocation('cityProper');
+            document.getElementById("text").textContent = "You're in the City Proper";
+        },
+        home: function(){
+            this.setLocation('home');
+            document.getElementById("text").textContent = "You're back home";
+        },
+        tombEntrance: function(){
+            this.setLocation('tombEntrance');
+            document.getElementById("text").textContent = "You're at the Entrance to the Ancient Tomb";
         }
     }
 })

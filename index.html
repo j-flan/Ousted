@@ -27,13 +27,55 @@
                     <li><button v-on:click="dynamite">dynamite</button></li>
                     <li><button v-on:click="heal">heal</button></li>
                 </ul>
+                <!--location tracker and setter, based on location. roads lead to areas, after
+                    area battles (3), the direction decision buttons will show, unless you are in an
+                    are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
+                    which will show immediately-->
                 <ul v-if="enemy.hp == 0" id="directions" >
-                   <!-- <li><input type="submit" id="north" value="N"/></li>
-                    <li><input type="submit" id="west" value="W"/></li>
-                    <li><input type="submit" id="east" value="E"/></li>
-                    <li><input type="submit" id="south" value="S"/></li> -->
-
+                    <!--chapter 1-->
+                    <!--begin-->
+                    <li v-if="location == 'start'" >
+                        <button v-on:click="setLocation('merchantRoad'); setDirection('W')">To merchant road</button>
+                        <button v-on:click="setLocation('swampRoad'); setDirection('E')">To swamp road</button></li>
+                    <!--on merchant road-->
+                    <li v-if="location == 'merchantRoad'" >
+                        <button v-on:click="merchantCamp()">To merchant camp</button></li>
+                    <!--on swamp road-->
+                    <li v-if="location == 'swampRoad' && direction == 'E'" >
+                        <button v-on:click="setLocation('lake'); setDirection('W')">To the lake</button></li>
+                    <li v-if="location == 'swampRoad' && direction == 'W'" >
+                        <button v-on:click="merchantCamp()">To merchant camp</button></li>
+                    <!--at lake-->
+                    <li v-if="location == 'lake'" >
+                        <button v-on:click="setLocation('swampRoad'); setDirection('W')">To merchant camp (via swamp road)</button></li>
+                    <!--at merchant camp-->
+                    <li v-if="location == 'merchantCamp'" >
+                        <button v-on:click="setLocation('cityRoad'); setDirection('S')" >To city road</button>
+                        <button v-on:click="setLocation('mountainRoad'); setDirection('W')">To mountain road</button>
+                        <button v-on:click="setLocation('swampRoad'); setDirection('E')">To swamp road</button></li>
+                    <!--in city proper-->
+                    <li v-if="location == 'cityProper'" >
+                        <button v-on:click="setLocation('city')">To city streets</button>
+                        <button v-on:click="setLocation('cityRoad'); setDirection('N')">To merchant camp (via city road)</button></li>
+                    <!--in city-->
+                    <li v-if="location == 'city'" >
+                        <button v-on:click="cityProper()">To city proper</button></li>
+                    <!--on city road-->
+                    <li v-if="location == 'cityRoad' && direction == 'S'" >
+                        <button v-on:click="cityProper()">To city proper</button></li>
+                    <li v-if="location == 'cityRoad' && direction == 'N'" >
+                        <button v-on:click="merchantCamp()">To merchant camp</button></li>
+                    <!--on mountain-->
+                    <li v-if="location == 'mountain'" >
+                        <button v-on:click="setLocation('mountainRoad'); setDirection('E')">To merchant camp (via mountain road)</button></li>
+                    <!--on mountain road-->
+                    <li v-if="location == 'mountainRoad' && direction == 'W'" >
+                        <button v-on:click="setLocation('mountain')">To mountain</button></li>
+                    <li v-if="location == 'mountainRoad' && direction == 'E'" >
+                        <button v-on:click="merchantCamp()">To merchant camp</button></li>
+                    
                     <li><button v-on:click="getEnemy">Battle!</button></li>
+                    <li>Direction: {{direction}}</li>
 
                                 
                 </ul>
