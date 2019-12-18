@@ -173,10 +173,11 @@ var game = new Vue({
             }
         },
         setImage: function(newImage){
-            this.image = newImage;
+            this.backgroundImage = newImage;
         },
         setLocation: function(newLocation){
             this.location = newLocation;
+            this.setImage(`pics/${newLocation}.jpg`);
         },
         setDirection: function(newDirection){
             this.direction = newDirection;
