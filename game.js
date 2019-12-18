@@ -369,6 +369,23 @@ var game = new Vue({
                 this.enemy.poisonCount -= 1;
             }
         },
+        //only one weapon active at a time
+        resetWeapon: function(){
+            this.item.shortSword= false,
+            this.item.longSword= false,
+            this.item.phantomBane= false,
+            this.item.bastardSword= false,
+            this.item.voidRapier= false,
+            this.item.coralKukri= false,
+            this.item.soultrapKatana= false,
+            this.item.lightningAxe= false
+        },
+        //only one off-hand at a time
+        resetOffHand: function(){
+            this.item.magicDagger= false,
+            this.item.magicShield= false,
+            this.item.parryingDagger= false
+        },
         //happens once at the time of purchase (leaving merchant). sets new stats.
         equip: function(){
             //main-hand weapons, player will always have main-hand weapon.
@@ -470,6 +487,9 @@ var game = new Vue({
                 this is placeholder text. receive full hp (once, in the future) and the phantom bane sword. check stats. player\
                 can choose to take this or not and encounter can happen only once. additional buttons required";
                 this.player.hp = this.player.hpMax;
+
+                //this is the equip weapon idea
+                this.resetWeapon();
                 this.item.phantomBane = true;
                 this.equip();
             }

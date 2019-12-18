@@ -33,7 +33,8 @@
                     which will show immediately-->
                     <!--players can  search areas as much as they want-->
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
-                        <button v-on:click="getEnemy()">START!</button></span>
+                        <!--testing equip weapon         here-->
+                        <button v-on:click="getEnemy(); equip()">START!</button></span>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!--chapter 1-->
                     <!--begin-->
