@@ -324,9 +324,12 @@ var game = new Vue({
             }
             this.enemyAttack();
         },
+
+        /////////////////////THIS
         chooseClass: function(){
 
         },
+
         eVamp: function(){
             this.player.hp -= 2;
             this.enemy.hp += 1;
@@ -385,6 +388,11 @@ var game = new Vue({
             this.item.magicDagger= false,
             this.item.magicShield= false,
             this.item.parryingDagger= false
+        },
+        //only one armor at a time
+        resetArmor: function(){
+            this.item.leatherArmor= false,
+            this.item.studdedLeatherArmor=false
         },
         //happens once at the time of purchase (leaving merchant). sets new stats.
         equip: function(){
@@ -492,6 +500,12 @@ var game = new Vue({
                 this.resetWeapon();
                 this.item.phantomBane = true;
                 this.equip();
+            }
+
+
+            ///////////////////////////////////HERE, THIS TOO//////////////////////////////////
+            if(name == 'Random Merchant'){
+
             }
         }
     }
