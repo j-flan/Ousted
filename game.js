@@ -65,8 +65,8 @@ let vandal = {name: "Greasy Vandal", hp: 45, attackStyle: "slashes", minDmg: 5, 
 let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 
 //NPCs   ---- make as empty character? could make as .name = special event.
-let lady;
-let randomMerchant;
+let lady = {name: 'Lady of the Lake', ability: 'watery tart', hp: 0, attackStyle: 'rendering', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
+let randomMerchant = {name: 'Random Merchant', ability: 'swindling', hp: 0, attackStyle: 'poverty', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 
 //object of arrays of objects
 let areas = {
@@ -168,6 +168,7 @@ var game = new Vue({
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
                     document.getElementById("attText").textContent = `${this.enemy.name}`;
+                    this.npcEnc(this.enemy.name);
                 }
             }
         },
@@ -183,9 +184,9 @@ var game = new Vue({
         nextChapter: function(){
             this.chapter+=1;
             this.potion+=25;
+            this.player.hp+=25;
         },
-        attack: function(){
-            
+        attack: function(){          
             //hit or miss
             let out = document.getElementById("text");
             let hit = Math.floor((Math.random() * this.enemy.toHit) + 1);
@@ -205,7 +206,6 @@ var game = new Vue({
                 //enemy killed
                 if (this.enemy.hp <= 0){
                     this.enemyKilled();
-                    this.battleCount += 1;
                 } 
             }
             //miss
@@ -245,13 +245,28 @@ var game = new Vue({
             if(this.player.hp < 1)
                 this.playerKilled();  
         },
+        setBattCount: function(num){
+            this.battleCount = num;
+        },
+        battCount: function(){
+            let sOut = document.getElementById("statText");
+            if (this.battleCount == 3)
+                this.setBattCount(0);
+            else
+                this.battleCount += 1;
+                sOut.textContent = `Battle count ${this.battleCount}`;        
+        },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
             document.getElementById("attText").textContent = '';
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
+            this.battCount();
             this.resetEnemy();
+            if (this.battleCount < 3){
+                this.getEnemy();
+            }
         },
         playerKilled: function(){
             document.getElementById("text").textContent = "GAME OVER";
@@ -264,17 +279,17 @@ var game = new Vue({
             this.enemy.hp = this.tmpHp;
             //wipe enemy
             this.enemy = empty;
-        },    
+        },
         flee: function(){
             let out = document.getElementById("text");
-            let eOut = document.getElementById("attText");
+            let eOut = document.getElementById("attText");        
             //chance to flee, evade must be larger than random enemy
             //flee chance between minflee and maxflee
             let range = this.enemy.maxFlee - this.enemy.minFlee;
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){
-                this.battleCount += 1;
-                out.textContent = `You run away from the ${this.enemy.name} like a bitch`
+                this.battCount();
+                out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
                 eOut.textContent = '';
                 this.resetEnemy();
             }
@@ -357,39 +372,45 @@ var game = new Vue({
         //happens once at the time of purchase (leaving merchant). sets new stats.
         equip: function(){
             //main-hand weapons, player will always have main-hand weapon.
-            if (shortSword){
+
+            //zero for buff reset.
+            this.player.evade = 7;
+            this.player.dex = 7;
+            this.player.hpMax = 100;
+
+            if (this.item.shortSword){
                 this.player.minDmg = 3;
                 this.player.maxDmg = 6;
             }
-            else if (longSword){
+            else if (this.item.longSword){
                 this.player.minDmg = 4;
                 this.player.maxDmg = 9;
                 this.player.dex = 6;
             }
-            else if (phantomBane){
+            else if (this.item.phantomBane){
                 this.player.minDmg = 5;
                 this.player.maxDmg = 8;
             }
-            else if (bastardSword){
+            else if (this.item.bastardSword){
                 this.player.minDmg = 6;
                 this.player.maxDmg = 12;
             }
-            else if (coralKukri){
+            else if (this.item.coralKukri){
                 this.player.minDmg = 6;
                 this.player.maxDmg = 11;
                 this.player.poison = true;
             }
-            else if (voidRapier){
+            else if (this.item.voidRapier){
                 this.player.minDmg = 5;
                 this.player.maxDmg = 11;
                 this.player.vamp = true;
             }
-            else if (soultrapKatana){
+            else if (this.item.soultrapKatana){
                 this.player.minDmg = 7;
                 this.player.maxDmg = 13;
                 this.player.vamp= true;
             }
-            else if (lightningAxe){
+            else if (this.item.lightningAxe){
                 this.player.minDmg = 8;
                 this.player.maxDmg = 13;
                 this.player.stun = true;
@@ -399,36 +420,33 @@ var game = new Vue({
                 this.player.maxDmg = 5;
             }
             //armors
-            //zero for buff reset.
-            this,player.evade = 7;
-            this.player.dex = 7;
-            this.player.hpMax = 100;
-
-            if (leatherArmor){
+            if (this.item.leatherArmor){
                 this.player.evade += 1;
             }
-            else if (studdedLeatherArmor){
+            else if (this.item.studdedLeatherArmor){
                 this.player.evade += 2;
             }
             //accessories
-            if (mercurialBoots){
+            if (this.item.mercurialBoots){
                 this.player.evade += 1;           
             }
-            if (voidBangle){
+            if (this.item.voidBangle){
                 this.player.vamp = true;
             }
             //off-hand
-            if (magicDagger){
+            if (this.item.magicDagger){
                 this.player.minDmg += 1;
                 this.player.dex += 1;
             }
-            else if (magicShield){
+            else if (this.item.magicShield){
                 this.player.hpMax += 25
             }
-            else if (parryingDagger){
+            else if (this.item.parryingDagger){
                 this.player.dex += 2;
                 this.player.minDmg += 1;
             }
+            if (this.player.hp > this.player.hpMax)
+                this.player.hp = this.player.hpMax;
         },
         merchantCamp: function(){
             this.setLocation('merchantCamp');
@@ -445,6 +463,16 @@ var game = new Vue({
         tombEntrance: function(){
             this.setLocation('tombEntrance');
             document.getElementById("text").textContent = "You're at the Entrance to the Ancient Tomb";
+        },
+        npcEnc: function(name){
+            if(name == 'Lady of the Lake'){
+                document.getElementById("text").textContent = "You have met the lady of the lake, \
+                this is placeholder text. receive full hp (once, in the future) and the phantom bane sword. check stats. player\
+                can choose to take this or not and encounter can happen only once. additional buttons required";
+                this.player.hp = this.player.hpMax;
+                this.item.phantomBane = true;
+                this.equip();
+            }
         }
     }
 })
