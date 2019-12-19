@@ -454,7 +454,7 @@ var game = new Vue({
             }
         },
         //only one weapon active at a time
-        resetWeapon: function(){
+        resetWeapon: function(n){
             this.item.shortSword= false,
             this.item.longSword= false,
             this.item.phantomBane= false,
@@ -462,7 +462,8 @@ var game = new Vue({
             this.item.voidRapier= false,
             this.item.coralKukri= false,
             this.item.soultrapKatana= false,
-            this.item.lightningAxe= false
+            this.item.lightningAxe= false,
+            n = true;
         },
         //only one off-hand at a time
         resetOffHand: function(){
@@ -476,17 +477,13 @@ var game = new Vue({
             this.item.studdedLeatherArmor=false
         },
         //set weapon. I feeel like this could be easier if there were a weapon data variable, lets try that later
-        // if item already equipped, keep player from purchasing again
+        // if item already equipped, keep player from purchasing again(in html file hide/show on false)
         setShortSword: function(){
             let out = document.getElementById("text");
             if (this.player.gold >= 10){
-                if(!this.item.shortSword){
-                    this.item.shortSword= true;
-                    this.player.gold -= 10;
-                    out.textContent = "Short Sword Equipped"
-                }
-                else
-                    out.textContent = "Short Sword already equipped"
+                this.item.shortSword= true;
+                this.player.gold -= 10;
+                out.textContent = "Short Sword Equipped"
             }
             else{
                 out.textContent = "Not Enough Gold";
@@ -495,13 +492,9 @@ var game = new Vue({
         setLongSword: function(){
             let out = document.getElementById("text");
             if (this.player.gold >= 15){
-                if(!this.item.longSword){
-                    this.item.longSword= true;
-                    this.player.gold -= 15;
-                    out.textContent = "Long Sword Equipped"
-                }
-                else
-                    out.textContent = "Long Sword already equipped"
+                this.item.longSword= true;
+                this.player.gold -= 15;
+                out.textContent = "Long Sword Equipped"
             }
             else{
                 out.textContent = "Not Enough Gold";
@@ -537,13 +530,9 @@ var game = new Vue({
         setLeatherArmor: function(){
             let out = document.getElementById("text");
             if (this.player.gold >= 15){
-                if(!this.item.leatherArmor){
-                    this.item.leatherArmor= true;
-                    this.player.gold -= 15;
-                    out.textContent = "Leather Armor Equipped"
-                }
-                else
-                    out.textContent = "Leather Armor already equipped"
+                this.item.leatherArmor= true;
+                this.player.gold -= 15;
+                out.textContent = "Leather Armor Equipped";
             }
             else{
                 out.textContent = "Not Enough Gold";
@@ -554,20 +543,16 @@ var game = new Vue({
         },
         setMBoots: function(){
             let out = document.getElementById("text");
-            if (this.player.gold >= 50){
-                if(!this.item.mercurialBoots){
-                    this.item.mercurialBoots= true;
-                    this.player.gold -= 50;
-                    out.textContent = "Mercurial Dancing Boots Equipped"
-                }
-                else
-                    out.textContent = "Mercurial Boots already equipped"
+            if (this.player.gold >= 100){
+                this.item.mercurialBoots= true;
+                this.player.gold -= 100;
+                out.textContent = "Mercurial Dancing Boots Equipped";
             }
             else{
                 out.textContent = "Not Enough Gold";
             }
         },
-        //happens once at the time of purchase (leaving merchant). sets new stats.
+        //happens at the time of purchase. sets new stats.
         equip: function(){
             //main-hand weapons, player will always have main-hand weapon.
 
@@ -670,16 +655,50 @@ var game = new Vue({
                 can choose to take this or not and encounter can happen only once. additional buttons required";
                 this.player.hp += 25;
 
-                //this is the equip weapon idea
+                //Need to make equip optional
                 this.resetWeapon();
                 this.item.phantomBane = true;
                 this.equip();
             }
 
 
-            ///////////////////////////////////HERE, THIS TOO//////////////////////////////////
+            ///////////////////////////////////There are more//////////////////////////////////
             if(name == 'Random Merchant'){
 
+            }
+
+            if(name == 'Wraith' || name == 'rWraith'){
+
+            }
+            if(name == 'Thrall'){
+                
+            }
+            if(name == 'Bandit'){
+                
+            }
+            if(name == 'Mimic'){
+                
+            }
+            if(name == 'Murder Crows'){
+                
+            }
+            if(name == 'Greasy Vandal'){
+                
+            }
+            if(name == 'Chaos'){
+                
+            }
+            if(name == 'Chaos Demon'){
+                
+            }
+            if(name == 'Necro Horde'){
+                
+            }
+            if(name == 'Gryphon'){
+                
+            }
+            if(name == 'Litch King'){
+                
             }
         }
     }

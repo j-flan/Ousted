@@ -31,13 +31,13 @@
                 <!--location tracker and setter, based on location. roads lead to areas, after
                     road battles  (3), the direction decision buttons will show, unless you are in an
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
-                    which will show immediately-->
+                    ///////////////////// which will show immediately  (need to complpete)////////////////////////--> 
                     <!--players can  search AREAS (not roads) as much as they want-->
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <!--testing equip weapon         here-->
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
                 <ul v-if="enemy.hp == 0" id="directions" >
-                    <!--////////////////// chapter 1 /////////////////////-->
+                    <!------------ chapter 1 ----------------->
                     <!--begin-->
                     <li v-if="location == 'start' && battleCount == 3" >
                         <!--calling battCount() resets the count to 0 if at 3-->
@@ -48,7 +48,7 @@
                         <button v-on:click="merchantCamp(); battCount();">To merchant camp</button></li>
                     <!--on swamp road-->
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
-                        <button v-on:click="setLocation('lake'); setDirection('W'); battCount(); getEnemy()">To the lake</button></li>
+                        <button v-on:click="setLocation('lake'); setDirection('W'); setBattCount(2); getEnemy()">To the lake</button></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
                         <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
                     <!--at lake-->
@@ -56,12 +56,15 @@
                         <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
                         <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
                     <!--at merchant camp-->
-                    <!--need to add potion item count and purchase//////////////////////////////////////-->
                     <li v-if="location == 'merchantCamp'" >
-                        <button v-on:click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button>
-                        <button v-on:click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button>
-                        <button v-on:click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 50g</button>
-                        <button v-on:click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button>
+                        <span v-if="item.shortSword == false">
+                            <button v-on:click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button></span>
+                        <span v-if="item.longSword == false">
+                            <button v-on:click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button></span>
+                        <span v-if="item.leatherArmor == false">   
+                            <button v-on:click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button></span>
+                        <span v-if="item.mercurialBoots == false">   
+                            <button v-on:click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 50g</button></span>                     
                         <button v-on:click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
                         <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
                         <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
