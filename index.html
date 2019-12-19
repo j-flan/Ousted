@@ -22,23 +22,25 @@
             </div>
             <div id="buttons">
                 <ul v-if="enemy.hp > 0" id="decisions">
-                    <li><button v-on:click="battle">Attack!</button></li>
-                    <li><button v-on:click="flee">Flee!</button></li>
-                    <li><button v-on:click="dynamite">dynamite</button></li>
-                    <li><button v-on:click="heal">heal</button></li>
+                    <li><button v-on:click="battle()">Attack!</button></li>
+                    <li><button v-on:click="flee()">Flee!</button></li>
+                    <li v-if="chapter = 1"><button v-on:click="explosive()">Powder Bomb</button></li>
+                    <li v-else-if="chapter = 2"><button v-on:click="explosive()">Dynamite</button></li>
+                    <li><button v-on:click="sauce()">Heal</button></li>
                 </ul>
                 <!--location tracker and setter, based on location. roads lead to areas, after
-                    area battles (3), the direction decision buttons will show, unless you are in an
+                    road battles  (3), the direction decision buttons will show, unless you are in an
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
                     which will show immediately-->
-                    <!--players can  search areas as much as they want-->
+                    <!--players can  search AREAS (not roads) as much as they want-->
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <!--testing equip weapon         here-->
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
                 <ul v-if="enemy.hp == 0" id="directions" >
-                    <!--chapter 1-->
+                    <!--////////////////// chapter 1 /////////////////////-->
                     <!--begin-->
                     <li v-if="location == 'start' && battleCount == 3" >
+                        <!--calling battCount() resets the count to 0 if at 3-->
                         <button v-on:click="setLocation('merchantRoad'); setDirection('W'); battCount(); getEnemy()">To merchant road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
                     <!--on merchant road-->
@@ -52,20 +54,30 @@
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
                         <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
-                        <button v-on:click="getEnemy(); setBattCount(2)">Keep searching area</button></li>
+                        <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
                     <!--at merchant camp-->
+                    <!--need to add potion item count and purchase//////////////////////////////////////-->
                     <li v-if="location == 'merchantCamp'" >
+                        <button v-on:click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button>
+                        <button v-on:click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button>
+                        <button v-on:click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 50g</button>
+                        <button v-on:click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button>
+                        <button v-on:click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
+                        <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
+                        <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
                         <button v-on:click="setLocation('cityRoad'); setDirection('S'); getEnemy()" >To city road</button>
                         <button v-on:click="setLocation('mountainRoad'); setDirection('W'); getEnemy()">To mountain road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); getEnemy()">To swamp road</button></li>
                     <!--in city proper-->
                     <li v-if="location == 'cityProper'" >
-                        <button v-on:click="setLocation('city'); getEnemy()">To city streets</button>
+                        <!--setBattCount(2) allows for only 1 battle before direction options are shown again.
+                        This is true for all AREAS (not roads)-->
+                        <button v-on:click="setLocation('city'); setBattCount(2); getEnemy()">To city streets</button>
                         <button v-on:click="setLocation('cityRoad'); setDirection('N'); setBattCount(0); getEnemy()">To merchant camp (via city road)</button></li>
                     <!--in city-->
                     <li v-if="location == 'city'" >
                         <button v-on:click="cityProper()">To city proper</button>
-                        <button v-on:click="getEnemy(); setBattCount(2)">Keep searching area</button></li>
+                        <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
                     <!--on city road-->
                     <li v-if="location == 'cityRoad' && direction == 'S' && battleCount == 3" >
                         <button v-on:click="cityProper(); battCount()">To city proper</button></li>
@@ -108,6 +120,8 @@
             </div>
             <div id="playerOutput">
                 <ul>
+                    <li>Sauce: {{potion}}</li>
+                    <li>Explosive: {{dynamite}}</li>
                     <li>HP: {{player.hp}} </li>
                     <li>Min DMG: {{player.minDmg}} </li>
                     <li>Max DMG: {{player.maxDmg}} </li>
