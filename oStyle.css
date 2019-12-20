@@ -1,15 +1,26 @@
 
 #decisions{
     display: block;
+    float: left;
     width: 60%;
-    margin-left: 20%;
+    margin-left: 25%;
     clear: left;
+    border-radius: 10px;
 }
 #decisions li{
     display: block;
     float: left;
-    margin: 10px;
-    padding: 10px;
+    margin: 2%;
+}
+#decisions button{
+    background-color: gray;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border:none;
+    border-radius: 10px;
+    font-size: 24px;
 }
 #directions{
     display: block;
@@ -31,24 +42,108 @@
 
 #text, #attText, #statText{
     display: block;
+    float: left;
     width: 60%;
     margin-left: 20%;
     border: solid gray;
     border-radius: 10px;
 }
-
-#enemyOutput{
+#playerOutput{
     display: block;
     float: left;
     clear: left;
     width: 40%;
+    margin-top: 2%;
+    margin-left: 5%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: lightblue;
+
 }
-#playerOutput{
+#enemyOutput{
     display: block;
-    float: right;
+    float: left;
+    width: 40%;
+    margin-top: 2%;
+    margin-left: 2%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: lightgreen;
+}
+#enemyOutput{
+    clear: none;
+}
+#playerOutput ul, #enemyOutput ul{
+    width: 95%;
+    margin: 0% 2%;
 }
 #playerOutput ul li, #enemyOutput ul li{
     display: block;
     float: left;
+    width: 150px;
+    margin: 2% 2%;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid gray
+}
+#playerOutput h4, #enemyOutput h4{
+    display:block;
+    float:left;
+    width:95%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+}
+#sButton span{
+    display: block;
+    float:left;
     clear:left;
+    margin-top:2%;
+    margin-left:40%;
+}
+#merch{
+    display: block;
+    float: left;
+    clear: left;
+
+    margin-top: 2%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: lightgoldenrodyellow;
+}
+#merch button{
+    background-color: gray;
+    color:white;
+    text-align: center;
+    display: block;
+    float: left;
+    clear: left;
+    text-decoration: none;
+    border:none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px;
+}
+#destination{
+    display: block;
+    float: left;
+    clear: left;
+
+    margin-top: 2%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: lightgray;
+}
+#destination button{
+    background-color: saddlebrown;
+    color:white;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border:none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px;
 }

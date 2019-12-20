@@ -12,13 +12,13 @@
                 <img :src="backgroundImage"/>
             </div>
             <div id="text">
-                P<li></li>
+                P<li>-</li>
             </div>
             <div id="attText">
-                E<li></li>
+                E<li>-</li>
             </div>
             <div id="statText">
-                S<li></li>
+                S<li>-</li>
             </div>
             <div id="buttons">
                 <ul v-if="enemy.hp > 0" id="decisions">
@@ -31,11 +31,12 @@
                 <!--location tracker and setter, based on location. roads lead to areas, after
                     road battles  (3), the direction decision buttons will show, unless you are in an
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
-                    ///////////////////// which will show immediately  (need to complpete)////////////////////////--> 
+                    ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
+                <div id="sButton">
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
-                        <!--testing equip weapon         here-->
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
+                </div>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
@@ -48,33 +49,39 @@
                         <button v-on:click="merchantCamp(); battCount();">To merchant camp</button></li>
                     <!--on swamp road-->
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
-                        <button v-on:click="setLocation('lake'); setDirection('W'); setBattCount(2); getEnemy()">To the lake</button></li>
+                        <span v-on:click="setLocation('lake'); setDirection('W'); setBattCount(2); getEnemy()"></span></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
-                        <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
+                        <span v-on:click="merchantCamp(); battCount()"></span></li>
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
                         <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
                         <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
                     <!--at merchant camp-->
                     <li v-if="location == 'merchantCamp'" >
-                        <span v-if="item.shortSword == false">
-                            <button v-on:click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button></span>
-                        <span v-if="item.longSword == false">
-                            <button v-on:click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button></span>
-                        <span v-if="item.leatherArmor == false">   
-                            <button v-on:click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button></span>
-                        <span v-if="item.mercurialBoots == false">   
-                            <button v-on:click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 50g</button></span>                     
-                        <button v-on:click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
-                        <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
-                        <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
-                        <button v-on:click="setLocation('cityRoad'); setDirection('S'); getEnemy()" >To city road</button>
-                        <button v-on:click="setLocation('mountainRoad'); setDirection('W'); getEnemy()">To mountain road</button>
-                        <button v-on:click="setLocation('swampRoad'); setDirection('E'); getEnemy()">To swamp road</button></li>
-                    <!--in city proper-->
+                        <div id="merch">
+                            <span v-if="item.shortSword == false">
+                                <button v-on:click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button></span>
+                            <span v-if="item.longSword == false">
+                                <button v-on:click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button></span>
+                            <span v-if="item.leatherArmor == false">   
+                                <button v-on:click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button></span>
+                            <span v-if="item.mercurialBoots == false">   
+                                <button v-on:click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 100g</button></span>                     
+                            <button v-on:click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
+                            <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
+                            <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
+                        </div>
+                        <div id="destination">
+                            <button v-on:click="setLocation('cityRoad'); setDirection('S'); getEnemy()" >To city road</button>
+                            <button v-on:click="setLocation('mountainRoad'); setDirection('W'); getEnemy()">To mountain road</button>
+                            <button v-on:click="setLocation('swampRoad'); setDirection('E'); getEnemy()">To swamp road</button>
+                        </div>
+                    </li>
+                        <!--in city proper-->
                     <li v-if="location == 'cityProper'" >
                         <!--setBattCount(2) allows for only 1 battle before direction options are shown again.
                         This is true for all AREAS (not roads)-->
+                        <!--///////////////////// MAKE MESSAGE BOARD, APOTHECARY & ARMORER ////////////////////////-->
                         <button v-on:click="setLocation('city'); setBattCount(2); getEnemy()">To city streets</button>
                         <button v-on:click="setLocation('cityRoad'); setDirection('N'); setBattCount(0); getEnemy()">To merchant camp (via city road)</button></li>
                     <!--in city-->
@@ -95,12 +102,28 @@
                         <button v-on:click="setLocation('mountain'); battCount(); getEnemy()">To mountain</button></li>
                     <li v-if="location == 'mountainRoad' && direction == 'E' && battleCount == 3" >
                         <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
+
                     <li>Direction: {{direction}}</li>
 
                                 
                 </ul>
             </div>
+            <div id="playerOutput">
+                <h4>PLAYER</h4>
+                <ul>
+                    <li>Sauce: {{potion}}</li>
+                    <li>Explosive: {{dynamite}}</li>
+                    <li>HP: {{player.hp}} </li>
+                    <li>Min DMG: {{player.minDmg}} </li>
+                    <li>Max DMG: {{player.maxDmg}} </li>
+                    <li>Dex: {{player.dex}} </li>
+                    <li>Evade: {{player.evade}} </li>
+                    <li>Gold: {{player.gold}} </li>
+                    <li>Points: {{player.points}} </li>
+                </ul>
+            </div>
             <div id = "enemyOutput">
+                <h4>ENEMY</h4>
                 <ul>
                     <li>Enemy: {{enemy.name}} </li>
                     <li v-if="enemy.poison" >Ability: Poison</li>
@@ -121,19 +144,7 @@
                     <li>Points: {{enemy.points}} </li>
                 </ul>
             </div>
-            <div id="playerOutput">
-                <ul>
-                    <li>Sauce: {{potion}}</li>
-                    <li>Explosive: {{dynamite}}</li>
-                    <li>HP: {{player.hp}} </li>
-                    <li>Min DMG: {{player.minDmg}} </li>
-                    <li>Max DMG: {{player.maxDmg}} </li>
-                    <li>Dex: {{player.dex}} </li>
-                    <li>Evade: {{player.evade}} </li>
-                    <li>Gold: {{player.gold}} </li>
-                    <li>Points: {{player.points}} </li>
-                </ul>
-            </div>
+            
            
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>

@@ -66,7 +66,7 @@ let vandal = {name: "Greasy Vandal", hp: 45, attackStyle: "slashes", minDmg: 5, 
 //empty enemy;
 let empty = {name: '', ability: '', hp: 0, attackStyle: '', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 
-//NPCs   ---- make as empty character? could make as .name = special event.
+//NPCs
 let lady = {name: 'Lady of the Lake', ability: 'watery tart', hp: 0, attackStyle: 'rendering', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 let randomMerchant = {name: 'Random Merchant', ability: 'swindling', hp: 0, attackStyle: 'poverty', minDmg: 0, maxDmg: 0, minHit: 0, maxHit: 0, minFlee: 0, maxFlee: 0, toHit: 0, gold: 0, points: 0, poison: false,stun: false,vamp: false};
 
@@ -169,7 +169,7 @@ var game = new Vue({
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
-                    document.getElementById("attText").textContent = `${this.enemy.name}`;
+                    document.getElementById("attText").textContent = `${this.enemy.name} appears`;
                     this.npcEnc(this.enemy.name);
                 }
             }
@@ -242,7 +242,7 @@ var game = new Vue({
         //player and enemy attack exchange
         //need to keep next enemy from attacking first, on road////////////////////////////////////////
         battle: function(){
-            document.getElementById("statText").textContent = '';
+            document.getElementById("statText").textContent = '-';
             this.attack();
             if(this.enemy.hp > 0)
                 this.enemyAttack();
@@ -262,7 +262,7 @@ var game = new Vue({
         },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
-            document.getElementById("attText").textContent = '';
+            document.getElementById("attText").textContent = '-';
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
@@ -274,7 +274,7 @@ var game = new Vue({
         },
         playerKilled: function(){
             document.getElementById("text").textContent = "GAME OVER";
-            document.getElementById("attText").textContent = '';
+            document.getElementById("attText").textContent = '-';
             this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
             this.resetEnemy();
         },
@@ -293,7 +293,7 @@ var game = new Vue({
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){     
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
-                eOut.textContent = '';
+                eOut.textContent = '-';
                 this.battCount();
                 this.resetEnemy();
                 if (this.battleCount < 3){
@@ -309,7 +309,6 @@ var game = new Vue({
             }
         },
 
-        ///////////////////////////// adjust t/f syntax/////////////////////////////////
         setExplosive: function(){
             let out = document.getElementById("text");
             //chapter 1
@@ -454,7 +453,7 @@ var game = new Vue({
             }
         },
         //only one weapon active at a time
-        resetWeapon: function(n){
+        resetWeapon: function(){
             this.item.shortSword= false,
             this.item.longSword= false,
             this.item.phantomBane= false,
@@ -462,8 +461,7 @@ var game = new Vue({
             this.item.voidRapier= false,
             this.item.coralKukri= false,
             this.item.soultrapKatana= false,
-            this.item.lightningAxe= false,
-            n = true;
+            this.item.lightningAxe= false
         },
         //only one off-hand at a time
         resetOffHand: function(){
@@ -651,9 +649,9 @@ var game = new Vue({
         npcEnc: function(name){
             if(name == 'Lady of the Lake'){
                 document.getElementById("text").textContent = "You have met the lady of the lake, \
-                this is placeholder text. receive 25 hp (once, in the future) and the phantom bane sword. check stats. player\
+                this is placeholder text. receive 50 hp (once, in the future) and the phantom bane sword. check stats. player\
                 can choose to take this or not and encounter can happen only once. additional buttons required";
-                this.player.hp += 25;
+                this.player.hp += 50;
 
                 //Need to make equip optional
                 this.resetWeapon();
