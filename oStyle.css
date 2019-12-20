@@ -19,7 +19,7 @@
     display: inline-block;
     text-decoration: none;
     border:none;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 24px;
 }
 #directions{
@@ -112,6 +112,27 @@
     padding-bottom: 2%;
     background-color: lightgoldenrodyellow;
 }
+#destination{
+    display: block;
+    float: left;
+    clear: left;
+    margin-top: 2%;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: lightgray;
+}
+#directions button{
+    background-color: saddlebrown;
+    color:white;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border:none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px;
+}
 #merch button{
     background-color: gray;
     color:white;
@@ -119,28 +140,6 @@
     display: block;
     float: left;
     clear: left;
-    text-decoration: none;
-    border:none;
-    border-radius: 5px;
-    font-size: 16px;
-    margin: 5px;
-}
-#destination{
-    display: block;
-    float: left;
-    clear: left;
-
-    margin-top: 2%;
-    border: 2px solid gray;
-    border-radius: 10px;
-    padding-bottom: 2%;
-    background-color: lightgray;
-}
-#destination button{
-    background-color: saddlebrown;
-    color:white;
-    text-align: center;
-    display: inline-block;
     text-decoration: none;
     border:none;
     border-radius: 5px;

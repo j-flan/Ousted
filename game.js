@@ -99,7 +99,7 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/forest.jpeg',
-        location: 'start',
+        location: 'tomb',
         direction: 'S',
         chapter: 1,
         potion: false,
@@ -123,7 +123,8 @@ var game = new Vue({
             poison: false,
             poisonCount: 0,
             stun: false,
-            vamp: false
+            vamp: false,
+            stunned: false
         },
         player:{
             gold: 0,
@@ -137,7 +138,8 @@ var game = new Vue({
             poison: false,
             poisonCount: 0,
             stun: false,
-            vamp: false
+            vamp: false,
+            stunned: false
         },
         npc:{
             lady: true,
@@ -192,7 +194,6 @@ var game = new Vue({
             //hit or miss
             let out = document.getElementById("text");
             let hit = Math.floor((Math.random() * this.enemy.toHit) + 1);
-
             //hit for random damage between min & max
             if (this.player.dex >= hit){
                 let range = this.player.maxDmg - this.player.minDmg;
@@ -244,21 +245,26 @@ var game = new Vue({
         battle: function(){
             document.getElementById("statText").textContent = '-';
             this.attack();
-            if(this.enemy.hp > 0)
-                this.enemyAttack();
+            if(this.enemy.hp > 0){
+                if(!this.enemy.stunned)
+                    this.enemyAttack();
+                else
+                    this.enemy.stunned = false;
+            }
             if(this.player.hp < 1)
                 this.playerKilled();  
         },
         setBattCount: function(num){
             this.battleCount = num;
         },
+        //forest road should take 5 count///////////////////////////////////////////
         battCount: function(){
             let sOut = document.getElementById("statText");
             if (this.battleCount == 3)
                 this.setBattCount(0);
-            else
+            else{
                 this.battleCount += 1;
-                sOut.textContent = `Battle count ${this.battleCount}`;        
+            }        
         },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
@@ -364,32 +370,51 @@ var game = new Vue({
             let out = document.getElementById("text");
             //chapter 1
             if (this.player.hp < this.player.hpMax){
-                if(this.player.gold >= 8){
-                    this.heal(50);
-                    this.player.gold -= 8;
+                if (this.location == 'merchantCamp'){
+                    if(this.player.gold >= 8){
+                        this.heal(50);
+                        this.player.gold -= 8;
+                    }
+                    else
+                    out.textContent = "Not enough gold";
                 }
-                else
-                out.textContent = "Not enough gold";
+                else if (this.location == 'cityProper'){
+                    if(this.player.gold >= 15){
+                        this.heal(75);
+                        this.player.gold -= 15;
+                    }
+                    else
+                    out.textContent = "Not enough gold";
+                }
             }
             else
-                out.textContent = "Already at Full Health!"
-
-            
+                out.textContent = "Already at Full Health!"     
         },
         //purchase potion from merchant
         setSauce: function(){
             let out = document.getElementById("text");
             //chapter 1
-            if(this.player.gold >= 5){
-                if(!this.potion){
-                    this.potion = true;
-                    this.player.gold -= 5;
-                }
-                else
+            if (this.potion){
                 out.textContent = "Only room for 1 in inventory";
             }
-            else
-                out.textContent = "Not enough gold";
+            else {
+                if (this.location == 'merchantCamp'){
+                    if(this.player.gold >= 5){
+                        this.potion = true;
+                        this.player.gold -= 5;  
+                    }
+                    else
+                        out.textContent = "Not enough gold";
+                }
+                else if (this.location == 'cityProper'){
+                    if(this.player.gold >= 8){
+                        this.potion = true;
+                        this.player.gold -= 8;
+                    }
+                    else
+                        out.textContent = "Not enough gold";
+                }
+            }
         },
         //use potion in battle
         sauce: function(){
@@ -411,29 +436,31 @@ var game = new Vue({
         },
 
         eVamp: function(){
-            this.player.hp -= 2;
             this.enemy.hp += 1;
         },
         pVamp: function(){
-            this.enemy.hp -= 2;
             this.player.hp += 1;
         },
         eStun: function(){
-            let stun = Math.floor(Math.random() * 5);
-            if(stun % 4 == 0){
-                document.getElementById("statText").textContent = "Stunned!"
-                this.enemyAttack();
+            let stun = Math.floor((Math.random() * 7) + 1);
+            if(stun % 7 == 0){
+                document.getElementById("statText").textContent = "Stunned!";
+                this.player.stunned = true;
             }
         },
+        unStun: function(){
+            this.player.stunned = false;
+        },
         pStun: function(){
-            let stun = Math.floor(Math.random() * 4);
-            if(stun % 3 == 0){
-                this.attack();
+            let stun = Math.floor((Math.random() * 6) + 1);
+            if(stun %6 == 0){
+                document.getElementById("statText").textContent = `${this.enemy.name} stunned!`;
+                this.enemy.stunned = true;
             }
         },
         ePoison: function(){
-            let poison = Math.floor(Math.random() * 5);
-            if(poison % 4 == 0 && this.player.poisonCount < 1){
+            let poison = Math.floor((Math.random() * 5) + 1);
+            if(poison % 5 == 0 && this.player.poisonCount < 1){
                 this.player.poisonCount = 3;
                 document.getElementById("statText").textContent = "Poisoned!"
             }
@@ -443,8 +470,8 @@ var game = new Vue({
             }
         },
         pPoison: function(){
-            let poison = Math.floor(Math.random() * 4);
-            if(poison % 3 == 0 && this.enemy.poisonCount < 1){
+            let poison = Math.floor((Math.random() * 4) + 1);
+            if(poison % 4 == 0 && this.enemy.poisonCount < 1){
                 this.enemy.poisonCount = 3;
             }
             else if(this.enemy.poisonCount > 0){
@@ -477,7 +504,7 @@ var game = new Vue({
         //set weapon. I feeel like this could be easier if there were a weapon data variable, lets try that later
         // if item already equipped, keep player from purchasing again(in html file hide/show on false)
         setShortSword: function(){
-            let out = document.getElementById("text");
+            let out = document.getElementById("statText");
             if (this.player.gold >= 10){
                 this.item.shortSword= true;
                 this.player.gold -= 10;
@@ -488,24 +515,45 @@ var game = new Vue({
             }
         },
         setLongSword: function(){
-            let out = document.getElementById("text");
+            let out = document.getElementById("statText");
             if (this.player.gold >= 15){
                 this.item.longSword= true;
                 this.player.gold -= 15;
-                out.textContent = "Long Sword Equipped"
+                out.textContent = "Long Sword Equipped. It's heavy!"
             }
             else{
                 out.textContent = "Not Enough Gold";
             }
         },
+        //cannot purchase phantom bane
         setPhantomBane: function(){
             this.item.phantomBane = true;
+            document.getElementById("statText") = "The old magic has left this ancient blade, but it's still sharp as ever";
         },
         setBastardSword: function(){
-            this.item.bastardSword = true;
+            let out = document.getElementById("statText");
+            if (this.player.gold >= 70){
+                this.item.bastardSword = true;
+                this.player.gold -= 70;
+                out.textContent = "Gripping the pommel, a chill flows from your palm to the top of your head. \
+                It feels as though you pulled this sword from its own grave";
+            }
+            else{
+                out.textContent = "Not Enough Gold";
+            }
+            
         },
         setVoidRapier: function(){
-            this.item.voidRapier = true;
+            let out = document.getElementById("statText");
+            if (this.player.gold >= 60){
+                this.item.voidRapier = true;
+                this.player.gold -= 60;
+                out.textContent = "Gripping the pommel, you feel a ghostly tentacle \
+                weaving its way through the tendons of your forearm."
+            }
+            else{
+                out.textContent = "Not Enough Gold";
+            }     
         },
         setCoralKukri: function(){
             this.item.coralKukri = true;
@@ -517,16 +565,32 @@ var game = new Vue({
             this.item.lightningAxe = true;
         },
         setMagicDagger: function(){
-            this.item.magicDagger = true;
+            let out = document.getElementById("statText");
+            if (this.player.gold >= 30){
+                this.item.magicDagger = true;
+                this.player.gold -= 30;
+                out.textContent = "Jeweled Dagger Equipped. It feels like it was made just for you."
+            }
+            else{
+                out.textContent = "Not Enough Gold";
+            }           
         },
         setMagicShield: function(){
-            this.item.magicShield = true;
+            let out = document.getElementById("statText");
+            if (this.player.gold >= 30){
+                this.item.magicShield = true;
+                this.player.gold -= 30;
+                out.textContent = "Crested Shield Equipped. Your chest swells with Vigor!"
+            }
+            else{
+                out.textContent = "Not Enough Gold";
+            }           
         },
         setParryingDagger: function(){
             this.item.parryingDagger = true;
         },
         setLeatherArmor: function(){
-            let out = document.getElementById("text");
+            let out = document.getElementById("statText");
             if (this.player.gold >= 15){
                 this.item.leatherArmor= true;
                 this.player.gold -= 15;
@@ -540,11 +604,11 @@ var game = new Vue({
             this.item.studdedLeatherArmor = true;
         },
         setMBoots: function(){
-            let out = document.getElementById("text");
+            let out = document.getElementById("statText");
             if (this.player.gold >= 100){
                 this.item.mercurialBoots= true;
                 this.player.gold -= 100;
-                out.textContent = "Mercurial Dancing Boots Equipped";
+                out.textContent = "You feel light on your feet";
             }
             else{
                 out.textContent = "Not Enough Gold";
@@ -566,7 +630,7 @@ var game = new Vue({
             else if (this.item.longSword){
                 this.player.minDmg = 4;
                 this.player.maxDmg = 9;
-                this.player.dex = 6;
+                this.player.dex -= 1;
             }
             else if (this.item.phantomBane){
                 this.player.minDmg = 5;
@@ -575,6 +639,8 @@ var game = new Vue({
             else if (this.item.bastardSword){
                 this.player.minDmg = 6;
                 this.player.maxDmg = 12;
+                this.player.dex -= 1;
+                this.player.stun = true;
             }
             else if (this.item.coralKukri){
                 this.player.minDmg = 6;
@@ -655,7 +721,7 @@ var game = new Vue({
 
                 //Need to make equip optional
                 this.resetWeapon();
-                this.item.phantomBane = true;
+                this.setPhantomBane();
                 this.equip();
             }
 
