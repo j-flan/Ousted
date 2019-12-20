@@ -37,7 +37,7 @@
                     ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
                 <div id="sButton">
-                    <span v-if="location == 'tomb' && enemy.hp == 0 && battleCount == 0">
+                    <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
                 </div>
                 <ul v-if="enemy.hp == 0" id="directions" >
