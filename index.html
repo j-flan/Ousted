@@ -43,7 +43,7 @@
                 </ul>
             </div>
             <div id="buttons">
-                <ul v-if="enemy.hp > 0 && !player.stunned" id="decisions">
+                <ul v-if="enemy.hp > 0 && player.hp > 0 && !player.stunned" id="decisions">
                     <li><button v-on:click="battle()">Attack!</button></li>
                     <li><button v-on:click="flee()">Flee!</button></li>
                     <li v-if="chapter = 1"><button v-on:click="explosive()">Powder Bomb</button></li>
@@ -63,13 +63,14 @@
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
                         <!--next enemy encounter-->
-                    <span v-else-if="enemy.hp == 0 && battleCount < 3" >
+                    <span v-else-if="location != 'forestRoad' && enemy.hp == 0 && battleCount < 3 || 
+                                    location == 'forestRoad' && enemy.hp == 0 && battleCount < 5">
                         <button v-on:click="getEnemy()">Continue Onward</button></span>
                 </ul>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
-                    <li v-if="location == 'start' && battleCount == 3" >
+                    <li v-if="location == 'start' && battleCount == 3 && player.hp > 0" >
                         <!--calling battCount() resets the count to 0 if at 3-->
                         <button v-on:click="setLocation('merchantRoad'); setDirection('W'); battCount(); getEnemy()">To merchant road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
@@ -83,11 +84,11 @@
                         <button v-on:click="merchantCamp();">To merchant camp</button></li>
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
-                        <div v-if="enemy.name == 'Lady of the Lake' && npc.lady">                     
-                            <button v-on:click="resetWeapon(); setPhantomBane(); equip(); setLocation('lake')">YES</button>
+                        <div v-if="enemy.name == 'Lady of the Lake' && npc.lady == true">                     
+                            <button v-on:click="resetWeapon(); setPhantomBane(); equip(); ladyFalse()">YES</button>
                         </div>
                         <div v-else>
-                            <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
+                            <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp</button>
                             <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button>
                         </div>
                     </li>
@@ -158,14 +159,14 @@
                         <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>             
                 </ul>
             </div>
+            <div id="statText">
+                Status<ul></ul>
+            </div>
             <div id="text">
                 Player<ul></ul>
             </div>
             <div id="attText">
                 Enemy<ul></ul>
-            </div>
-            <div id="statText">
-                Status<ul></ul>
             </div>
             <div id="nautical">
                 <li>Direction: {{direction}}</li>

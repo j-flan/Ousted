@@ -98,7 +98,7 @@ let areas = {
 var game = new Vue({
     el: '#game',
     data:{
-        backgroundImage: 'pics/forest.jpeg',
+        backgroundImage: 'pics/start.jpg',
         location: 'start',
         direction: 'S',
         chapter: 1,
@@ -236,7 +236,9 @@ var game = new Vue({
                 else if(this.enemy.stun)
                     this.eStun();
                 else if(this.enemy.poison)
-                    this.ePoison();       
+                    this.ePoison();
+                if(this.player.hp < 1)
+                    this.playerKilled();     
             }
             //miss
             else{
@@ -244,25 +246,23 @@ var game = new Vue({
             }
         },
         //player and enemy attack exchange
-        //need to keep next enemy from attacking first, on road////////////////////////////////////////
         battle: function(){
             document.getElementById("statText").textContent = '-';
             this.attack();
             if(this.enemy.hp > 0){
-                if(!this.enemy.stunned)
+                if(!this.enemy.stunned){
                     this.enemyAttack();
+                }
                 else
                     this.enemy.stunned = false;
-            }
-            if(this.player.hp < 1)
-                this.playerKilled();  
+            } 
         },
         setBattCount: function(num){
             this.battleCount = num;
         },
-        //forest road should take 5 count///////////////////////////////////////////
+        //number of battles, forest road takes 5 count
         battCount: function(){
-            if (this.battleCount == 3)
+            if (this.location != 'forestRoad' && this.battleCount == 3 || this.location == 'forestRoad' && this.battleCount == 5)
                 this.setBattCount(0);
             else{
                 this.battleCount += 1;
@@ -277,14 +277,16 @@ var game = new Vue({
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
-            this.battCount();
+            this.setBattCount(0);
             this.resetEnemy();
         },
         playerKilled: function(){
-            document.getElementById("text").textContent = "GAME OVER";
-            document.getElementById("attText").textContent = '-';
+            document.getElementById("statText").textContent = "GAME OVER";
+            document.getElementById("attText").textContent = '';
+            document.getElementById("text").textContent = '';
             this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
             this.resetEnemy();
+            this.setLocation('start');
         },
         resetEnemy: function(){
             //enemy hp reset for future battles
@@ -711,6 +713,9 @@ var game = new Vue({
             document.getElementById("text").textContent = "You're at the Entrance to the Ancient Tomb";
         },
         //npc encounters
+        ladyFalse: function(){
+            this.npc.lady = false;
+        },
         npcEnc: function(name){
             if(name == 'Lady of the Lake'){
                 let out = document.getElementById("attText");
@@ -719,7 +724,6 @@ var game = new Vue({
                     from the mass of the water. She approaches you, holding a faintly green glowing blade \
                     in offering. You instanly feel refreshed in her gentle gaze. +50hp. Take the blade?";
                     this.heal(50);
-                    this.npc.lady = false;
                 }
                 else{
                     out.textContent = "This is where you met the Lady of the Lake. \

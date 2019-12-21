@@ -70,9 +70,6 @@
     border-radius: 5px;
     font-size: 2vw;
 }
-.sButton{
-    margin-left: 19%;
-}
 #directions{
     display: block;
     width: 40%;
@@ -130,7 +127,7 @@
     text-decoration: none;
     border:none;
     border-radius: 5px;
-    font-size: 24px;
+    font-size: 2vw;
     margin: 5px;
 }
 #merch button{
@@ -151,5 +148,9 @@
     float: left;
     clear: left;
     margin-left: 44%;
-    margin-top: 5%;
+    margin-top: 2%;
+}
+.sButton button{
+    margin-left: 0%;
+    width: 47%;
 }
