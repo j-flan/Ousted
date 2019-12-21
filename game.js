@@ -710,7 +710,7 @@ var game = new Vue({
             this.setLocation('tombEntrance');
             document.getElementById("text").textContent = "You're at the Entrance to the Ancient Tomb";
         },
-        //npc encounters, need to add special enemy encounter choices /////////////////////////////////
+        //npc encounters
         npcEnc: function(name){
             if(name == 'Lady of the Lake'){
                 let out = document.getElementById("attText");

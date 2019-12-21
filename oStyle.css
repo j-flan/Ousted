@@ -1,60 +1,14 @@
 
-#decisions{
+#game{
     display: block;
-    float: left;
-    width: 60%;
-    margin-left: 25%;
-    clear: left;
-    border-radius: 10px;
-}
-#decisions li{
-    display: block;
-    float: left;
-    margin: 2%;
-}
-#decisions button{
-    background-color: gray;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    border:none;
-    border-radius: 5px;
-    font-size: 24px;
-}
-#directions{
-    display: block;
-    width: 40%;
-    margin-left: 30%;
-    clear: left;
-}
-#directions li{
-    display: block;
-    float: left;
-    margin-left: 10px;
-}
-
-#background img{
-    width: 60%;
-    margin-left: 20%;
-    border-radius: 10px;
-}
-
-#text, #attText, #statText{
-    display: block;
-    float: left;
-    width: 60%;
-    margin-left: 20%;
-    border: 1px solid gray;
-    border-radius: 5px;
+    position: absolute;
+    width: 100%;
 }
 #playerOutput{
     display: block;
     float: left;
-    clear: left;
-    width: 40%;
-    margin-top: 2%;
-    margin-left: 5%;
+    width: 15%;
+    margin-left:9%;
     border: 2px solid gray;
     border-radius: 10px;
     padding-bottom: 2%;
@@ -64,38 +18,95 @@
 #enemyOutput{
     display: block;
     float: left;
-    width: 40%;
-    margin-top: 2%;
-    margin-left: 2%;
+    width: 15%;
     border: 2px solid gray;
     border-radius: 10px;
     padding-bottom: 2%;
-    background-color: lightgreen;
+    color: white;
+    background-color: firebrick;
 }
 #playerOutput ul, #enemyOutput ul{
     width: 95%;
     margin: 0% 2%;
+    list-style: none;
+    padding-left: 0;
 }
 #playerOutput ul li, #enemyOutput ul li{
     display: block;
     float: left;
-    width: 150px;
+    clear:left;
+    width: 100%;
     margin: 2% 2%;
-    border-left: 1px solid gray;
-    border-bottom: 1px solid gray
+    font-size: 1.5vw;
 }
 #playerOutput h4, #enemyOutput h4{
     display:block;
     float:left;
     width:95%;
     margin-left: 5%;
-    margin-bottom: 2%;
+    margin-bottom: 37%;
 }
+#enemyOutput h4{
+    margin-bottom: 53%
+}
+#buttons{
+    display: block;
+    float: left;
+    width: 100%;
+    margin-left: 22%;
+    clear: both;
+}
+#decisions li{
+    display: block;
+    float: left;
+    margin: 0.5% 2%;
+}
+#decisions button{
+    background-color: gray;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border:none;
+    border-radius: 5px;
+    font-size: 2vw;
+}
+.sButton{
+    margin-left: 19%;
+}
+#directions{
+    display: block;
+    width: 40%;
+    margin-left: 2%;
+    clear: left;
+}
+#directions li{
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
+
+#background img{
+    display:block;
+    float:left;
+    width: 50%;
+    border-radius: 10px;
+}
+
+#text, #attText, #statText{
+    display: block;
+    float: left;
+    width: 80%;
+    margin-left: 9%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 2vw;
+}
+
 #merch{
     display: block;
     float: left;
     clear: left;
-
     margin-top: 2%;
     border: 2px solid gray;
     border-radius: 10px;
@@ -116,7 +127,6 @@
     background-color: saddlebrown;
     color:white;
     text-align: center;
-    display: inline-block;
     text-decoration: none;
     border:none;
     border-radius: 5px;
@@ -135,4 +145,11 @@
     border-radius: 5px;
     font-size: 16px;
     margin: 5px;
+}
+#nautical{
+    display:block;
+    float: left;
+    clear: left;
+    margin-left: 44%;
+    margin-top: 5%;
 }

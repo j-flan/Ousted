@@ -8,17 +8,39 @@
     </head>
     <body>
         <div id="game">
+            <div id="playerOutput">
+                <h4>PLAYER</h4>
+                <ul>                  
+                    <li>HP: {{player.hp}} </li>
+                    <li>Min DMG: {{player.minDmg}} </li>
+                    <li>Max DMG: {{player.maxDmg}} </li>
+                    <li>Dex: {{player.dex}} </li>
+                    <li>Evade: {{player.evade}} </li>
+                    <li>Sauce: {{potion}}</li>
+                    <li>Explosive: {{dynamite}}</li>
+                    <li>Gold: {{player.gold}} </li>
+                    <li>Points: {{player.points}} </li>
+                </ul>
+            </div>
             <div id="background">
                 <img :src="backgroundImage"/>
             </div>
-            <div id="text">
-                P<li>-</li>
-            </div>
-            <div id="attText">
-                E<li>-</li>
-            </div>
-            <div id="statText">
-                S<li>-</li>
+            <div id = "enemyOutput">
+                <h4>ENEMY</h4>
+                <ul>
+                    <li>Enemy: {{enemy.name}} </li>
+                    <li v-if="enemy.poison" >Ability: Poison</li>
+                    <li v-else-if="enemy.stun">Ability: Stun</li>
+                    <li v-else-if="enemy.vamp">Ability: Leech </li>
+                    <li v-else>Ability: None</li>
+                    <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
+                    <li v-else>HP: 0</li>
+                    <li>Min Dmg: {{enemy.minDmg}} </li>
+                    <li>Max Dmg: {{enemy.maxDmg}} </li>
+                    <li>To Hit: {{enemy.toHit}} </li>
+                    <li>Gold: {{enemy.gold}} </li>
+                    <li>Points: {{enemy.points}} </li>
+                </ul>
             </div>
             <div id="buttons">
                 <ul v-if="enemy.hp > 0 && !player.stunned" id="decisions">
@@ -37,7 +59,7 @@
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
                     ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
-                <ul id="decisions">
+                <ul id="decisions" class="sButton">
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
                         <!--next enemy encounter-->
@@ -53,12 +75,12 @@
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
                     <!--on merchant road-->
                     <li v-if="location == 'merchantRoad' && battleCount == 3" >
-                        <button v-on:click="merchantCamp(); battCount();">To merchant camp</button></li>
+                        <button v-on:click="merchantCamp();">To merchant camp</button></li>
                     <!--on swamp road-->
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
                         <button v-on:click="setLocation('lake')">To the Lake</button></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
-                        <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
+                        <button v-on:click="merchantCamp();">To merchant camp</button></li>
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
                         <div v-if="enemy.name == 'Lady of the Lake' && npc.lady">                     
@@ -85,9 +107,9 @@
                             <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
                         </div>
                         <div id="destination">
-                            <button v-on:click="setLocation('cityRoad'); setDirection('S'); getEnemy()" >To city road</button>
-                            <button v-on:click="setLocation('mountainRoad'); setDirection('W'); getEnemy()">To mountain road</button>
-                            <button v-on:click="setLocation('swampRoad'); setDirection('E'); getEnemy()">To swamp road</button>
+                            <button v-on:click="setLocation('cityRoad'); setDirection('S'); setBattCount(0); getEnemy()" >To city road</button>
+                            <button v-on:click="setLocation('mountainRoad'); setDirection('W'); setBattCount(0); getEnemy()">To mountain road</button>
+                            <button v-on:click="setLocation('swampRoad'); setDirection('E'); setBattCount(0); getEnemy()">To swamp road</button>
                         </div>
                     </li>
                         <!--in city proper-->
@@ -133,51 +155,21 @@
                     <li v-if="location == 'mountainRoad' && direction == 'W' && battleCount == 3" >
                         <button v-on:click="setLocation('mountain'); battCount(); getEnemy()">To mountain</button></li>
                     <li v-if="location == 'mountainRoad' && direction == 'E' && battleCount == 3" >
-                        <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
-
-                    <li>Direction: {{direction}}</li>
-
-                                
+                        <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>             
                 </ul>
             </div>
-            <div id="playerOutput">
-                <h4>PLAYER</h4>
-                <ul>
-                    <li>Sauce: {{potion}}</li>
-                    <li>Explosive: {{dynamite}}</li>
-                    <li>HP: {{player.hp}} </li>
-                    <li>Min DMG: {{player.minDmg}} </li>
-                    <li>Max DMG: {{player.maxDmg}} </li>
-                    <li>Dex: {{player.dex}} </li>
-                    <li>Evade: {{player.evade}} </li>
-                    <li>Gold: {{player.gold}} </li>
-                    <li>Points: {{player.points}} </li>
-                </ul>
+            <div id="text">
+                Player<ul></ul>
             </div>
-            <div id = "enemyOutput">
-                <h4>ENEMY</h4>
-                <ul>
-                    <li>Enemy: {{enemy.name}} </li>
-                    <li v-if="enemy.poison" >Ability: Poison</li>
-                    <li v-else-if="enemy.stun">Ability: Stun</li>
-                    <li v-else-if="enemy.vamp">Ability: Leech </li>
-                    <li v-else>Ability: -</li>
-                    <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
-                    <li v-else>HP: -</li>
-                    <li>Attack: {{enemy.attackStyle}} </li>
-                    <li>Min Dmg: {{enemy.minDmg}} </li>
-                    <li>Max Dmg: {{enemy.maxDmg}} </li>
-                    <li>Min Hit: {{enemy.minHit}} </li>
-                    <li>Max Hit: {{enemy.maxHit}} </li>
-                    <li>Min Flee: {{enemy.minFlee}} </li>
-                    <li>Max Flee: {{enemy.maxFlee}} </li>
-                    <li>To Hit: {{enemy.toHit}} </li>
-                    <li>Gold: {{enemy.gold}} </li>
-                    <li>Points: {{enemy.points}} </li>
-                </ul>
+            <div id="attText">
+                Enemy<ul></ul>
             </div>
-            
-           
+            <div id="statText">
+                Status<ul></ul>
+            </div>
+            <div id="nautical">
+                <li>Direction: {{direction}}</li>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script type="text/javascript" src="game.js"></script> 
