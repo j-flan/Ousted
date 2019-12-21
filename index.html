@@ -29,17 +29,21 @@
                     <li><button v-on:click="sauce()">Heal</button></li>
                 </ul>
                 <!--handle stunned status-->
-                <ul id="decisions" v-else-if="enemy.hp > 0 && player.stunned">
+                <ul v-else-if="enemy.hp > 0 && player.stunned" id="decisions">
                     <button v-on:click="unStun(); enemyAttack()">Break Stun Status</button></ul>
+                
                 <!--location tracker and setter, based on location. roads lead to areas, after
                     road battles  (3), the direction decision buttons will show, unless you are in an
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
                     ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
-                <div id="sButton">
+                <ul id="decisions">
                     <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
                         <button v-on:click="getEnemy(); equip()">START!</button></span>
-                </div>
+                        <!--next enemy encounter-->
+                    <span v-else-if="enemy.hp == 0 && battleCount < 3" >
+                        <button v-on:click="getEnemy()">Continue Onward</button></span>
+                </ul>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
@@ -52,13 +56,19 @@
                         <button v-on:click="merchantCamp(); battCount();">To merchant camp</button></li>
                     <!--on swamp road-->
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
-                        <span v-on:click="setLocation('lake'); setDirection('W'); setBattCount(2); getEnemy()"></span></li>
+                        <button v-on:click="setLocation('lake')">To the Lake</button></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
-                        <span v-on:click="merchantCamp(); battCount()"></span></li>
+                        <button v-on:click="merchantCamp(); battCount()">To merchant camp</button></li>
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
-                        <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
-                        <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
+                        <div v-if="enemy.name == 'Lady of the Lake' && npc.lady">                     
+                            <button v-on:click="resetWeapon(); setPhantomBane(); equip(); setLocation('lake')">YES</button>
+                        </div>
+                        <div v-else>
+                            <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp (via swamp road)</button>
+                            <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button>
+                        </div>
+                    </li>
                     <!--at merchant camp-->
                     <li v-if="location == 'merchantCamp'" >
                         <div id="merch">
@@ -92,7 +102,7 @@
                                 <button v-on:click="resetOffHand(); setMagicShield(); equip()">Purchase Crested Shield(off-hand): maxHP +25, 30g</button></span>
                             <span v-if="!item.bastardSword">   
                                 <button v-on:click="resetWeapon(); setbastardSword(); equip()">Purchase Frozen Bastard Sword: DMG 6-12, dex -1, 1/6 chance STUN, 70g</button></span>
-                            <span v-if="!item.voidRapier()">   
+                            <span v-if="!item.voidRapier">   
                                 <button v-on:click="resetWeapon(); setvoidRapier(); equip()">Purchase Void Rapier: DMG 5-11, Leech 1hp from enemy on hit, 60g</button></span>                     
                             <button v-on:click="eelSauce()">Get a room at the INN, Heal 75hp, 15g</button>
                             <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 8g</button>
@@ -101,7 +111,10 @@
                         <div id="destination">
                             <button v-on:click="setLocation('city'); setBattCount(2); getEnemy()">To city streets</button>
                             <button v-on:click="setLocation('cityRoad'); setDirection('N'); setBattCount(0); getEnemy()">To merchant camp (via city road)</button>
-                        </div> 
+                        </div>
+                        <div id="destination" v-if="!npc.chaosDemonBoss">
+                            <button v-on:click="setBattCount(0); nextChapter()">Next Chapter</button>
+                        </div>
                     </li>                      
                     <!--in city streets-->
                     <li v-if="location == 'city'" >
