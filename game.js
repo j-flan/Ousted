@@ -98,6 +98,7 @@ let areas = {
 var game = new Vue({
     el: '#game',
     data:{
+        gameBackgroundImage: 'pics/gameBackground.jpg',
         backgroundImage: 'pics/start.jpg',
         heroImage: 'pics/hero1.png',
         enemyImage: 'pics/goblin.png',
