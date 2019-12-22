@@ -72,7 +72,7 @@ let randomMerchant = {name: 'Random Merchant', ability: 'swindling', hp: 0, atta
 
 //object of arrays of objects
 let areas = {
-    "start": [bear, goblins, elf, goblins],
+    "forest": [bear, goblins, elf, goblins],
     "merchantRoad" : [gutterBums, bandit, marauder, elf],
     "swampRoad" : [wolves, wraith, mudMan, leech],
     "cityRoad" : [thief, thrall, wyvren, gutterBums],
@@ -99,6 +99,7 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/start.jpg',
+        heroImage: 'pics/pixil-frame-0.png',
         location: 'start',
         direction: 'S',
         chapter: 1,
@@ -126,6 +127,10 @@ var game = new Vue({
             vamp: false,
             stunned: false
         },
+        hunter: false,
+        fighter: false,
+        farmer: false,
+        weapon: 'Hand Axe',
         player:{
             gold: 0,
             hp: 100,
@@ -172,9 +177,9 @@ var game = new Vue({
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
-                    document.getElementById("text").textContent = '-';
-                    document.getElementById("attText").textContent = '-';
-                    document.getElementById("statText").textContent = `${this.enemy.name} appears`;
+                    document.getElementById("statText").textContent = '';
+                    document.getElementById("text").textContent = '';
+                    document.getElementById("attText").textContent = `${this.enemy.name} appears`;
                     this.npcEnc(this.enemy.name);
                 }
             }
@@ -247,7 +252,7 @@ var game = new Vue({
         },
         //player and enemy attack exchange
         battle: function(){
-            document.getElementById("statText").textContent = '-';
+            document.getElementById("statText").textContent = '';
             this.attack();
             if(this.enemy.hp > 0){
                 if(!this.enemy.stunned){
@@ -273,11 +278,11 @@ var game = new Vue({
         },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
-            document.getElementById("attText").textContent = '-';
+            document.getElementById("attText").textContent = '';
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
-            this.setBattCount(0);
+            this.battCount();
             this.resetEnemy();
         },
         playerKilled: function(){
@@ -286,6 +291,10 @@ var game = new Vue({
             document.getElementById("text").textContent = '';
             this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
             this.resetEnemy();
+            this.setBattCount(0);
+            this.hunter = false;
+            this.fighter = false;
+            this.farmer = false;
             this.setLocation('start');
         },
         resetEnemy: function(){
@@ -303,7 +312,7 @@ var game = new Vue({
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){     
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
-                eOut.textContent = '-';
+                eOut.textContent = '';
                 this.battCount();
                 this.resetEnemy();
             }
@@ -433,9 +442,26 @@ var game = new Vue({
         },
         /////////////////////THIS
         chooseClass: function(){
-
+            this.setLocation('forest');
+            document.getElementById('statText').textContent = "Choose your class: Hunter - Normal.  Fighter - Easy(dex -1, maxDMG +2).   \
+            Farmer - Hard (dex -1, evade -1, maxDMG -1, maxHP +10)";
         },
-
+        setFighter: function(){
+            this.fighter = true;
+            this.equip();
+            this.player.hp = this.player.hpMax;
+            document.getElementById('statText').textContent = "You have a lifetime of fighting experince giving you more resilience +25 hpMax,\
+             but your large stature leaves you less nimble -1 evade";
+        },
+        setFarmer: function(){
+            this.farmer = true;
+            this.equip();
+            this.player.hp = this.player.hpMax;
+            document.getElementById('statText').textContent = "You're just a simple farmer -1 dex, -1 evade";
+        },
+        setHunter: function(){
+            this.hunter = true;
+        },
         eVamp: function(){
             this.enemy.hp += 1;
         },
@@ -620,52 +646,57 @@ var game = new Vue({
             //main-hand weapons, player will always have main-hand weapon.
 
             //zero for buff reset.
-            this.player.evade = 7;
-            this.player.dex = 7;
-            this.player.hpMax = 100;
+                this.player.evade = 7;
+                this.player.dex = 7;
+                this.player.hpMax = 100;
 
             if (this.item.shortSword){
                 this.player.minDmg = 3;
                 this.player.maxDmg = 6;
+                this.weapon = 'Short Sword';
+                
             }
             else if (this.item.longSword){
                 this.player.minDmg = 4;
                 this.player.maxDmg = 9;
                 this.player.dex -= 1;
+                this.weapon = 'Long Sword';
             }
             else if (this.item.phantomBane){
                 this.player.minDmg = 5;
                 this.player.maxDmg = 8;
+                this.weapon = 'Phantom Bane';
             }
             else if (this.item.bastardSword){
                 this.player.minDmg = 6;
                 this.player.maxDmg = 12;
                 this.player.dex -= 1;
                 this.player.stun = true;
+                this.weapon = 'Frozen Bastard Sword';
             }
             else if (this.item.coralKukri){
                 this.player.minDmg = 6;
                 this.player.maxDmg = 11;
                 this.player.poison = true;
+                this.weapon = 'Coral Kukri';
             }
             else if (this.item.voidRapier){
                 this.player.minDmg = 5;
                 this.player.maxDmg = 11;
                 this.player.vamp = true;
+                this.weapon = 'Void Rapier';
             }
             else if (this.item.soultrapKatana){
                 this.player.minDmg = 7;
                 this.player.maxDmg = 13;
                 this.player.vamp= true;
+                this.weapon = 'Soultrap Katana';
             }
             else if (this.item.lightningAxe){
                 this.player.minDmg = 8;
                 this.player.maxDmg = 13;
                 this.player.stun = true;
-            }
-            else{
-                this.player.minDmg = 2;
-                this.player.maxDmg = 5;
+                this.weapon = 'Lightning Axe';
             }
             //armors
             if (this.item.leatherArmor){
@@ -692,6 +723,15 @@ var game = new Vue({
             else if (this.item.parryingDagger){
                 this.player.dex += 2;
                 this.player.minDmg += 1;
+            }
+            //reset special class stats
+            if(this.farmer){
+                this.player.evade -= 1;
+                this.player.dex -= 1;
+            }
+            else if(this.fighter){
+                this.player.evade -= 1;
+                this.player.hpMax += 25;
             }
             if (this.player.hp > this.player.hpMax)
                 this.player.hp = this.player.hpMax;
@@ -720,8 +760,7 @@ var game = new Vue({
             if(name == 'Lady of the Lake'){
                 let out = document.getElementById("attText");
                 if(this.npc.lady){
-                    out.textContent = "You see a woman walk out from the lake with no hinderance \
-                    from the mass of the water. She approaches you, holding a faintly green glowing blade \
+                    out.textContent = "You see a ghostly woman walk gracefully from the lake. She approaches you, holding a faintly green glowing blade \
                     in offering. You instanly feel refreshed in her gentle gaze. +50hp. Take the blade?";
                     this.heal(50);
                 }

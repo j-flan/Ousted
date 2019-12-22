@@ -12,10 +12,11 @@
                 <h4>PLAYER</h4>
                 <ul>                  
                     <li>HP: {{player.hp}} </li>
+                    <li>Weapon: {{weapon}} </li>
                     <li>Min DMG: {{player.minDmg}} </li>
                     <li>Max DMG: {{player.maxDmg}} </li>
                     <li>Dex: {{player.dex}} </li>
-                    <li>Evade: {{player.evade}} </li>
+                    <li>Evade: {{player.evade}} </li>              
                     <li>Sauce: {{potion}}</li>
                     <li>Explosive: {{dynamite}}</li>
                     <li>Gold: {{player.gold}} </li>
@@ -25,6 +26,9 @@
             <div id="background">
                 <img :src="backgroundImage"/>
             </div>
+            <!--<div id="hero">
+                <img :src="heroImage"/>
+            </div>-->
             <div id = "enemyOutput">
                 <h4>ENEMY</h4>
                 <ul>
@@ -43,7 +47,7 @@
                 </ul>
             </div>
             <div id="buttons">
-                <ul v-if="enemy.hp > 0 && player.hp > 0 && !player.stunned" id="decisions">
+                <ul v-if="enemy.hp > 0 && player.hp > 0 && !player.stunned" id="decisions" class="fight">
                     <li><button v-on:click="battle()">Attack!</button></li>
                     <li><button v-on:click="flee()">Flee!</button></li>
                     <li v-if="chapter = 1"><button v-on:click="explosive()">Powder Bomb</button></li>
@@ -55,22 +59,27 @@
                     <button v-on:click="unStun(); enemyAttack()">Break Stun Status</button></ul>
                 
                 <!--location tracker and setter, based on location. roads lead to areas, after
-                    road battles  (3), the direction decision buttons will show, unless you are in an
+                    road battles (3), the direction decision buttons will show, unless you are in an
                     are "safe zone" (merchant camp, city proper, chapter 2: home, tomb entrance)
                     ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
                 <ul id="decisions" class="sButton">
-                    <span v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
-                        <button v-on:click="getEnemy(); equip()">START!</button></span>
+                    <div v-if="location == 'start' && enemy.hp == 0 && battleCount == 0">
+                        <button v-on:click="chooseClass()">START!</button></div>
+                    <div v-if="!hunter && !fighter && !farmer && location == 'forest'" >
+                        <button v-on:click="setHunter()">Hunter</button>
+                        <button v-on:click="setFighter()">Fighter</button>
+                        <button v-on:click="setFarmer()">Farmer</button>
+                    </div>
                         <!--next enemy encounter-->
-                    <span v-else-if="location != 'forestRoad' && enemy.hp == 0 && battleCount < 3 || 
+                    <div v-else-if="location != 'start' && location != 'forestRoad' && enemy.hp == 0 && battleCount < 3 || location != 'start' &&
                                     location == 'forestRoad' && enemy.hp == 0 && battleCount < 5">
-                        <button v-on:click="getEnemy()">Continue Onward</button></span>
+                        <button v-on:click="getEnemy()">Continue Onward</button></div>
                 </ul>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
-                    <li v-if="location == 'start' && battleCount == 3 && player.hp > 0" >
+                    <li v-if="location == 'forest' && battleCount == 3 && player.hp > 0" >
                         <!--calling battCount() resets the count to 0 if at 3-->
                         <button v-on:click="setLocation('merchantRoad'); setDirection('W'); battCount(); getEnemy()">To merchant road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
@@ -117,7 +126,7 @@
                     <li v-if="location == 'cityProper'" >
                         <!--setBattCount(2) allows for only 1 battle before direction options are shown again.
                         This is true for all AREAS (not roads)-->
-                        <!--///////////////////// MAKE MESSAGE BOARD, APOTHECARY & ARMORER ////////////////////////-->
+                        <!--///////////////////// MAKE MESSAGE BOARD ////////////////////////-->
                         <div id="merch">
                             <span v-if="!item.magicDagger">
                                 <button v-on:click="resetOffHand(); setMagicDagger(); equip()">Purchase Jeweled Dager(off-hand): minDMG +1 dex +1, 30g</button></span>
@@ -160,16 +169,16 @@
                 </ul>
             </div>
             <div id="statText">
-                Status<ul></ul>
+                <ul></ul>
             </div>
             <div id="text">
-                Player<ul></ul>
+                <ul></ul>
             </div>
             <div id="attText">
-                Enemy<ul></ul>
+                <ul></ul>
             </div>
             <div id="nautical">
-                <li>Direction: {{direction}}</li>
+                <li>Compass: {{direction}}</li>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
