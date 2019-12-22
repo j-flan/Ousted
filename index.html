@@ -9,9 +9,8 @@
     <body>
         <div id="game">
             <div id="playerOutput">
-                <h4>PLAYER</h4>
+                <h3>PLAYER</h3>
                 <ul>                  
-                    <li>HP: {{player.hp}} </li>
                     <li>Weapon: {{weapon}} </li>
                     <li>Min DMG: {{player.minDmg}} </li>
                     <li>Max DMG: {{player.maxDmg}} </li>
@@ -21,29 +20,32 @@
                     <li>Explosive: {{dynamite}}</li>
                     <li>Gold: {{player.gold}} </li>
                     <li>Points: {{player.points}} </li>
+                    <li><h4>HP: {{player.hp}}</h4></li>
                 </ul>
             </div>
             <div id="background">
                 <img :src="backgroundImage"/>
             </div>
-            <!--<div id="hero">
+            <div id="hero" v-if="enemy.hp > 0">
                 <img :src="heroImage"/>
-            </div>-->
+            </div>
+            <div id="enemy" v-if="enemy.hp > 0">
+                <img :src="enemyImage"/>
+            </div>
             <div id = "enemyOutput">
-                <h4>ENEMY</h4>
+                <h3>ENEMY</h3>
                 <ul>
                     <li>Enemy: {{enemy.name}} </li>
                     <li v-if="enemy.poison" >Ability: Poison</li>
                     <li v-else-if="enemy.stun">Ability: Stun</li>
                     <li v-else-if="enemy.vamp">Ability: Leech </li>
-                    <li v-else>Ability: None</li>
-                    <li v-if="enemy.hp > 0" >HP: {{enemy.hp}} </li>
-                    <li v-else>HP: 0</li>
+                    <li v-else>Ability: None</li>            
                     <li>Min Dmg: {{enemy.minDmg}} </li>
                     <li>Max Dmg: {{enemy.maxDmg}} </li>
                     <li>To Hit: {{enemy.toHit}} </li>
                     <li>Gold: {{enemy.gold}} </li>
                     <li>Points: {{enemy.points}} </li>
+                    <li><h4>HP: {{enemy.hp}}</h4></li>
                 </ul>
             </div>
             <div id="buttons">

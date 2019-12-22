@@ -99,7 +99,8 @@ var game = new Vue({
     el: '#game',
     data:{
         backgroundImage: 'pics/start.jpg',
-        heroImage: 'pics/pixil-frame-0.png',
+        heroImage: 'pics/hero1.png',
+        enemyImage: 'pics/goblin.png',
         location: 'start',
         direction: 'S',
         chapter: 1,
@@ -177,8 +178,8 @@ var game = new Vue({
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
-                    document.getElementById("statText").textContent = '';
-                    document.getElementById("text").textContent = '';
+                    document.getElementById("statText").textContent = '...............';
+                    document.getElementById("text").textContent = '...............';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
                     this.npcEnc(this.enemy.name);
                 }
@@ -252,7 +253,7 @@ var game = new Vue({
         },
         //player and enemy attack exchange
         battle: function(){
-            document.getElementById("statText").textContent = '';
+            document.getElementById("statText").textContent = '...............';
             this.attack();
             if(this.enemy.hp > 0){
                 if(!this.enemy.stunned){
@@ -278,7 +279,7 @@ var game = new Vue({
         },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
-            document.getElementById("attText").textContent = '';
+            document.getElementById("attText").textContent = '...............';
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
@@ -287,8 +288,8 @@ var game = new Vue({
         },
         playerKilled: function(){
             document.getElementById("statText").textContent = "GAME OVER";
-            document.getElementById("attText").textContent = '';
-            document.getElementById("text").textContent = '';
+            document.getElementById("attText").textContent = '...............';
+            document.getElementById("text").textContent = '...............';
             this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
             this.resetEnemy();
             this.setBattCount(0);
@@ -312,7 +313,7 @@ var game = new Vue({
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){     
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
-                eOut.textContent = '';
+                eOut.textContent = '...............';
                 this.battCount();
                 this.resetEnemy();
             }
