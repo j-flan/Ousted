@@ -99,8 +99,8 @@ var game = new Vue({
     data:{
         gameBackgroundImage: 'pics/gameBackground.jpg',
         backgroundImage: 'pics/start.jpg',
-        heroImage: 'pics/hero1.png',
-        enemyImage: 'pics/goblin.png',
+        heroImage: 'gifs/hero1.gif',
+        enemyImage: 'gifs/goblin.gif',
         enemyHold: empty,
         location: 'start',
         direction: 'S',
@@ -182,8 +182,8 @@ var game = new Vue({
                     document.getElementById("statText").textContent = '...............';
                     document.getElementById("text").textContent = '...............';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
-                    //this.enemyImage = `pics/${enemy.name}.png`;
-                    this.enemyImage = `pics/goblin.png`;
+                    //this.enemyImage = `gifs/${enemy.name}.gif`;
+                    this.enemyImage = `gifs/goblin.gif`;
                     this.npcEnc(this.enemy.name);
                 }
             }
@@ -794,8 +794,8 @@ var game = new Vue({
                 if(this.npc.victim){
                     out.textContent = "You come accross two Greasy Vandals attempting an unsavory act upon a young lady. \
                         You meet their eyes and your fist clenches your blade";
-                    //this.enemyImage = `pics/vandal.png`;
-                    this.enemyImage = 'pics/goblin.png';
+                    //this.enemyImage = `gifs/vandal.gif`;
+                    this.enemyImage = 'gifs/goblin.gif';
                     this.enemy = this.enemyHold;
                     this.enemyHold = empty;  
                 }
@@ -814,8 +814,8 @@ var game = new Vue({
                     + "I am merely an agent of Chaos and make no decision against fate."
                     + "However, I can see into your mind and know that you desire revenge more than your life..."
                     + "Have at you!  Regen 50% MaxHP!";
-                    //this.enemyImage = `pics/chaosDemon.png`;
-                    this.enemyImage = 'pics/goblin.png';
+                    //this.enemyImage = `gifs/chaosDemon.gif`;
+                    this.enemyImage = 'gifs/goblin.gif';
                     this.enemy = this.enemyHold;
                     this.enemyHold = empty;
                     this.heal(this.player.hpMax / 2);   
@@ -831,8 +831,8 @@ var game = new Vue({
                 let x = Math.floor((Math.random() * 2) + 1);
                 if (x == 2){
                     out.textContent  = `it was a ruse!. ${this.enemyHold.name} attacks!`;
-                    //this.enemyImage = `pics/${enemy.name}.png`;
-                    this.enemyImage = 'pics/goblin.png';
+                    //this.enemyImage = `gifs/${enemy.name}.gif`;
+                    this.enemyImage = 'gifs/goblin.gif';
                     this.enemy = this.enemyHold;
                     this.enemyHold = empty;
                     this.enemyAttack();
