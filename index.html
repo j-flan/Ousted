@@ -87,9 +87,19 @@
                         <button v-on:click="setLocation('merchantRoad'); setDirection('W'); battCount(); getEnemy()">To merchant road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
                     <!--on merchant road-->
+                    <li v-if="location == 'merchantRoad'" >
+                        <div v-if="enemyHold.name == 'Bandit'">                     
+                            <button v-on:click="choiceEncounter()">YES</button>
+                        </div>
+                    </li>
                     <li v-if="location == 'merchantRoad' && battleCount == 3" >
                         <button v-on:click="merchantCamp();">To merchant camp</button></li>
                     <!--on swamp road-->
+                    <li v-if="location == 'swampRoad'" >
+                        <div v-if="enemyHold.name == 'Wraith'">                     
+                            <button v-on:click="choiceEncounter()">YES</button>
+                        </div>
+                    </li>
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
                         <button v-on:click="setLocation('lake')">To the Lake</button></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
@@ -136,9 +146,9 @@
                             <span v-if="!item.magicShield">
                                 <button v-on:click="resetOffHand(); setMagicShield(); equip()">Purchase Crested Shield(off-hand): maxHP +25, 30g</button></span>
                             <span v-if="!item.bastardSword">   
-                                <button v-on:click="resetWeapon(); setbastardSword(); equip()">Purchase Frozen Bastard Sword: DMG 6-12, dex -1, 1/6 chance STUN, 70g</button></span>
+                                <button v-on:click="resetWeapon(); setBastardSword(); equip()">Purchase Frozen Bastard Sword: DMG 6-12, dex -1, 1/6 chance STUN, 70g</button></span>
                             <span v-if="!item.voidRapier">   
-                                <button v-on:click="resetWeapon(); setvoidRapier(); equip()">Purchase Void Rapier: DMG 5-11, Leech 1hp from enemy on hit, 60g</button></span>                     
+                                <button v-on:click="resetWeapon(); setVoidRapier(); equip()">Purchase Void Rapier: DMG 5-11, Leech 1hp from enemy on hit, 60g</button></span>                     
                             <button v-on:click="eelSauce()">Get a room at the INN, Heal 75hp, 15g</button>
                             <button v-on:click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 8g</button>
                             <button v-on:click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
@@ -152,10 +162,19 @@
                         </div>
                     </li>                      
                     <!--in city streets-->
+                    
                     <li v-if="location == 'city'" >
+                        <div v-if="enemyHold.name == 'Greasy Vandal'">                     
+                            <button v-on:click="choiceEncounter()">YES</button>
+                        </div>
                         <button v-on:click="cityProper()">To city proper</button>
                         <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
                     <!--on city road-->
+                    <li v-if="location == 'cityRoad'" >
+                        <div v-if="enemyHold.name == 'Thrall'">                     
+                            <button v-on:click="choiceEncounter()">YES</button>
+                        </div>
+                    </li>
                     <li v-if="location == 'cityRoad' && direction == 'S' && battleCount == 3" >
                         <button v-on:click="cityProper(); battCount()">To city proper</button></li>
                     <li v-if="location == 'cityRoad' && direction == 'N' && battleCount == 3" >

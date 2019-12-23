@@ -13,7 +13,6 @@ let mudMan = {name: "Mud Man", hp: 14, attackStyle: "attacks", minDmg: 3, maxDmg
 let poo = {name: "Poo", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 6, maxHit: 11, minFlee: 7, maxFlee: 10, toHit: 8, gold: 8, points: 70, poison: false,stun: false,vamp: false};
 let leech = {name: "Leech", hp: 14, attackStyle: "bites", minDmg: 3, maxDmg: 8, minHit: 4, maxHit: 12, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 35, poison: false,stun: false,vamp: true};
 let mLeech = {name: "Massive Leech", hp: 20, attackStyle: "bites", minDmg: 4, maxDmg: 9, minHit: 4, maxHit:12 , minFlee: 5, maxFlee: 10, toHit: 8, gold: 10, points: 80, poison: false,stun: false,vamp: true};
-let rWraith = {name: "Rotten Wraith", hp: 24, attackStyle: "swipes", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 10, toHit: 9, gold: 8, points: 80, poison: false,stun: false,vamp: false};
 let thief = {name: "Thief", hp: 15, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 10, toHit: 8, gold: 5, points: 40, poison: false,stun: false,vamp: false};
 let thrall = {name: "Thrall", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 6, maxFlee: 12, toHit: 8, gold: 12, points: 60, poison: false,stun: false,vamp: false};
 let wyvren = {name: "Wyvren", hp: 25, attackStyle: "claws", minDmg: 5, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 6, maxFlee: 12, toHit: 8, gold: 11, points: 100, poison: false,stun: false,vamp: false};
@@ -102,6 +101,7 @@ var game = new Vue({
         backgroundImage: 'pics/start.jpg',
         heroImage: 'pics/hero1.png',
         enemyImage: 'pics/goblin.png',
+        enemyHold: empty,
         location: 'start',
         direction: 'S',
         chapter: 1,
@@ -182,6 +182,8 @@ var game = new Vue({
                     document.getElementById("statText").textContent = '...............';
                     document.getElementById("text").textContent = '...............';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
+                    //this.enemyImage = `pics/${enemy.name}.png`;
+                    this.enemyImage = `pics/goblin.png`;
                     this.npcEnc(this.enemy.name);
                 }
             }
@@ -280,12 +282,22 @@ var game = new Vue({
         },
         enemyKilled: function(){
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
-            document.getElementById("attText").textContent = '...............';
+            document.getElementById("attText").textContent = `Gained ${this.enemy.gold} gold!`;
             //add spoils to player stats
             this.player.gold += this.enemy.gold;
             this.player.points += this.enemy.points;
             this.battCount();
             this.resetEnemy();
+            if(this.enemy.name == 'Greasy Vandal' && this.npc.victim){
+                this.vandalDeath();
+                this.npc.victim = false;
+            }
+            //boss kill glitch? happens on first enemy kill without location check//////////////////////////////////////////////
+            if(this.enemy.name = 'Chaos Demon' && this.npc.chaosDemonBoss && this.location == 'mountain'){
+                this.chaosDemonDeath();
+                this.npc.chaosDemonBoss = false;
+            }
+            
         },
         playerKilled: function(){
             document.getElementById("statText").textContent = "GAME OVER";
@@ -297,6 +309,7 @@ var game = new Vue({
             this.hunter = false;
             this.fighter = false;
             this.farmer = false;
+            this.weapon = 'Hand Axe';
             this.setLocation('start');
         },
         resetEnemy: function(){
@@ -758,6 +771,92 @@ var game = new Vue({
         ladyFalse: function(){
             this.npc.lady = false;
         },
+        vandalDeath: function(){
+            document.getElementById('statText').textContent = "You wipe the blood from your blade and see the girl not far away. \
+                She is shaken, but thanks you and gives you a kiss on the cheek." +
+                "It felt so wonderful you breifly closed your eyes, and when you opened them she was gone. +25 Max HP!";
+                this.player.hpMax += 25;
+                this.player.hp += 25;
+        },
+        chaosDemonDeath: function(){
+            document.getElementById('statText').textContent ="You swing!... and your blade cuts through empty air."
+            + "an intense gust of wind throws you forward violently as the demon imploded!"
+            + "A small piece of glowing ore has broken apart from the rest, and you pick it up."
+            + "It is extremely heavy for its size, and you immediately feel a part of yourself being tied to this small gem."
+            + "+25 Max HP! HP fully restored! + 50 gold!";
+            this.player.hpMax += 25;
+            this.player.hp = this.player.hpMax;
+        },
+        choiceEncounter: function(){
+            let out = document.getElementById('statText');
+            //VANDAL MINI-BOSS
+            if (this.enemyHold.name == "Greasy Vandal"){
+                if(this.npc.victim){
+                    out.textContent = "You come accross two Greasy Vandals attempting an unsavory act upon a young lady. \
+                        You meet their eyes and your fist clenches your blade";
+                    //this.enemyImage = `pics/vandal.png`;
+                    this.enemyImage = 'pics/goblin.png';
+                    this.enemy = this.enemyHold;
+                    this.enemyHold = empty;  
+                }
+                else{
+                    out.textContent = "Oh a penny! gold +1";
+                    this.player.gold +=1;
+                    this.enemyHold = empty;
+                }
+            }
+             //CHAOS DEMON BOSS
+            else if (this.enemyHold.name == "Chaos Demon"){
+                if(this.npc.chaosDemonBoss){
+                    out.textContent = "You stop in your tracks and regain your own sight, now realizing that you had lost it."
+                    + "Filling your gaze is a huge creature, with slightly human form, though molten and amorphous."
+                    + "Chaos Demon: Have you come all this way to seek revenge for your village in the forest?"
+                    + "I am merely an agent of Chaos and make no decision against fate."
+                    + "However, I can see into your mind and know that you desire revenge more than your life..."
+                    + "Have at you!  Regen 50% MaxHP!";
+                    //this.enemyImage = `pics/chaosDemon.png`;
+                    this.enemyImage = 'pics/goblin.png';
+                    this.enemy = this.enemyHold;
+                    this.enemyHold = empty;
+                    this.heal(this.player.hpMax / 2);   
+                }
+                else{
+                    out.textContent = "Oh a penny! gold +1";
+                    this.player.gold +=1;
+                    this.enemyHold = empty;
+                }
+            }
+            //GENERAL ENCOUNTER
+            else{
+                let x = Math.floor((Math.random() * 2) + 1);
+                if (x == 2){
+                    out.textContent  = `it was a ruse!. ${this.enemyHold.name} attacks!`;
+                    //this.enemyImage = `pics/${enemy.name}.png`;
+                    this.enemyImage = 'pics/goblin.png';
+                    this.enemy = this.enemyHold;
+                    this.enemyHold = empty;
+                    this.enemyAttack();
+                }
+                ////////NEEDS TO BE UNIQUE FOR CERTAIN ENEMIES
+                else if (this.enemyHold.name == "Wraith"){
+                    this.player.gold += this.enemyHold.gold / 2;
+                    out.textContent = `You find ${this.enemyHold.gold / 2} gold! that was too easy...`;
+                    this.enemyHold = empty;
+                }
+                else if (this.enemyHold.name == "Thrall"){
+                    this.player.gold += this.enemyHold.gold / 2;
+                    out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
+                        He hands you ${this.enemyHold.gold / 2} gold for your help. that was too easy...`;
+                    this.enemyHold = empty;
+                }
+                else if (this.enemyHold.name == "Bandit"){
+                    this.player.gold += this.enemyHold.gold / 2;
+                    out.textContent = `You spend the rest of the day helping the man fix his cart. \
+                        He hands you ${this.enemyHold.gold / 2} gold for your help and company. that was too easy...`;
+                    this.enemyHold = empty;
+                }
+            }
+        },
         npcEnc: function(name){
             if(name == 'Lady of the Lake'){
                 let out = document.getElementById("attText");
@@ -775,41 +874,110 @@ var game = new Vue({
 
             ///////////////////////////////////There are more//////////////////////////////////
             if(name == 'Random Merchant'){
-
+                this.backgroundImage = 'pics/randomMerchant.jpg';
             }
 
-            if(name == 'Wraith' || name == 'rWraith'){
-
+            if(name == 'Wraith'){
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = "Something shiny catches your eye... Check it out?";
             }
             if(name == 'Thrall'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = "A terrified looking man runs up to you from the West. \
+                He says a small dragon tried to carry off his carriage to the mountain but dropped it on the way. \
+                He desperately needs help getting his shit back together... Offer your help?";
             }
             if(name == 'Bandit'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = "A man is busy mending the wheel of his cart. Do you want to help?";
             }
             if(name == 'Mimic'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Murder Crows'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Greasy Vandal'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = "You hear a hushed scream from down the alley. Take a look?";
             }
             if(name == 'Chaos'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Chaos Demon'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = "A voice that is much different than your own begins to tug on your mind. \
+                    Give in to  the foreign voice?";
             }
             if(name == 'Necro Horde'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Gryphon'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Litch King'){
-                
+                this.enemyImage = '';
+                this.enemyHold = this.enemy;
+                this.enemy = empty;
+                let eOut = document.getElementById('attText');
+                let out = document.getElementById('statText');
+                eOut.textContent = "...............";
+                out.textContent = ""; ////////////////////////////FILL ME IN
             }
         }
     }
