@@ -99,8 +99,9 @@ var game = new Vue({
     data:{
         gameBackgroundImage: 'pics/gameBackground.jpg',
         backgroundImage: 'pics/start.jpg',
-        heroImage: 'gifs/hero1.gif',
-        enemyImage: 'gifs/goblin.gif',
+        heroImage: '',
+        enemyImage: '',
+        strike: '',
         enemyHold: empty,
         location: 'start',
         direction: 'S',
@@ -146,7 +147,7 @@ var game = new Vue({
             poisonCount: 0,
             stun: false,
             vamp: false,
-            stunned: false
+            stunned: false,
         },
         npc:{
             lady: true,
@@ -176,17 +177,24 @@ var game = new Vue({
         getEnemy: function(){  
             for (var key in areas){
                 if (key == this.location){
+                    this.setHeroImage('gifs/hero1.gif');
                     let rand = Math.floor(Math.random() * 4);       
                     this.enemy = areas[key][rand];
                     this.tmpHp = this.enemy.hp;
                     document.getElementById("statText").textContent = '...............';
                     document.getElementById("text").textContent = '...............';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
-                    //this.enemyImage = `gifs/${enemy.name}.gif`;
-                    this.enemyImage = `gifs/goblin.gif`;
+                    //this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
+                    this.setEnemyImage(`gifs/goblin.gif`);
                     this.npcEnc(this.enemy.name);
                 }
             }
+        },
+        setEnemyImage: function(image){
+            this.enemyImage = image;
+        },
+        setHeroImage: function(image){
+            this.heroImage = image;
         },
         setImage: function(newImage){
             this.backgroundImage = newImage;
@@ -202,12 +210,30 @@ var game = new Vue({
             this.chapter += 1;
             this.player.hp += 25;
         },
+        enemyHit: function(){
+            //this.setEnemyImage(`pics/${this.enemy.name}.png`);
+            this.setEnemyImage(`pics/goblin.png`);
+        },
+        heroHit: function(){
+            this.setHeroImage('pics/hero1.png');
+        },
+        strikeAnimation: function(){
+            this.strike = 'gifs/strike.gif';
+        },
+        hitAnimation: function(){
+            this.strikeAnimation();
+            this.enemyHit();
+            setTimeout(()=>{this.strikeAnimation(); this.strike = ''},500);
+            // WILL REPLACE GOBLIN ----> this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
+            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(`gifs/goblin.gif`);},750);
+        },
         attack: function(){          
             //hit or miss
             let out = document.getElementById("text");
             let hit = Math.floor((Math.random() * this.enemy.toHit) + 1);
             //hit for random damage between min & max
             if (this.player.dex >= hit){
+                this.hitAnimation();
                 let range = this.player.maxDmg - this.player.minDmg;
                 let dmg = Math.floor((Math.random() * range)+ this.player.minDmg);
                 this.enemy.hp -= dmg;
@@ -221,11 +247,13 @@ var game = new Vue({
                 //enemy killed
                 if (this.enemy.hp <= 0){
                     this.enemyKilled();
+                    
                 } 
             }
             //miss
             else{
                 out.textContent = "You Miss!";
+                
             }        
         },
         enemyAttack: function(){
@@ -236,6 +264,9 @@ var game = new Vue({
 
             //hit for random damage between min & max
             if (hit >= this.player.evade){
+               //hero attack timeout setTimeout(()=>{this.setHeroImage(`gifs/hero1.gif`); this.heroHit()},750);
+                this.heroHit();
+                setTimeout(()=>{this.heroHit(); this.setHeroImage(`gifs/hero1.gif`)},750);
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
@@ -260,7 +291,7 @@ var game = new Vue({
             this.attack();
             if(this.enemy.hp > 0){
                 if(!this.enemy.stunned){
-                    this.enemyAttack();
+                    this.enemyAttack();     
                 }
                 else
                     this.enemy.stunned = false;
@@ -281,6 +312,7 @@ var game = new Vue({
             this
         },
         enemyKilled: function(){
+            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(''); this.setHeroImage('')},750);
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
             document.getElementById("attText").textContent = `Gained ${this.enemy.gold} gold!`;
             //add spoils to player stats
@@ -288,6 +320,7 @@ var game = new Vue({
             this.player.points += this.enemy.points;
             this.battCount();
             this.resetEnemy();
+            
             if(this.enemy.name == 'Greasy Vandal' && this.npc.victim){
                 this.vandalDeath();
                 this.npc.victim = false;
@@ -300,6 +333,8 @@ var game = new Vue({
             
         },
         playerKilled: function(){
+            this.setEnemyImage(''); 
+            this.setHeroImage('');
             document.getElementById("statText").textContent = "GAME OVER";
             document.getElementById("attText").textContent = '...............';
             document.getElementById("text").textContent = '...............';
@@ -309,6 +344,7 @@ var game = new Vue({
             this.hunter = false;
             this.fighter = false;
             this.farmer = false;
+            
             this.weapon = 'Hand Axe';
             this.setLocation('start');
         },
@@ -319,6 +355,7 @@ var game = new Vue({
             this.enemy = empty;
         },
         flee: function(){
+            
             let out = document.getElementById("text");
             let eOut = document.getElementById("attText");        
             //chance to flee, evade must be larger than random enemy
@@ -357,6 +394,7 @@ var game = new Vue({
 
         },
         explosive: function(){
+            
             let out = document.getElementById("text");
             if (this.dynamite){
                 if (this.chapter == 1){
@@ -443,6 +481,7 @@ var game = new Vue({
         },
         //use potion in battle
         sauce: function(){
+            
             if(this.potion){
                 if (this.chapter == 1)
                     this.heal(25);       

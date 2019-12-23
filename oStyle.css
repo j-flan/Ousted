@@ -134,6 +134,14 @@
     right: 40%;
     width: 15%
 }
+#strike img{
+    z-index: 3;
+    display: block;
+    position: absolute;
+    top: 20%;
+    right: 35%;
+    width: 25%
+}
 #text, #attText, #statText{
     display: block;
     float: left;
