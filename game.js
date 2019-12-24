@@ -184,8 +184,7 @@ var game = new Vue({
                     document.getElementById("statText").textContent = '...............';
                     document.getElementById("text").textContent = '...............';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
-                    //this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
-                    this.setEnemyImage(`gifs/goblin.gif`);
+                    this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
                     this.npcEnc(this.enemy.name);
                 }
             }
@@ -211,21 +210,21 @@ var game = new Vue({
             this.player.hp += 25;
         },
         enemyHit: function(){
-            //this.setEnemyImage(`pics/${this.enemy.name}.png`);
-            this.setEnemyImage(`pics/goblin.png`);
+            this.setEnemyImage(`pics/${this.enemy.name}.png`);
         },
         heroHit: function(){
             this.setHeroImage('pics/hero1.png');
         },
         strikeAnimation: function(){
             this.strike = 'gifs/strike.gif';
+            this.setHeroImage('gifs/heroAttack.gif');
         },
         hitAnimation: function(){
             this.strikeAnimation();
             this.enemyHit();
-            setTimeout(()=>{this.strikeAnimation(); this.strike = ''},500);
-            // WILL REPLACE GOBLIN ----> this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
-            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(`gifs/goblin.gif`);},750);
+            setTimeout(()=>{this.strikeAnimation(); this.strike = ''; this.setHeroImage('gifs/hero1.gif');},500);
+            
+            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(`gifs/${this.enemy.name}.gif`);},750);
         },
         attack: function(){          
             //hit or miss
@@ -264,9 +263,10 @@ var game = new Vue({
 
             //hit for random damage between min & max
             if (hit >= this.player.evade){
-               //hero attack timeout setTimeout(()=>{this.setHeroImage(`gifs/hero1.gif`); this.heroHit()},750);
-                this.heroHit();
-                setTimeout(()=>{this.heroHit(); this.setHeroImage(`gifs/hero1.gif`)},750);
+                if(this.heroImage != 'gifs/heroAttack.gif'){
+                    this.heroHit();
+                    setTimeout(()=>{this.heroHit(); this.setHeroImage(`gifs/hero1.gif`)},750);
+                }          
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
@@ -344,7 +344,8 @@ var game = new Vue({
             this.hunter = false;
             this.fighter = false;
             this.farmer = false;
-            
+            this.setHeroImage('');
+            this.setEnemyImage('');
             this.weapon = 'Hand Axe';
             this.setLocation('start');
         },
