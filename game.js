@@ -3,16 +3,13 @@
 let bear = {name: "Bear", hp: 12, attackStyle: "swipes", minDmg: 3, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 5, points: 50, poison: false,stun: false,vamp: false};
 let goblins = {name: "Goblin", hp: 6, attackStyle: "attack", minDmg: 1, maxDmg: 5, minHit: 5, maxHit: 10, minFlee: 6, maxFlee: 10, toHit: 8, gold: 3, points:10 , poison: false,stun: false,vamp: false};
 let elf = {name: "Elf", hp: 8, attackStyle: "attacks", minDmg: 3, maxDmg: 5, minHit: 6, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
-let gutterBums = {name: "Gutter Bum", hp: 12, attackStyle: "attack", minDmg: 1, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 4, points: 25, poison: false,stun: false,vamp: false};
-let bandit = {name: "Bandit", hp: 8, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
+let bandit = {name: "Bandit", hp: 12, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
 let marauder = {name: "Marauder", hp: 10, attackStyle: "attacks", minDmg: 5, maxDmg: 8, minHit: 5, maxHit: 10, minFlee: 6, maxFlee: 10, toHit: 8, gold: 7, points: 40, poison: false,stun: false,vamp: false};
 let wolves = {name: "Wolf", hp: 15, attackStyle: "attack", minDmg: 2, maxDmg: 7, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 10, toHit: 8, gold: 5, points: 30, poison: false,stun: false,vamp: false};
-let vWolves = {name: "Vicious Wolf", hp: 20, attackStyle: "attack", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 10, toHit: 9, gold: 7, points: 40, poison: false,stun: false,vamp: false};
 let wraith = {name: "Wraith", hp: 18, attackStyle: "attacks", minDmg: 4, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 10, toHit: 9, gold: 8, points: 50, poison: false,stun: false,vamp: false};
 let mudMan = {name: "Mud Man", hp: 14, attackStyle: "attacks", minDmg: 3, maxDmg: 8, minHit: 5, maxHit: 11, minFlee: 6, maxFlee: 10, toHit: 8, gold: 5, points: 40, poison: false,stun: false,vamp: false};
 let poo = {name: "Poo", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 6, maxHit: 11, minFlee: 7, maxFlee: 10, toHit: 8, gold: 8, points: 70, poison: false,stun: false,vamp: false};
 let leech = {name: "Leech", hp: 14, attackStyle: "bites", minDmg: 3, maxDmg: 8, minHit: 4, maxHit: 12, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 35, poison: false,stun: false,vamp: true};
-let mLeech = {name: "Massive Leech", hp: 20, attackStyle: "bites", minDmg: 4, maxDmg: 9, minHit: 4, maxHit:12 , minFlee: 5, maxFlee: 10, toHit: 8, gold: 10, points: 80, poison: false,stun: false,vamp: true};
 let thief = {name: "Thief", hp: 15, attackStyle: "attacks", minDmg: 4, maxDmg: 6, minHit: 4, maxHit: 11, minFlee: 5, maxFlee: 10, toHit: 8, gold: 5, points: 40, poison: false,stun: false,vamp: false};
 let thrall = {name: "Thrall", hp: 20, attackStyle: "lunges", minDmg: 3, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 6, maxFlee: 12, toHit: 8, gold: 12, points: 60, poison: false,stun: false,vamp: false};
 let wyvren = {name: "Wyvren", hp: 25, attackStyle: "claws", minDmg: 5, maxDmg: 9, minHit: 4, maxHit: 11, minFlee: 6, maxFlee: 12, toHit: 8, gold: 11, points: 100, poison: false,stun: false,vamp: false};
@@ -72,9 +69,9 @@ let randomMerchant = {name: 'Random Merchant', ability: 'swindling', hp: 0, atta
 //object of arrays of objects
 let areas = {
     "forest": [bear, goblins, elf, goblins],
-    "merchantRoad" : [gutterBums, bandit, marauder, elf],
+    "merchantRoad" : [wolves, bandit, marauder, elf],
     "swampRoad" : [wolves, wraith, mudMan, leech],
-    "cityRoad" : [thief, thrall, wyvren, gutterBums],
+    "cityRoad" : [thief, thrall, wyvren, bandit],
     "mountainRoad" : [fSprite, mimic, mTroll, bat],
     "valleyRoad" : [fern, zombie, panther, malboro],
     "marshRoad" : [litchling, crows, banshee, aElement],
@@ -83,7 +80,7 @@ let areas = {
     "forestRoad" : [witch, bat, mush, centaur],
     "plainsRoad" : [chimera, crows, sandMan, golem],
     "volcanoRoad" : [chaosEl, fBat, omegaTroll, chimera],
-    "lake" : [mLeech, mudMan, lady, poo],
+    "lake" : [leech, mudMan, lady, poo],
     "city" : [drunk, vandal, rat, cultist],
     "mountain" : [fSprite, chaosDemon, mTroll, bat],
     "valley" : [fern, randomMerchant, viper, malboro],
@@ -325,7 +322,7 @@ var game = new Vue({
                 this.vandalDeath();
                 this.npc.victim = false;
             }
-            //boss kill glitch? happens on first enemy kill without location check//////////////////////////////////////////////
+            //chaos demon kill glitch? happens on first enemy kill without location check//////////////////////////////////////////////
             if(this.enemy.name = 'Chaos Demon' && this.npc.chaosDemonBoss && this.location == 'mountain'){
                 this.chaosDemonDeath();
                 this.npc.chaosDemonBoss = false;
@@ -344,8 +341,6 @@ var game = new Vue({
             this.hunter = false;
             this.fighter = false;
             this.farmer = false;
-            this.setHeroImage('');
-            this.setEnemyImage('');
             this.weapon = 'Hand Axe';
             this.setLocation('start');
         },
@@ -356,7 +351,6 @@ var game = new Vue({
             this.enemy = empty;
         },
         flee: function(){
-            
             let out = document.getElementById("text");
             let eOut = document.getElementById("attText");        
             //chance to flee, evade must be larger than random enemy
@@ -367,6 +361,8 @@ var game = new Vue({
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
                 eOut.textContent = '...............';
                 this.battCount();
+                this.setHeroImage('');
+                this.setEnemyImage('');
                 this.resetEnemy();
             }
             //did not flee
@@ -871,8 +867,7 @@ var game = new Vue({
                 let x = Math.floor((Math.random() * 2) + 1);
                 if (x == 2){
                     out.textContent  = `it was a ruse!. ${this.enemyHold.name} attacks!`;
-                    //this.enemyImage = `gifs/${enemy.name}.gif`;
-                    this.enemyImage = 'gifs/goblin.gif';
+                    this.enemyImage = `gifs/${this.enemyHold.name}.gif`;
                     this.enemy = this.enemyHold;
                     this.enemyHold = empty;
                     this.enemyAttack();
@@ -882,18 +877,21 @@ var game = new Vue({
                     this.player.gold += this.enemyHold.gold / 2;
                     out.textContent = `You find ${this.enemyHold.gold / 2} gold! that was too easy...`;
                     this.enemyHold = empty;
+                    this.battCount();
                 }
                 else if (this.enemyHold.name == "Thrall"){
                     this.player.gold += this.enemyHold.gold / 2;
                     out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
                         He hands you ${this.enemyHold.gold / 2} gold for your help. that was too easy...`;
                     this.enemyHold = empty;
+                    this.battCount();
                 }
                 else if (this.enemyHold.name == "Bandit"){
                     this.player.gold += this.enemyHold.gold / 2;
                     out.textContent = `You spend the rest of the day helping the man fix his cart. \
                         He hands you ${this.enemyHold.gold / 2} gold for your help and company. that was too easy...`;
                     this.enemyHold = empty;
+                    this.battCount();
                 }
             }
         },

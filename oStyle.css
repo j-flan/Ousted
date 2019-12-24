@@ -70,7 +70,7 @@
     display: block;
     float: left;
     width: 100%;
-    clear: both;
+    clear: left;
     z-index: 99;
 }
 .fight{
@@ -82,7 +82,7 @@
     margin: 0.5% 2%;
 }
 #decisions button{
-    background-color: gray;
+    background-color: darkgray;
     color: white;
     text-align: center;
     text-decoration: none;
@@ -100,7 +100,7 @@
 #directions{
     display: block;
     width: 70%;
-    margin-left: 18%;
+    margin-left: 25%;
     clear: left;
 }
 #directions li{
@@ -170,13 +170,12 @@
 
 #merch{
     display: block;
-    float: left;
-    clear: left;
-    margin-top: 2%;
-    border: 3px solid gray;
+    position: absolute;
+    left: 24%;
+    top: 1.5%;
+    border: 3px solid gold;
     border-radius: 10px;
-    padding-bottom: 2%;
-    background-color: lightgoldenrodyellow;
+    z-index: 2;
 }
 #merch button:hover{
     background-color: rgb(143, 142, 142);
@@ -211,7 +210,7 @@
     box-shadow: 3px 1px black, 3px 3px black inset;
 }
 #merch button{
-    background-color: gray;
+    background-color: slategray;
     color:white;
     text-align: center;
     display: block;
@@ -219,8 +218,9 @@
     clear: left;
     text-decoration: none;
     border:none;
+    box-shadow: 3px 3px black;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.5vw;
     margin: 5px;
 }
 #nautical{

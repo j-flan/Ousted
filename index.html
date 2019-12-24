@@ -80,7 +80,10 @@
                         <!--next enemy encounter-->
                     <div v-else-if="location != 'start' && location != 'forestRoad' && enemy.hp == 0 && battleCount < 3 || location != 'start' &&
                                     location == 'forestRoad' && enemy.hp == 0 && battleCount < 5">
-                        <button v-on:click="getEnemy()">Continue Onward</button></div>
+                        <div v-if="enemyHold.name != 'Bandit' ^ enemyHold.name != 'Wraith' ^ enemyHold.name != 'Lady of the Lake' ^ enemyHold.name != 'Thrall' ^ enemyHold.name != 'Greasy Vandal'" >
+                            <button v-on:click="getEnemy()">Continue Onward</button>
+                        </div>
+                    </div>
                 </ul>
                 <ul v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
@@ -90,19 +93,17 @@
                         <button v-on:click="setLocation('merchantRoad'); setDirection('W'); battCount(); getEnemy()">To merchant road</button>
                         <button v-on:click="setLocation('swampRoad'); setDirection('E'); battCount(); getEnemy()">To swamp road</button></li>
                     <!--on merchant road-->
-                    <li v-if="location == 'merchantRoad'" >
-                        <div v-if="enemyHold.name == 'Bandit'">                     
-                            <button v-on:click="choiceEncounter()">YES</button>
-                        </div>
-                    </li>
+                    <div v-if="enemyHold.name == 'Bandit'">                     
+                        <button v-on:click="choiceEncounter()">YES</button>
+                        <button v-on:click="enemyHold.name = ''; battCount()">NO</button>
+                    </div>
                     <li v-if="location == 'merchantRoad' && battleCount == 3" >
                         <button v-on:click="merchantCamp();">To merchant camp</button></li>
                     <!--on swamp road-->
-                    <li v-if="location == 'swampRoad'" >
-                        <div v-if="enemyHold.name == 'Wraith'">                     
-                            <button v-on:click="choiceEncounter()">YES</button>
-                        </div>
-                    </li>
+                    <div v-if="enemyHold.name == 'Wraith'">                     
+                        <button v-on:click="choiceEncounter()">YES</button>
+                        <button v-on:click="enemyHold.name = ''; battCount()">NO</button>
+                    </div>
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
                         <button v-on:click="setLocation('lake')">To the Lake</button></li>
                     <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
@@ -111,6 +112,7 @@
                     <li v-if="location == 'lake'" >
                         <div v-if="enemy.name == 'Lady of the Lake' && npc.lady == true">                     
                             <button v-on:click="resetWeapon(); setPhantomBane(); equip(); ladyFalse()">YES</button>
+                            <button v-on:click="ladyFalse()">NO</button>
                         </div>
                         <div v-else>
                             <button v-on:click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">To merchant camp</button>
@@ -169,15 +171,16 @@
                     <li v-if="location == 'city'" >
                         <div v-if="enemyHold.name == 'Greasy Vandal'">                     
                             <button v-on:click="choiceEncounter()">YES</button>
+                            <button v-on:click="enemyHold.name = ''">NO</button>
                         </div>
                         <button v-on:click="cityProper()">To city proper</button>
-                        <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button></li>
-                    <!--on city road-->
-                    <li v-if="location == 'cityRoad'" >
-                        <div v-if="enemyHold.name == 'Thrall'">                     
-                            <button v-on:click="choiceEncounter()">YES</button>
-                        </div>
+                        <button v-on:click="setBattCount(2); getEnemy()">Keep searching area</button>
                     </li>
+                    <!--on city road-->
+                    <div v-if="enemyHold.name == 'Thrall'">                     
+                        <button v-on:click="choiceEncounter()">YES</button>
+                        <button v-on:click="enemyHold.name = ''; battCount()">NO</button>
+                    </div>
                     <li v-if="location == 'cityRoad' && direction == 'S' && battleCount == 3" >
                         <button v-on:click="cityProper(); battCount()">To city proper</button></li>
                     <li v-if="location == 'cityRoad' && direction == 'N' && battleCount == 3" >
