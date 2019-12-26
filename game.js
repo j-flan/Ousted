@@ -96,8 +96,8 @@ var game = new Vue({
     data:{
         gameBackgroundImage: 'pics/gameBackground.jpg',
         backgroundImage: 'pics/start.jpg',
-        heroImage: '',
-        enemyImage: '',
+        heroImage: 'pics/empty.png',
+        enemyImage: 'pics/empty.png',
         strike: '',
         enemyHold: empty,
         location: 'start',
@@ -299,17 +299,10 @@ var game = new Vue({
         },
         //number of battles, forest road takes 5 count
         battCount: function(){
-            if (this.location != 'forestRoad' && this.battleCount == 3 || this.location == 'forestRoad' && this.battleCount == 5)
-                this.setBattCount(0);
-            else{
-                this.battleCount += 1;
-            }        
-        },
-        continue: function(){
-            this
+            this.battleCount += 1;
         },
         enemyKilled: function(){
-            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(''); this.setHeroImage('')},750);
+            setTimeout(()=>{this.enemyHit(); this.setEnemyImage('pics/empty.png'); this.setHeroImage('pics/empty.png')},750);
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
             document.getElementById("attText").textContent = `Gained ${this.enemy.gold} gold!`;
             //add spoils to player stats
@@ -318,31 +311,26 @@ var game = new Vue({
             this.battCount();
             this.resetEnemy();
             
-            if(this.enemy.name == 'Greasy Vandal' && this.npc.victim){
+            if(this.enemyHold.name == 'Greasy Vandal' && this.npc.victim){
                 this.vandalDeath();
                 this.npc.victim = false;
+                this.enemyHold = empty;
             }
             //chaos demon kill glitch? happens on first enemy kill without location check//////////////////////////////////////////////
-            if(this.enemy.name = 'Chaos Demon' && this.npc.chaosDemonBoss && this.location == 'mountain'){
+            if(this.enemyHold.name = 'Chaos Demon' && this.npc.chaosDemonBoss && this.location == 'mountain'){
                 this.chaosDemonDeath();
                 this.npc.chaosDemonBoss = false;
+                this.enemyHold = empty;
             }
             
         },
         playerKilled: function(){
-            this.setEnemyImage(''); 
-            this.setHeroImage('');
+            this.setEnemyImage('pics/empty.png'); 
+            this.setHeroImage('pics/empty.png');
             document.getElementById("statText").textContent = "GAME OVER";
             document.getElementById("attText").textContent = '...............';
             document.getElementById("text").textContent = '...............';
-            this.player = {gold: 0,hp: 100,hpMax: 100,minDmg: 2,maxDmg: 5,dex: 7,evade: 7,points: 0, poison: false, stun: false, vamp: false};
-            this.resetEnemy();
-            this.setBattCount(0);
-            this.hunter = false;
-            this.fighter = false;
-            this.farmer = false;
-            this.weapon = 'Hand Axe';
-            this.setLocation('start');
+            setTimeout(()=>{this.setHeroImage('pics/empty.png'); location.reload()}, 2000);
         },
         resetEnemy: function(){
             //enemy hp reset for future battles
@@ -361,9 +349,10 @@ var game = new Vue({
                 out.textContent = `You run away from the ${this.enemy.name} like a bitch`;
                 eOut.textContent = '...............';
                 this.battCount();
-                this.setHeroImage('');
-                this.setEnemyImage('');
+                this.setHeroImage('pics/empty.png');
+                this.setEnemyImage('pics/empty.png');
                 this.resetEnemy();
+                this.enemyHold = empty;
             }
             //did not flee
             else{
@@ -491,7 +480,6 @@ var game = new Vue({
             }
             this.enemyAttack();
         },
-        /////////////////////THIS
         chooseClass: function(){
             this.setLocation('forest');
             document.getElementById('statText').textContent = "Choose your class: Hunter - Normal.  Fighter - Easy(dex -1, maxDMG +2).   \
@@ -694,13 +682,13 @@ var game = new Vue({
         },
         //happens at the time of purchase. sets new stats.
         equip: function(){
-            //main-hand weapons, player will always have main-hand weapon.
 
             //zero for buff reset.
                 this.player.evade = 7;
                 this.player.dex = 7;
                 this.player.hpMax = 100;
 
+            //main-hand weapons, player will always have main-hand weapon.
             if (this.item.shortSword){
                 this.player.minDmg = 3;
                 this.player.maxDmg = 6;
@@ -788,20 +776,57 @@ var game = new Vue({
                 this.player.hp = this.player.hpMax;
         },
         merchantCamp: function(){
+            let out = document.getElementById("statText");
             this.setLocation('merchantCamp');
-            document.getElementById("text").textContent = "You're at the Merchant Camp";
+            document.getElementById("attText").textContent = "...............";
+            if(this.npc.chaosDemonBoss){
+                out.textContent = "There are a couple of Vendors hanging about...";
+            }
+            else{
+                out.textContent = "Returning to the Merchant Camp, you are relieved to be walking among others again. \
+                        Though, you can't help but feel an emptyness as if you lost a part of yourself on that mountain. \
+                        You spot a man smiling at you from a distance and points South toward the City.";
+            }
+        },
+        lake: function(){
+            let out = document.getElementById("statText");
+            document.getElementById("attText").textContent = "...............";
+            this.setLocation('lake');
+            if (this.npc.lady){
+                out.textContent = "You find yourself standing at the edge of a large lake. \
+                    This lake seems strangely out of place. Take a look around?";
+            }
+            else{
+                out.textContent = "Once again, you arrive at the lake, though it does not feel the same as before";
+            }
         },
         cityProper: function(){
             this.setLocation('cityProper');
-            document.getElementById("text").textContent = "You're in the City Proper";
+            let out = document.getElementById("statText");
+            document.getElementById("attText").textContent = "...............";
+            if(this.npc.chaosDemonBoss){
+                out.textContent = "Inside the City walls, you see only a handful of people walking about \
+                    and notice smoke rising from multiple buildings";
+            }
+            else{
+                out.textContent = "You come to find a bustling city, scaffolding around the damaged biuldings, and \
+                    the smell of sulpher has disappeared. At the end of the main road you spot a large wagon and a man \
+                    busy loading it."
+            }
         },
         home: function(){
             this.setLocation('home');
-            document.getElementById("text").textContent = "You're back home";
+            document.getElementById("statText").textContent = "You're back home";
         },
         tombEntrance: function(){
             this.setLocation('tombEntrance');
-            document.getElementById("text").textContent = "You're at the Entrance to the Ancient Tomb";
+            document.getElementById("statText").textContent = "You're at the Entrance to the Ancient Tomb";
+        },
+        mountainTop: function(){
+            this.setLocation('mountain');
+            document.getElementById("statText").textContent = "...............";
+            document.getElementById("taxt").textContent = "The top of the mountain is a meandering trenchwork of jagged rock and snow covered boulders.\
+                You feel a malicious presence stirring in the air. Take a look around?";
         },
         //npc encounters
         ladyFalse: function(){
@@ -830,10 +855,9 @@ var game = new Vue({
                 if(this.npc.victim){
                     out.textContent = "You come accross two Greasy Vandals attempting an unsavory act upon a young lady. \
                         You meet their eyes and your fist clenches your blade";
-                    //this.enemyImage = `gifs/vandal.gif`;
-                    this.enemyImage = 'gifs/goblin.gif';
+                    this.enemyImage = `gifs/vandal.gif`;
                     this.enemy = this.enemyHold;
-                    this.enemyHold = empty;  
+                    //this.enemyHold = empty;  
                 }
                 else{
                     out.textContent = "Oh a penny! gold +1";
@@ -850,10 +874,9 @@ var game = new Vue({
                     + "I am merely an agent of Chaos and make no decision against fate."
                     + "However, I can see into your mind and know that you desire revenge more than your life..."
                     + "Have at you!  Regen 50% MaxHP!";
-                    //this.enemyImage = `gifs/chaosDemon.gif`;
-                    this.enemyImage = 'gifs/goblin.gif';
+                    this.enemyImage = `gifs/chaosDemon.gif`;
                     this.enemy = this.enemyHold;
-                    this.enemyHold = empty;
+                    //this.enemyHold = empty;
                     this.heal(this.player.hpMax / 2);   
                 }
                 else{
@@ -864,34 +887,40 @@ var game = new Vue({
             }
             //GENERAL ENCOUNTER
             else{
+                
                 let x = Math.floor((Math.random() * 2) + 1);
                 if (x == 2){
-                    out.textContent  = `it was a ruse!. ${this.enemyHold.name} attacks!`;
+                    out.textContent  = `it was a ruse! ${this.enemyHold.name} attacks!`;
                     this.enemyImage = `gifs/${this.enemyHold.name}.gif`;
                     this.enemy = this.enemyHold;
                     this.enemyHold = empty;
                     this.enemyAttack();
+
                 }
-                ////////NEEDS TO BE UNIQUE FOR CERTAIN ENEMIES
-                else if (this.enemyHold.name == "Wraith"){
-                    this.player.gold += this.enemyHold.gold / 2;
-                    out.textContent = `You find ${this.enemyHold.gold / 2} gold! that was too easy...`;
-                    this.enemyHold = empty;
-                    this.battCount();
-                }
-                else if (this.enemyHold.name == "Thrall"){
-                    this.player.gold += this.enemyHold.gold / 2;
-                    out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
-                        He hands you ${this.enemyHold.gold / 2} gold for your help. that was too easy...`;
-                    this.enemyHold = empty;
-                    this.battCount();
-                }
-                else if (this.enemyHold.name == "Bandit"){
-                    this.player.gold += this.enemyHold.gold / 2;
-                    out.textContent = `You spend the rest of the day helping the man fix his cart. \
-                        He hands you ${this.enemyHold.gold / 2} gold for your help and company. that was too easy...`;
-                    this.enemyHold = empty;
-                    this.battCount();
+                else{
+                    this.setHeroImage('pics/empty.png');
+                    this.setEnemyImage('pics/empty.png');
+                    ////////NEEDS TO BE UNIQUE FOR CERTAIN ENEMIES
+                    if (this.enemyHold.name == "Wraith"){
+                        this.player.gold += this.enemyHold.gold / 2;
+                        out.textContent = `You find ${this.enemyHold.gold / 2} gold! that was too easy...`;
+                        this.enemyHold = empty;
+                        this.battCount();
+                    }
+                    else if (this.enemyHold.name == "Thrall"){
+                        this.player.gold += this.enemyHold.gold / 2;
+                        out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
+                            He hands you ${this.enemyHold.gold / 2} gold for your help. that was too easy...`;
+                        this.enemyHold = empty;
+                        this.battCount();
+                    }
+                    else if (this.enemyHold.name == "Bandit"){
+                        this.player.gold += this.enemyHold.gold / 2;
+                        out.textContent = `You spend the rest of the day helping the man fix his cart. \
+                            He hands you ${this.enemyHold.gold / 2} gold for your help and company. that was too easy...`;
+                        this.enemyHold = empty;
+                        this.battCount();
+                    }
                 }
             }
         },
