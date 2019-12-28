@@ -39,18 +39,28 @@
             <div id = "enemyOutput">
                 <h3>ENEMY</h3>
                 <ul>
-                    <li>Enemy: {{enemy.name}} </li>
-                    <li v-if="enemy.poison" >Ability: Poison</li>
-                    <li v-else-if="enemy.stun">Ability: Stun</li>
-                    <li v-else-if="enemy.vamp">Ability: Leech </li>
+                    <li v-if="holdName == ''">Enemy: {{enemy.name}} </li>
+                    <li v-else>Enemy: None</li>
+                    <li v-if="holdName == ''">
+                        <li v-if="enemy.poison" >Ability: Poison</li>
+                        <li v-else-if="enemy.stun">Ability: Stun</li>
+                        <li v-else-if="enemy.vamp">Ability: Leech </li>
+                        <li v-else>Ability: None</li> 
+                    </li>
                     <li v-else>Ability: None</li>            
-                    <li>Min Dmg: {{enemy.minDmg}} </li>
-                    <li>Max Dmg: {{enemy.maxDmg}} </li>
-                    <li>To Hit: {{enemy.toHit}} </li>
-                    <li>Gold: {{enemy.gold}} </li>
-                    <li>Points: {{enemy.points}} </li>
+                    <li v-if="holdName == ''">Min Dmg: {{enemy.minDmg}} </li>
+                    <li v-else>Min Dmg: 0</li>
+                    <li v-if="holdName == ''">Max Dmg: {{enemy.maxDmg}} </li>
+                    <li v-else>Max Dmg: 0</li>
+                    <li v-if="holdName == ''">To Hit: {{enemy.toHit}} </li>
+                    <li v-else>To Hit: 0</li>
+                    <li v-if="holdName == ''">Gold: {{enemy.gold}} </li>
+                    <li v-else>Gold: 0</li>
+                    <li v-if="holdName == ''">Points: {{enemy.points}} </li>
+                    <li v-else>Points: 0</li>
                     <li>battles: {{battleCount}}</li>
-                    <li><h4>HP: {{enemy.hp}}</h4></li>
+                    <li v-if="holdName == ''"><h4>HP: {{enemy.hp}}</h4></li>
+                    <li v-else>HP: 0</li>
                 </ul>
             </div>
             <div id="buttons">
@@ -94,14 +104,14 @@
                     <!--on merchant road-->
                     <div v-if="holdName == 'Bandit'">                     
                         <button @click="choiceEncounter()">YES</button>
-                        <button @click="npcFalse(); battCount(); setEnemyHp(0)">NO</button>
+                        <button @click="npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
                     <li v-if="location == 'merchantRoad' && battleCount == 3" >
                         <button @click="merchantCamp();">Enter Merchant Camp</button></li>
                     <!--on swamp road-->
                     <div v-if="holdName == 'Wraith'">                     
                         <button @click="choiceEncounter()">YES</button>
-                        <button @click=" npcFalse(); battCount(); setEnemyHp(0)">NO</button>
+                        <button @click=" npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
                     <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
                         <button @click="lake()">To the Lake</button></li>
@@ -110,8 +120,8 @@
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
                         <div v-if="holdName == 'Lady of the Lake'">                     
-                            <button @click="resetWeapon(); setPhantomBane(); equip(); ladyFalse(); setBattCount(3); npcFalse(); setEnemyHp(0)">YES</button>
-                            <button @click="ladyFalse(); setBattCount(3); npcFalse(); setEnemyHp(0)">NO</button>
+                            <button @click="resetWeapon(); setPhantomBane(); equip(); ladyFalse(); setBattCount(3); npcFalse(); setEnemy(enemyZero)">YES</button>
+                            <button @click="ladyFalse(); setBattCount(3); npcFalse(); setEnemy(enemyZero)">NO</button>
                         </div>
                         <div v-else>
                             <button @click="setLocation('swampRoad'); setDirection('W'); setBattCount(0); getEnemy()">Back to the Merchant Camp</button>
@@ -170,7 +180,7 @@
                     <li v-if="location == 'city'" >
                         <div v-if="holdName == 'Greasy Vandal'">                     
                             <button @click="choiceEncounter()">YES</button>
-                            <button @click="npcFalse(); seBattCount(2); setEnemyHp(0)">NO</button>
+                            <button @click="npcFalse(); seBattCount(2); setEnemy(enemyZero)">NO</button>
                         </div>
                         <div v-else>
                             <button @click="cityProper()">Back to City Proper</button>
@@ -180,7 +190,7 @@
                     <!--on city road-->
                     <div v-if="holdName == 'Thrall'">                     
                         <button @click="choiceEncounter()">YES</button>
-                        <button @click="npcFalse(); battCount(); setEnemyHp(0)">NO</button>
+                        <button @click="npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
                     <li v-if="location == 'cityRoad' && direction == 'S' && battleCount == 3" >
                         <button @click="cityProper(); setBattCount(0)">Enter the City</button></li>

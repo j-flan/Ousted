@@ -72,7 +72,7 @@ var game = new Vue({
         heroImage: '',
         enemyImage: '',
         strike: '',
-        location: 'lake',
+        location: 'start',
         direction: 'S',
         chapter: 1,
         potion: false,
