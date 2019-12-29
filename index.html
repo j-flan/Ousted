@@ -1,79 +1,79 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ousted</title>
         <link rel="stylesheet" href="oStyle.css"/>
         
     </head>
     <body>
         <div id="game">
-                <img id="back" :src="gameBackgroundImage"/>
-            <div id="playerOutput">
-                <h3>PLAYER</h3>
-                <ul>                  
-                    <li>Weapon: {{weapon}} </li>
-                    <li>Min DMG: {{player.minDmg}} </li>
-                    <li>Max DMG: {{player.maxDmg}} </li>
-                    <li>Dex: {{player.dex}} </li>
-                    <li>Evade: {{player.evade}} </li>              
-                    <li>Sauce: {{potion}}</li>
-                    <li>Explosive: {{dynamite}}</li>
-                    <li>Gold: {{player.gold}} </li>
-                    <li>Points: {{player.points}} </li>
-                    <li><h4>HP: {{player.hp}}</h4></li>
-                </ul>
-            </div>
+            <img id="back" :src="gameBackgroundImage"/>
             <div id="background">
                 <img :src="backgroundImage"/>
+                <div id="hero">
+                    <img :src="heroImage"/>
+                </div>
+                <div id="enemy">
+                    <img :src="enemyImage"/>
+                </div>
+                <div id="strike">
+                    <img :src="strike"/>
+                </div>
             </div>
-            <div id="hero">
-                <img :src="heroImage"/>
+            <div id="output">
+                <div id="statText">
+                    <ul>Your home, the village of Sardina, was just burned to the ground by a ball of fire that fell from the sky.
+                        Living in the middle of the forest has its advantages, though the closest town is 3 days away on foot. 
+                        You know of a merchant to the SouthWest, but first you must make your way through the forest to find the road.
+                        Your only posessions are the clothes on your back and your Splitting Axe (2-5 DMG).</ul>
+                </div>
+                <div id="text">
+                    <ul></ul>
+                </div>
+                <div id="attText">
+                    <ul></ul>
+                </div>
             </div>
-            <div id="enemy">
-                <img :src="enemyImage"/>
-            </div>
-            <div id="strike">
-                <img :src="strike"/>
-            </div>
-            <div id = "enemyOutput">
-                <h3>ENEMY</h3>
-                <ul>
-                    <li v-if="holdName == ''">Enemy: {{enemy.name}} </li>
-                    <li v-else>Enemy: None</li>
-                    <li v-if="holdName == ''">
-                        <li v-if="enemy.poison" >Ability: Poison</li>
-                        <li v-else-if="enemy.stun">Ability: Stun</li>
-                        <li v-else-if="enemy.vamp">Ability: Leech </li>
-                        <li v-else>Ability: None</li> 
-                    </li>
-                    <li v-else>Ability: None</li>            
-                    <li v-if="holdName == ''">Min Dmg: {{enemy.minDmg}} </li>
-                    <li v-else>Min Dmg: 0</li>
-                    <li v-if="holdName == ''">Max Dmg: {{enemy.maxDmg}} </li>
-                    <li v-else>Max Dmg: 0</li>
-                    <li v-if="holdName == ''">To Hit: {{enemy.toHit}} </li>
-                    <li v-else>To Hit: 0</li>
-                    <li v-if="holdName == ''">Gold: {{enemy.gold}} </li>
-                    <li v-else>Gold: 0</li>
-                    <li v-if="holdName == ''">Points: {{enemy.points}} </li>
-                    <li v-else>Points: 0</li>
-                    <li>battles: {{battleCount}}</li>
-                    <li v-if="holdName == ''"><h4>HP: {{enemy.hp}}</h4></li>
-                    <li v-else>HP: 0</li>
-                </ul>
-            </div>
+            <div id="actionBlock">
+                <div id="playerOutput">
+                    <div>                          
+                        <li>Equip: {{weapon}} </li>
+                        <li>DMG: {{player.minDmg}}-{{player.maxDmg}} </li>
+                        <li>dex: {{player.dex}} </li>
+                        <li>ev: {{player.evade}} </li>              
+                        <li v-if="potion">pot: 1</li>
+                        <li v-else>potion: 0</li>
+                        <li v-if="dynamite">bomb: 1</li>
+                        <li v-else>bomb: 0</li>
+                        <li>G: {{player.gold}} </li>
+                        <li>P: {{player.points}} </li>             
+                    </div>
+                </div>
+                <div id="health">
+                    <strong><li>HP: {{player.hp}}</li></strong>
+                </div>
+                <div id = "enemyOutput">
+                    <div>
+                        <li v-if="holdName == ''"><strong>Foe: {{enemy.hp}}</strong></li>
+                        <li v-else>Foe: 0</li>
+                    </div>
+                </div>
+                <div id="buttons">
+                    <div v-if="activeBattle && !player.stunned" id="fightButtons">
+                        <li><button @click="battle()">Attack!</button></li>
+                        <li><button @click="flee()">Flee!</button></li>
+                        <li v-if="chapter = 1"><button @click="explosive()">Powder Bomb</button></li>
+                        <li v-else-if="chapter = 2"><button @click="explosive()">Dynamite</button></li>
+                        <li><button @click="sauce()">Heal</button></li>
+                    </div>
+                    <!--handle stunned status-->
+                    <ul v-else-if="enemy.hp > 0 && player.stunned" id="decisions">
+                        <button @click="unStun(); enemyAttack()">Break Stun Status</button></ul>
+                </div>  
+            </div>    
             <div id="buttons">
-                <ul v-if="activeBattle && !player.stunned" id="decisions" class="fight">
-                    <li><button @click="battle()">Attack!</button></li>
-                    <li><button @click="flee()">Flee!</button></li>
-                    <li v-if="chapter = 1"><button @click="explosive()">Powder Bomb</button></li>
-                    <li v-else-if="chapter = 2"><button @click="explosive()">Dynamite</button></li>
-                    <li><button @click="sauce()">Heal</button></li>
-                </ul>
-                <!--handle stunned status-->
-                <ul v-else-if="enemy.hp > 0 && player.stunned" id="decisions">
-                    <button @click="unStun(); enemyAttack()">Break Stun Status</button></ul>
+                
                 
                 <!--location tracker and setter, based on location. roads lead to areas, after
                     road battles (3), the direction decision buttons will show, unless you are in an
@@ -87,14 +87,14 @@
                         <button @click="getEnemy()">Continue Onward</button>
                     </div>
                     <div v-else-if="location == 'start' && player.hp > 0">
-                        <button @click="chooseClass()">START!</button></div>
+                        <button @click="chooseClass()">START!</button>
+                    </div>
                     <div v-if="!hunter && !fighter && !farmer && location == 'forest'" >
                         <button @click="setHunter(); getEnemy()">Hunter</button>
                         <button @click="setFighter(); getEnemy()">Fighter</button>
                         <button @click="setFarmer(); getEnemy()">Farmer</button>
                     </div>              
-                </ul>
-                <ul v-if="enemy.hp == 0" id="directions" >
+                <div v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
                     <li v-if="location == 'forest' && battleCount == 3 && player.hp > 0" >
@@ -205,24 +205,15 @@
                         <button @click="mountainTop(); setBattCount(0);; getEnemy()">To the Mountain Top</button></li>
                     <li v-if="location == 'mountainRoad' && direction == 'E' && battleCount == 3" >
                         <button @click="merchantCamp(); setBattCount(0);">Enter the Merchant Camp</button></li>             
+                </div>
                 </ul>
             </div>
-            <div id="statText">
-                <ul>Your home, the village of Sardina, was just burned to the ground by a ball of fire that fell from the sky.
-                    Living in the middle of the forest has its advantages, though the closest town is 3 days away on foot. 
-                    You know of a merchant to the SouthWest, but first you must make your way through the forest to find the road.
-                    Your only posessions are the clothes on your back and your Splitting Axe (2-5 DMG).</ul>
-            </div>
-            <div id="text">
-                <ul></ul>
-            </div>
-            <div id="attText">
-                <ul></ul>
-            </div>
+            
             <div id="nautical">
                 <li>Compass: {{direction}}</li>
             </div>
         </div>
+    </div>>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script type="text/javascript" src="game.js"></script> 
     </body>
