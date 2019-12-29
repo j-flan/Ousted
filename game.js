@@ -196,8 +196,8 @@ var game = new Vue({
                     this.rand = Math.floor(Math.random() * 4);                
                     this.setEnemy(this.areas[key][this.rand]);
                     this.setActiveBattle();
-                    document.getElementById("statText").textContent = '...............';
-                    document.getElementById("text").textContent = '...............';
+                    document.getElementById("statText").textContent = '';
+                    document.getElementById("text").textContent = '';
                     document.getElementById("attText").textContent = `${this.enemy.name} appears`;
                     this.setEnemyImage(`gifs/${this.enemy.name}.gif`);
                     this.npcEnc(this.enemy.name);
@@ -208,7 +208,7 @@ var game = new Vue({
             this.enemy.name = n.name;
             this.enemy.ability = n.ability;
             this.enemy.hp = n.hp;
-            this.enemy.attack = n.attack;
+            this.enemy.attack = n.attackStyle;
             this.enemy.minDmg = n.minDmg;
             this.enemy.maxDmg = n.maxDmg;
             this.enemy.minHit = n.minHit;
@@ -252,8 +252,9 @@ var game = new Vue({
         },
         chooseClass: function(){
             this.setLocation('forest');
-            document.getElementById('statText').textContent = "Choose your class: Hunter - Normal.  Fighter - Easy(dex -1, maxDMG +2).   \
-            Farmer - Hard (dex -1, evade -1, maxDMG -1, maxHP +10)";
+            document.getElementById('statText').textContent = "Hunter - Normal.";
+            document.getElementById('text').textContent = "Fighter - Easy(dex -1, maxDMG +2)";
+            document.getElementById('attText').textContent = "Farmer - Hard (dex -1, evade -1, maxDMG -1, maxHP +10)";
         },
         setFighter: function(){
             this.fighter = true;
@@ -331,7 +332,7 @@ var game = new Vue({
                 let range = this.enemy.maxDmg - this.enemy.minDmg;
                 let dmg = Math.floor((Math.random() * range) + this.enemy.minDmg);
                 this.player.hp -= dmg;
-                eOut.textContent = `${this.enemy.name} ${this.enemy.attackStyle} for ${dmg} dmg`;
+                eOut.textContent = `${this.enemy.name} ${this.enemy.attack} for ${dmg} dmg`;
                 if(this.enemy.vamp)
                     this.eVamp();
                 else if(this.enemy.stun)
@@ -348,7 +349,7 @@ var game = new Vue({
         },
         //player and enemy attack exchange
         battle: function(){
-            document.getElementById("statText").textContent = '...............';
+            document.getElementById("statText").textContent = '';
             this.attack();
             if(this.enemy.hp > 0){
                 if(!this.enemy.stunned){
@@ -394,8 +395,8 @@ var game = new Vue({
             this.setEnemyImage(''); 
             this.setHeroImage('');
             document.getElementById("statText").textContent = "GAME OVER";
-            document.getElementById("attText").textContent = '...............';
-            document.getElementById("text").textContent = '...............';
+            document.getElementById("attText").textContent = '';
+            document.getElementById("text").textContent = '';
             setTimeout(()=>{this.setHeroImage(''); location.reload()}, 2000);
         },
         flee: function(){
@@ -407,7 +408,7 @@ var game = new Vue({
             let chance = Math.floor((Math.random() * range) + this.enemy.minFlee);
             if (this.player.evade > chance){     
                 out.textContent = `You run away from the ${this.enemy.name}`;
-                eOut.textContent = '...............';
+                eOut.textContent = '';
                 this.enemy.hp = 0;
                 this.battCount();
                 this.setHeroImage('');
@@ -587,7 +588,7 @@ var game = new Vue({
         merchantCamp: function(){
             let out = document.getElementById("statText");
             this.setLocation('merchantCamp');
-            document.getElementById("attText").textContent = "...............";
+            document.getElementById("attText").textContent = '';
             if(this.npc.chaosDemonBoss){
                 out.textContent = "There are a couple of Vendors hanging about...";
             }
@@ -599,7 +600,7 @@ var game = new Vue({
         },
         lake: function(){
             let out = document.getElementById("statText");
-            document.getElementById("attText").textContent = "...............";
+            document.getElementById("attText").textContent = '';
             this.setLocation('lake');
             if (this.npc.lady){
                 out.textContent = "You find yourself standing at the edge of a large lake. \
@@ -612,7 +613,7 @@ var game = new Vue({
         cityProper: function(){
             this.setLocation('cityProper');
             let out = document.getElementById("statText");
-            document.getElementById("attText").textContent = "...............";
+            document.getElementById("attText").textContent = '';
             if(this.npc.chaosDemonBoss){
                 out.textContent = "Inside the City walls, you see only a handful of people walking about \
                     and notice smoke rising from multiple buildings";
@@ -633,7 +634,7 @@ var game = new Vue({
         },
         mountainTop: function(){
             this.setLocation('mountain');
-            document.getElementById("statText").textContent = "...............";
+            document.getElementById("statText").textContent = '';
             document.getElementById("taxt").textContent = "The top of the mountain is a meandering trenchwork of jagged rock and snow covered boulders.\
                 You feel a malicious presence stirring in the air. Take a look around?";
         },
@@ -758,14 +759,14 @@ var game = new Vue({
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = "Something shiny catches your eye... Check it out?";
             }
             if(name == 'Thrall'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = "A terrified looking man runs up to you from the West. \
                 He says a small dragon tried to carry off his carriage to the mountain but dropped it on the way. \
                 He desperately needs help getting his shit back together... Offer your help?";
@@ -774,42 +775,42 @@ var game = new Vue({
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = "A man is busy mending the wheel of his cart. Do you want to help?";
             }
             if(name == 'Mimic'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Murder Crows'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Greasy Vandal'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = "You hear a hushed scream from down the alley. Take a look?";
             }
             if(name == 'Chaos'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Chaos Demon'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = "A voice that is much different than your own begins to tug on your mind. \
                     Give in to  the foreign voice?";
             }
@@ -817,21 +818,21 @@ var game = new Vue({
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Gryphon'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
             if(name == 'Litch King'){
                 this.setEncounter();
                 let eOut = document.getElementById('attText');
                 let out = document.getElementById('statText');
-                eOut.textContent = "...............";
+                eOut.textContent = '';
                 out.textContent = ""; ////////////////////////////FILL ME IN
             }
         },

@@ -3,7 +3,8 @@
     display: block;
     position: absolute;
     width: 96%;
-    border: 10px solid rgb(65, 32, 10);
+    height: 96%;
+    border: 10px solid rgb(51, 50, 49);
 }
 #back{
     position: absolute;
@@ -15,110 +16,19 @@
 #back img{
     object-fit: cover;
 }
-#playerOutput{
-    display: block;
-    float: left;
-    width: 15%;
-    margin-left:6%;
-    border: 10px solid rgb(102, 57, 26);
-    box-shadow: -3px 3px rgb(34, 32, 28), -3px 3px rgb(34, 32, 28) inset;
-    border-radius: 5px;
-    background-color: lightblue;
-    z-index: 0;
-
-}
-#enemyOutput{
-    display: block;
-    float: left;
-    width: 15%;
-    border: 10px solid rgb(102, 57, 26);
-    box-shadow: 3px 3px rgb(34, 32, 28),  3px 3px rgb(34, 32, 28) inset;
-    border-radius: 5px;
-    padding-bottom: 2%;
-    padding-left: 2%;
-    color: white;
-    text-shadow: 3px 3px black;
-    background-color: firebrick;
-    z-index: -1;
-}
-#playerOutput ul, #enemyOutput ul{
-    width: 95%;
-    margin: 0% 2%;
-    list-style: none;
-    padding-left: 0;
-}
-#playerOutput ul li, #enemyOutput ul li{
-    display: block;
-    float: left;
-    clear:left;
-    width: 100%;
-    margin: 2% 2%;
-    font-size: 1.5vw;
-}
-#playerOutput h3, #enemyOutput h3{
-    display:block;
-    float:left;
-    width:95%;
-    margin-left: 5%;
-    margin-bottom: 16%;
-}
-#enemyOutput h4{
-    margin-bottom: 4%;
-    margin-top: 42%;
-}
-#buttons{
-    display: block;
-    float: left;
-    width: 100%;
-    clear: left;
-    z-index: 99;
-}
-.fight{
-    margin-left: 22%;
-}
-#decisions li{
-    display: block;
-    float: left;
-    margin: 0.5% 2%;
-}
-#decisions button{
-    background-color: darkgray;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border:none;
-    border-radius: 5px;
-    box-shadow: 3px 3px black;
-    font-size: 2vw;
-}
-#decisions button:hover{
-    background-color: rgb(143, 142, 142);
-}
-#decisions button:active {
-    box-shadow: 3px 1px black, 3px 3px black inset;
-}
-#directions{
-    display: block;
-    width: 70%;
-    margin-left: 25%;
-    clear: left;
-}
-#directions li{
-    display: block;
-    float: left;
-    margin-left: 10px;
-}
-
 #background img{
     display:block;
     float:left;
-    width: 50%;
-    border: 10px solid rgb(51, 50, 49);
+    width: 40%;
+    margin-left: 1.5%;
+    margin-top: 1%;
+    border: 5px solid rgb(51, 50, 49);
     box-shadow: 0px 3px rgb(34, 32, 28), 0px 5px rgb(34, 32, 28) inset;
     border-radius: 10px;
     z-index: 1;
 }
 #hero img{
+    border: none;
     z-index: 2;
     display: block;
     position: absolute;
@@ -127,6 +37,7 @@
     width: 20%;
 }
 #enemy img{
+    border: none;
     z-index: 2;
     display: block;
     position: absolute;
@@ -135,6 +46,7 @@
     width: 15%
 }
 #strike img{
+    border: none;
     z-index: 3;
     display: block;
     position: absolute;
@@ -142,31 +54,137 @@
     right: 35%;
     width: 25%
 }
+#output{
+    display: block;
+    float: right;
+    margin-top: 1%;
+    margin-right: 3%;
+    width: 50%;
+    height: 60%;
+    background-color: rgb(102, 79, 63);
+    border: 5px solid rgb(51, 50, 49);
+    border-radius: 10px;
+    box-shadow: 3px 3px rgb(34, 32, 28) inset, 3px 0px rgb(34, 32, 28);
+}
 #text, #attText, #statText{
     display: block;
     float: left;
-    width: 80%;
-    margin-left: 9%;
+    width: 95%;
+    color: white;
+    font-size: 1.5vw;
     text-align: center;
-    color: black;
-    background-color: white;
-    border-left: 10px solid rgb(102, 57, 26);
-    border-right: 10px solid rgb(102, 57, 26);
-    font-size: 2vw;
 }
 #statText{
-    border-top: 10px solid rgb(102, 57, 26);
-    border-radius: 10px 10px 0px 0px;
-    box-shadow: 3px 3px rgb(34, 32, 28) inset, 3px 0px rgb(34, 32, 28);
+    margin-top: 1%;
+    margin-left: 1%;
 }
-#text{
-    box-shadow: 3px 0px rgb(34, 32, 28), 3px 0px rgb(34, 32, 28) inset;
+#actionBlock{
+    margin-left: 1%;
+    display: block;
+    float:left;
+    width: 43%;
 }
-#attText{
-    border-bottom: 10px solid rgb(102, 57, 26);
-    border-radius: 0px 0px 10px 10px;
-    box-shadow: 3px 3px rgb(34, 32, 28), 3px 0px rgb(34, 32, 28) inset;
+#playerOutput{
+    display:block;
+    float:left;
+    width: 35%;
+    margin-left: 1.5%;
+    border: 5px solid rgb(51, 50, 49);
+    box-shadow: 0px 3px rgb(34, 32, 28);
+    border-radius: 10px;
+    z-index: 1;
+    background-color: rgb(102, 79, 63);
+    color: white;
+
 }
+#health{
+    display:block;
+    float:left;
+    width: 25%;
+    border: 5px solid rgb(51, 50, 49);
+    box-shadow: 0px 3px rgb(34, 32, 28);
+    border-radius: 10px;
+    z-index: 1;
+    list-style: none;
+    font-size: 1.5vw;
+    text-align: center;
+    background-color: lightskyblue;
+    color: white;
+    text-shadow: 2px 2px black;
+}
+#health li{
+    margin-top: 0.5%;
+}
+#enemyOutput{
+    display:block;
+    float:left;
+    width: 25%;
+    border: 5px solid rgb(51, 50, 49);
+    box-shadow: 0px 3px rgb(34, 32, 28);
+    border-radius: 10px;
+    z-index: 1;
+    list-style: none;
+    font-size: 1.5vw;
+    text-align: center;
+    background-color: lightcoral;
+    color: white;
+    text-shadow: 2px 2px black;
+}
+#enemyOutput li{
+    margin-top: 0.5%;
+}
+#playerOutput div{
+    width: 95%;
+    margin: 0.25%;
+    list-style: none;
+}
+#playerOutput li{
+    display: block;
+    float: left;
+    clear:left;
+    width: 90%;
+    margin: 0.25%;
+    margin-left: 2.5%;
+    font-size: 1.5vw;
+    list-style: none;
+}
+#buttons button{
+    text-align: center;
+    text-decoration: none;
+    border:none;
+    border-radius: 5px;
+    box-shadow: 3px 3px black;
+    font-size: 2vw;
+    z-index: 99;
+    margin: 0.5%;
+}
+#buttons button:hover{
+    background-color: rgb(143, 142, 142);
+}
+#decisions button:active {
+    box-shadow: 3px 1px black, 3px 3px black inset;
+}
+#fightButtons{
+    list-style: none;
+    display: block;
+    float:left;
+    width: 15%;
+}
+#decisions li{
+    display: block;
+    float: left;
+    margin: 0.5% 2%;
+}
+#directions{
+    display: block;
+    float:left;
+}
+#directions li{
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
+
 
 #merch{
     display: block;
@@ -195,20 +213,7 @@
     background-color: lightgray;
 }
 #directions button{
-    background-color: saddlebrown;
-    color:white;
-    text-align: center;
-    text-decoration: none;
-    border:none;
-    border-radius: 5px;
-    font-size: 2vw;
-    margin: 5px;
-}
-#directions button:hover{
-    background-color: rgb(143, 142, 142);
-}
-#directions button:active {
-    box-shadow: 3px 1px black, 3px 3px black inset;
+
 }
 #merch button{
     background-color: slategray;
