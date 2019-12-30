@@ -26,7 +26,7 @@
                     <ul>Your home, the village of Sardina, was just burned to the ground by a ball of fire that fell from the sky.
                         Living in the middle of the forest has its advantages, though the closest town is 3 days away on foot. 
                         You know of a merchant to the SouthWest, but first you must make your way through the forest to find the road.
-                        Your only posessions are the clothes on your back and your Splitting Axe (2-5 DMG).</ul>
+                        Your only posessions are the clothes on your back and an old dull sword (2-5 DMG).</ul>
                 </div>
                 <div id="text">
                     <ul></ul>
@@ -59,12 +59,12 @@
                         <li v-else>Foe: 0</li>
                     </div>
                 </div>
-                <div id="buttons">
+                <div>
                     <div v-if="activeBattle && !player.stunned" id="fightButtons">
                         <li><button @click="battle()">Attack!</button></li>
                         <li><button @click="flee()">Flee!</button></li>
-                        <li v-if="chapter = 1"><button @click="explosive()">Powder Bomb</button></li>
-                        <li v-else-if="chapter = 2"><button @click="explosive()">Dynamite</button></li>
+                        <li v-if="chapter = 1"><button @click="explosive()">Bomb</button></li>
+                        <li v-else-if="chapter = 2"><button @click="explosive()">TNT</button></li>
                         <li><button @click="sauce()">Heal</button></li>
                     </div>
                     <!--handle stunned status-->
@@ -81,18 +81,20 @@
                     ///////////////////// which will show immediately  (need to complpete)////////////////////////-->
                     <!--players can  search AREAS (not roads) as much as they want-->
 
-                <ul id="decisions" class="sButton">
-                       <!--next enemy encounter-->
-                    <div v-if="!activeBattle && !npcEncounter && battleCount > 0 && battleCount < 3">
-                        <button @click="getEnemy()">Continue Onward</button>
-                    </div>
-                    <div v-else-if="location == 'start' && player.hp > 0">
-                        <button @click="chooseClass()">START!</button>
-                    </div>
-                    <div v-if="!hunter && !fighter && !farmer && location == 'forest'" >
-                        <button @click="setHunter(); getEnemy()">Hunter</button>
-                        <button @click="setFighter(); getEnemy()">Fighter</button>
-                        <button @click="setFarmer(); getEnemy()">Farmer</button>
+                <ul id="decisions">
+                    <div id="advance">
+                        <!--next enemy encounter-->
+                        <div v-if="!activeBattle && !npcEncounter && battleCount > 0 && battleCount < 3">
+                            <button @click="getEnemy()">Continue Onward</button>
+                        </div>
+                        <div v-else-if="location == 'start' && player.hp > 0">
+                            <button @click="chooseClass()">START!</button>
+                        </div>
+                        <div v-if="!hunter && !fighter && !farmer && location == 'forest'" >
+                            <button @click="setHunter(); getEnemy()">Hunter</button>
+                            <button @click="setFighter(); getEnemy()">Fighter</button>
+                            <button @click="setFarmer(); getEnemy()">Farmer</button>
+                        </div>
                     </div>              
                 <div v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->

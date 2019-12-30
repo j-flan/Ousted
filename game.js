@@ -149,7 +149,7 @@ var game = new Vue({
         hunter: false,
         fighter: false,
         farmer: false,
-        weapon: 'Hand Axe',
+        weapon: 'Old Sword',
         player:{
             gold: 0,
             hp: 100,
@@ -239,6 +239,7 @@ var game = new Vue({
         setLocation: function(newLocation){
             this.location = newLocation;
             this.setImage(`pics/${newLocation}.jpg`);
+            this.setHeroImage('');
         },
         setDirection: function(newDirection){
             this.direction = newDirection;
@@ -274,20 +275,18 @@ var game = new Vue({
         },
         enemyHit: function(){
             this.setEnemyImage(`pics/${this.enemy.name}.png`);
+            this.strike = 'gifs/strike.gif'
         },
         heroHit: function(){
             this.setHeroImage('pics/hero1.png');
         },
         strikeAnimation: function(){
-            this.strike = 'gifs/strike.gif';
             this.setHeroImage('gifs/heroAttack.gif');
         },
         hitAnimation: function(){
             this.strikeAnimation();
-            this.enemyHit();
-            setTimeout(()=>{this.strikeAnimation(); this.strike = ''; this.setHeroImage('gifs/hero1.gif');},500);
-            
-            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(`gifs/${this.enemy.name}.gif`);},750);
+            setTimeout(()=>{this.strikeAnimation(); this.enemyHit(); this.setHeroImage('gifs/hero1.gif');},750);
+            setTimeout(()=>{this.strikeAnimation(); this.strike = ''; this.setEnemyImage(`gifs/${this.enemy.name}.gif`); this.setHeroImage('gifs/hero1.gif');},1000);
         },
         attack: function(){          
             //hit or miss
@@ -363,11 +362,13 @@ var game = new Vue({
             this.battleCount = num;
         },
         //number of battles, forest road takes 5 count
-        battCount: function(){
+        battCount: function(){         
             this.battleCount += 1;
+            console.log(this.battleCount);
         },
         enemyKilled: function(){
-            setTimeout(()=>{this.enemyHit(); this.setEnemyImage(''); this.setHeroImage('')},750);
+            ////////////////////////////////////// HERO WONT GO AWAY NOW ????//////
+            setTimeout(()=>{this.strikeAnimation(); this.setEnemyImage(''); this.setHeroImage('gifs/hero1.gif')},800);
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
             document.getElementById("attText").textContent = `Gained ${this.enemy.gold} gold!`;
             //add spoils to player stats
