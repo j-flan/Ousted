@@ -130,7 +130,7 @@
                 <div v-if="enemy.hp == 0" id="directions" >
                     <!------------ chapter 1 ----------------->
                     <!--begin-->
-                    <li v-if="location == 'forest' && battleCount == 3 && player.hp > 0" >
+                    <li v-if="location == 'forest' && battleCount > 2 && player.hp > 0" >
                         <!--calling setBattCount(0) hard resets the count to 0 -->
                         <button @click="setLocation('merchantRoad'); setDirection('W'); setBattCount(0); getEnemy()">To the Merchant Camp</button>
                         <button @click="setLocation('swampRoad'); setDirection('E'); setBattCount(0); getEnemy()">Through the Swamp</button></li>
@@ -139,16 +139,16 @@
                         <button @click="choiceEncounter()">YES</button>
                         <button @click="npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
-                    <li v-if="location == 'merchantRoad' && battleCount == 3" >
+                    <li v-if="location == 'merchantRoad' && battleCount > 2" >
                         <button @click="merchantCamp();">Enter Merchant Camp</button></li>
                     <!--on swamp road-->
                     <div v-if="holdName == 'Wraith'">                     
                         <button @click="choiceEncounter()">YES</button>
                         <button @click=" npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
-                    <li v-if="location == 'swampRoad' && direction == 'E' && battleCount == 3" >
+                    <li v-if="location == 'swampRoad' && direction == 'E' && battleCount > 2" >
                         <button @click="lake()">To the Lake</button></li>
-                    <li v-if="location == 'swampRoad' && direction == 'W' && battleCount == 3" >
+                    <li v-if="location == 'swampRoad' && direction == 'W' && battleCount > 2" >
                         <button @click="merchantCamp();">Enter Merchant Camp</button></li>
                     <!--at lake-->
                     <li v-if="location == 'lake'" >
@@ -196,18 +196,18 @@
                         <button @click="choiceEncounter()">YES</button>
                         <button @click="npcFalse(); battCount(); setEnemy(enemyZero)">NO</button>
                     </div>
-                    <li v-if="location == 'cityRoad' && direction == 'S' && battleCount == 3" >
+                    <li v-if="location == 'cityRoad' && direction == 'S' && battleCount > 2" >
                         <button @click="cityProper(); setBattCount(0)">Enter the City</button></li>
-                    <li v-if="location == 'cityRoad' && direction == 'N' && battleCount == 3" >
+                    <li v-if="location == 'cityRoad' && direction == 'N' && battleCount > 2" >
                         <button @click="merchantCamp(); setBattCount(0)">Enter the Merchant Camp</button></li>
                     <!--on mountain-->
                     <li v-if="location == 'mountain'" >
                         <button @click="setLocation('mountainRoad'); setDirection('E'); setBattCount(0);; getEnemy()">Back to the Merchant Camp</button>
                         <button @click="getEnemy(); setBattCount(2)">Keep searching area</button></li>
                     <!--on mountain road-->
-                    <li v-if="location == 'mountainRoad' && direction == 'W' && battleCount == 3" >
+                    <li v-if="location == 'mountainRoad' && direction == 'W' && battleCount > 2" >
                         <button @click="mountainTop(); setBattCount(0);; getEnemy()">To the Mountain Top</button></li>
-                    <li v-if="location == 'mountainRoad' && direction == 'E' && battleCount == 3" >
+                    <li v-if="location == 'mountainRoad' && direction == 'E' && battleCount > 2" >
                         <button @click="merchantCamp(); setBattCount(0);">Enter the Merchant Camp</button></li>             
                 </div>
                 </ul>

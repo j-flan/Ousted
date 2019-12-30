@@ -365,6 +365,9 @@ var game = new Vue({
         battCount: function(){         
             this.battleCount += 1;
             console.log(this.battleCount);
+            if(this.battleCount > 3){
+                this.battleCount = 3;
+            }
         },
         enemyKilled: function(){
             ////////////////////////////////////// HERO WONT GO AWAY NOW ????//////
@@ -676,15 +679,13 @@ var game = new Vue({
             this.setEnemy(this.areas[this.location][this.rand]);
         },
         choiceEncounter: function(){
-            //advance battle count immediately
-            this.battCount();
+
             let out = document.getElementById('statText');
             //VANDAL MINI-BOSS
             if (this.holdName == "Greasy Vandal"){
                 this.npcFalse();
                 this.setActiveBattle();
                 //decrement battle count by 1 if encountered, will increment at end of battle.
-                this.setBattCount(this.battleCount -1);
                 if(this.npc.victim){
                     out.textContent = "You come accross two Greasy Vandals attempting an unsavory act upon a young lady. \
                         You meet their eyes and your fist clenches your blade";
@@ -700,7 +701,6 @@ var game = new Vue({
                 if(this.npc.chaosDemonBoss){
                     this.npcFalse();
                     this.setActiveBattle();
-                    this.setBattCount(this.battleCount -1);
                     out.textContent = "You stop in your tracks and regain your own sight, now realizing that you had lost it."
                     + "Filling your gaze is a huge creature, with slightly human form, though molten and amorphous."
                     + "Chaos Demon: Have you come all this way to seek revenge for your village in the forest?"
@@ -724,7 +724,6 @@ var game = new Vue({
                     out.textContent  = `it was a ruse! ${this.enemy.name} attacks!`;
                     this.enemyImage = `gifs/${this.enemy.name}.gif`;
                     this.setActiveBattle();
-                    this.setBattCount(this.battleCount -1);
                     this.enemyAttack();                               
                 }
                 else{
@@ -733,16 +732,19 @@ var game = new Vue({
                     if (this.enemy.name == "Wraith"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `You find ${this.enemy.gold / 2} gold! that was too easy...`;
+                        this.battCount();
                     }
                     else if (this.enemy.name == "Thrall"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
                             He hands you ${this.enemy.gold / 2} gold for your help. that was too easy...`;
+                            this.battCount();
                     }
                     else if (this.enemy.name == "Bandit"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `You spend the rest of the day helping the man fix his cart. \
                             He hands you ${this.enemy.gold / 2} gold for your help and company. that was too easy...`;
+                            this.battCount();
                     }
                 }
             }
