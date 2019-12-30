@@ -1071,6 +1071,12 @@ var game = new Vue({
                 this.player.evade -= 1;
                 this.player.hpMax += 25;
             }
+            if (!this.npc.victim){
+                this.player.hpMax += 25;
+            }
+            if (!this.npc.chaosDemonBoss){
+                this.player.hpMax += 25;
+            }
             if (this.player.hp > this.player.hpMax)
                 this.player.hp = this.player.hpMax;
         }
