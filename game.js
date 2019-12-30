@@ -590,6 +590,7 @@ var game = new Vue({
             let out = document.getElementById("statText");
             this.setLocation('merchantCamp');
             document.getElementById("attText").textContent = '';
+            document.getElementById("text").textContent = '';
             if(this.npc.chaosDemonBoss){
                 out.textContent = "There are a couple of Vendors hanging about...";
             }
@@ -615,6 +616,7 @@ var game = new Vue({
             this.setLocation('cityProper');
             let out = document.getElementById("statText");
             document.getElementById("attText").textContent = '';
+            document.getElementById("text").textContent = '';
             if(this.npc.chaosDemonBoss){
                 out.textContent = "Inside the City walls, you see only a handful of people walking about \
                     and notice smoke rising from multiple buildings";

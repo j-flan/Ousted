@@ -217,9 +217,9 @@
 #merch{
     display: block;
     position: absolute;
-    width: 49%;
-    left: 24%;
-    top: 1.5%;
+    width: 99%;
+    left: 0.5%;
+    bottom: 0.5%;
     border: 3px solid gold;
     border-radius: 10px;
     z-index: 2;

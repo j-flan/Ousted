@@ -34,6 +34,37 @@
                 <div id="attText">
                     <ul></ul>
                 </div>
+                <li v-if="location == 'merchantCamp'" >
+                    <div id="merch">
+                        <span v-if="!item.shortSword">
+                            <button @click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button></span>
+                        <span v-if="!item.longSword">
+                            <button @click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button></span>
+                        <span v-if="!item.leatherArmor">   
+                            <button @click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button></span>
+                        <span v-if="!item.mercurialBoots">   
+                            <button @click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 100g</button></span>                     
+                        <button @click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
+                        <button @click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
+                        <button @click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
+                    </div>
+                </li>
+                <li v-if="location == 'cityProper'" >
+                    <!--///////////////////// MAKE MESSAGE BOARD ////////////////////////-->
+                    <div id="merch">
+                        <span v-if="!item.magicDagger">
+                            <button @click="resetOffHand(); setMagicDagger(); equip()">Purchase Jeweled Dager(off-hand): minDMG +1 dex +1, 30g</button></span>
+                        <span v-if="!item.magicShield">
+                            <button @click="resetOffHand(); setMagicShield(); equip()">Purchase Crested Shield(off-hand): maxHP +25, 30g</button></span>
+                        <span v-if="!item.bastardSword">   
+                            <button @click="resetWeapon(); setBastardSword(); equip()">Purchase Frozen Bastard Sword: DMG 6-12, dex -1, 1/6 chance STUN, 70g</button></span>
+                        <span v-if="!item.voidRapier">   
+                            <button @click="resetWeapon(); setVoidRapier(); equip()">Purchase Void Rapier: DMG 5-11, Leech 1hp from enemy on hit, 60g</button></span>                     
+                        <button @click="eelSauce()">Get a room at the INN, Heal 75hp, 15g</button>
+                        <button @click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 8g</button>
+                        <button @click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
+                    </div>
+                </li>
             </div>
             <div id="actionBlock">
                 <div id="playerOutput">
@@ -132,19 +163,6 @@
                     </li>
                     <!--at merchant camp-->
                     <li v-if="location == 'merchantCamp'" >
-                        <div id="merch">
-                            <span v-if="!item.shortSword">
-                                <button @click="resetWeapon(); setShortSword(); equip()">Purchase Reliable Steel Short Sword: Dmg 3-6, 10g</button></span>
-                            <span v-if="!item.longSword">
-                                <button @click="resetWeapon(); setLongSword(); equip()">Purchase Heavy Iron Long Sword: Dmg 4-9, dex -1, 15g</button></span>
-                            <span v-if="!item.leatherArmor">   
-                                <button @click="resetArmor(); setLeatherArmor(); equip()">Purchase Leather Armor: 15g</button></span>
-                            <span v-if="!item.mercurialBoots">   
-                                <button @click="setMBoots(); equip()">Purchase Mercurial Dancing Boots: evade +1, 100g</button></span>                     
-                            <button @click="eelSauce()">Drink Magic EEl Sauce, Heal 50hp 8g</button>
-                            <button @click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 5g</button>
-                            <button @click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
-                        </div>
                         <div id="destination">
                             <button @click="setLocation('cityRoad'); setDirection('S'); setBattCount(0); getEnemy()" >Road to the City</button>
                             <button @click="setLocation('mountainRoad'); setDirection('W'); setBattCount(0); getEnemy()">Trail to the Mountain</button>
@@ -153,22 +171,6 @@
                     </li>
                         <!--in city proper-->
                     <li v-if="location == 'cityProper'" >
-                        <!--setBattCount(2) allows for only 1 battle before direction options are shown again.
-                        This is true for all AREAS (not roads)-->
-                        <!--///////////////////// MAKE MESSAGE BOARD ////////////////////////-->
-                        <div id="merch">
-                            <span v-if="!item.magicDagger">
-                                <button @click="resetOffHand(); setMagicDagger(); equip()">Purchase Jeweled Dager(off-hand): minDMG +1 dex +1, 30g</button></span>
-                            <span v-if="!item.magicShield">
-                                <button @click="resetOffHand(); setMagicShield(); equip()">Purchase Crested Shield(off-hand): maxHP +25, 30g</button></span>
-                            <span v-if="!item.bastardSword">   
-                                <button @click="resetWeapon(); setBastardSword(); equip()">Purchase Frozen Bastard Sword: DMG 6-12, dex -1, 1/6 chance STUN, 70g</button></span>
-                            <span v-if="!item.voidRapier">   
-                                <button @click="resetWeapon(); setVoidRapier(); equip()">Purchase Void Rapier: DMG 5-11, Leech 1hp from enemy on hit, 60g</button></span>                     
-                            <button @click="eelSauce()">Get a room at the INN, Heal 75hp, 15g</button>
-                            <button @click="setSauce()">Purchase EEL Sauce to go, Heal 25hp in battle, 8g</button>
-                            <button @click="setExplosive()">Purchase Powder Bomb, 15dmg to enemy, 5g</button>
-                        </div>
                         <div id="destination">
                             <button @click="setLocation('city'); setBattCount(2); getEnemy()">To city streets</button>
                             <button @click="setLocation('cityRoad'); setDirection('N'); setBattCount(0); getEnemy()">Back to the Merchant Camp</button>
