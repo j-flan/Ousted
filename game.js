@@ -389,6 +389,9 @@ var game = new Vue({
 
             }
             //chaos demon kill glitch? happens on first enemy kill without location check//////////////////////////////////////////////
+            //as soon as you reach the mountain, the first enemy killed kills the boss
+            //without the location check, it happens on the very first fight.
+            //Make new location for boss fight only, when chaos demon encountered?
             if(this.enemy.name = 'Chaos Demon' && this.npc.chaosDemonBoss && this.location == 'mountain'){
                 this.chaosDemonDeath();
                 this.npc.chaosDemonBoss = false;
@@ -697,7 +700,7 @@ var game = new Vue({
                 }
             }
              //CHAOS DEMON BOSS
-            else if (this.enemy.name == "Chaos Demon"){
+            else if (this.holdname == "Chaos Demon"){
                 if(this.npc.chaosDemonBoss){
                     this.npcFalse();
                     this.setActiveBattle();
@@ -729,22 +732,20 @@ var game = new Vue({
                 else{
                     this.setHeroImage('');
                     ////////NEEDS TO BE UNIQUE FOR CERTAIN ENEMIES
+                    //does not contribute to battle count at this time
                     if (this.enemy.name == "Wraith"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `You find ${this.enemy.gold / 2} gold! that was too easy...`;
-                        this.battCount();
                     }
                     else if (this.enemy.name == "Thrall"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `"You help the man gather what he needs and he is grateful for your help. \
                             He hands you ${this.enemy.gold / 2} gold for your help. that was too easy...`;
-                            this.battCount();
                     }
                     else if (this.enemy.name == "Bandit"){
                         this.player.gold += this.enemy.gold / 2;
                         out.textContent = `You spend the rest of the day helping the man fix his cart. \
                             He hands you ${this.enemy.gold / 2} gold for your help and company. that was too easy...`;
-                            this.battCount();
                     }
                 }
             }
