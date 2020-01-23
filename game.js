@@ -1,7 +1,5 @@
-//enemies
 
 //enemies
-
 let bear = {name: "Bear", hp: 12, attackStyle: "swipes", minDmg: 3, maxDmg: 6, minHit: 4, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 5, points: 50, poison: false,stun: false,vamp: false};
 let goblins = {name: "Goblin", hp: 6, attackStyle: "attack", minDmg: 1, maxDmg: 5, minHit: 5, maxHit: 10, minFlee: 6, maxFlee: 10, toHit: 8, gold: 3, points:10 , poison: false,stun: false,vamp: false};
 let elf = {name: "Elf", hp: 8, attackStyle: "attacks", minDmg: 3, maxDmg: 5, minHit: 6, maxHit: 10, minFlee: 5, maxFlee: 10, toHit: 8, gold: 6, points: 30, poison: false,stun: false,vamp: false};
@@ -273,6 +271,8 @@ var game = new Vue({
         setHunter: function(){
             this.hunter = true;
         },
+
+        //battle animation methods
         enemyHit: function(){
             this.setEnemyImage(`pics/${this.enemy.name}.png`);
             this.strike = 'gifs/strike.gif'
@@ -288,6 +288,7 @@ var game = new Vue({
             setTimeout(()=>{this.strikeAnimation(); this.enemyHit(); this.setHeroImage('gifs/hero1.gif');},750);
             setTimeout(()=>{this.strikeAnimation(); this.strike = ''; this.setEnemyImage(`gifs/${this.enemy.name}.gif`); this.setHeroImage('gifs/hero1.gif');},1000);
         },
+
         attack: function(){          
             //hit or miss
             let out = document.getElementById("text");
@@ -370,7 +371,6 @@ var game = new Vue({
             }
         },
         enemyKilled: function(){
-            ////////////////////////////////////// HERO WONT GO AWAY NOW ????//////
             setTimeout(()=>{this.strikeAnimation(); this.setEnemyImage(''); this.setHeroImage('gifs/hero1.gif')},800);
             document.getElementById("text").textContent = `You slayed the ${this.enemy.name}!`;
             document.getElementById("attText").textContent = `Gained ${this.enemy.gold} gold!`;
@@ -447,8 +447,7 @@ var game = new Vue({
                 out.textContent = "Not enough gold";
 
         },
-        explosive: function(){
-            
+        explosive: function(){        
             let out = document.getElementById("text");
             if (this.dynamite){
                 if (this.chapter == 1){
@@ -547,6 +546,7 @@ var game = new Vue({
             }
             this.enemyAttack();
         },
+        //hero and enemy status effects
         eVamp: function(){
             this.enemy.hp += 1;
         },
@@ -668,6 +668,7 @@ var game = new Vue({
             this.player.hpMax += 25;
             this.player.hp = this.player.hpMax;
         },
+        //npc encounter set to  active
         setEncounter: function(){       
             this.npcEncounter = true;
             this.activeBattle = false;
@@ -676,19 +677,19 @@ var game = new Vue({
             console.log(this.holdName);
             this.setEnemy(this.enemyZero);
         },
+        //remove npc encounter status
         npcFalse: function(){
             this.npcEncounter = false;
             this.holdName = '';
             this.setEnemy(this.areas[this.location][this.rand]);
         },
+        //the yes/no encounter decision
         choiceEncounter: function(){
-
             let out = document.getElementById('statText');
             //VANDAL MINI-BOSS
             if (this.holdName == "Greasy Vandal"){
                 this.npcFalse();
                 this.setActiveBattle();
-                //decrement battle count by 1 if encountered, will increment at end of battle.
                 if(this.npc.victim){
                     out.textContent = "You come accross two Greasy Vandals attempting an unsavory act upon a young lady. \
                         You meet their eyes and your fist clenches your blade";
@@ -723,11 +724,12 @@ var game = new Vue({
             else{  
                 this.npcFalse();        
                 let x = Math.floor((Math.random() * 2) + 1);
+                // 50/50 chance of battle or half reward gold 
                 if (x == 2){
                     out.textContent  = `it was a ruse! ${this.enemy.name} attacks!`;
                     this.enemyImage = `gifs/${this.enemy.name}.gif`;
                     this.setActiveBattle();
-                    this.enemyAttack();                               
+                    this.enemyAttack();                   
                 }
                 else{
                     this.setHeroImage('');
@@ -750,6 +752,7 @@ var game = new Vue({
                 }
             }
         },
+        //check current enemy name for encounter
         npcEnc: function(name){
             if(name == 'Lady of the Lake'){
                 let out = document.getElementById("attText");
