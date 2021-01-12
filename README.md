@@ -1,2 +1,2 @@
 # Ousted
-An Adventure Game
+"Crestfall written in JavaScript using Vue.js"
